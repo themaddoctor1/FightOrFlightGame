@@ -28,7 +28,7 @@ public class FistFighterPattern extends SpawnPattern{
     public void cycle(double time) {
         int enemyCount = WorldManager.getWorld().enemyCount();
         
-        for(int i = 0; i < 10-enemyCount && spawned < count; i++){
+        for(int i = 0; i < MAX_ENEMIES-enemyCount && spawned < count; i++){
             spawned++;
             double theta = 2*Math.PI * Math.random();
             Vector v = new Vector(20, theta, 0);

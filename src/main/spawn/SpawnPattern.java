@@ -14,6 +14,8 @@ import world.WorldManager;
  */
 public abstract class SpawnPattern {
     
+    public static final int MAX_ENEMIES = 16;
+    
     public abstract void cycle(double time);
 
 
