@@ -10,17 +10,18 @@ import gui.Controller;
 import physics.*;
 import world.WorldManager;
 import world.entities.creatures.FistFighter;
+import world.entities.creatures.Gunman;
 
 /**
  *
  * @author Christopher Hittner
  */
-public class FistFighterPattern extends SpawnPattern{
+public class HybridPattern extends SpawnPattern{
     
     int count;
     int spawned = 0;
     
-    public FistFighterPattern(int enemies){
+    public HybridPattern(int enemies){
         count = enemies;
     }
     
@@ -34,7 +35,10 @@ public class FistFighterPattern extends SpawnPattern{
             Vector v = new Vector(20, theta, 0);
             Coordinate c = new Coordinate(Controller.getPlayer().getPosition().X(), 1, Controller.getPlayer().getPosition().Z());
             c.addVector(v);
-            WorldManager.getWorld().getEntities().add(new FistFighter(c));
+            if(Math.random() < 0.5)
+                WorldManager.getWorld().getEntities().add(new FistFighter(c));
+            else
+                WorldManager.getWorld().getEntities().add(new Gunman(c));
         }
         
     }

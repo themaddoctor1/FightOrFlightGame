@@ -7,6 +7,7 @@
 package world;
 
 import gui.Controller;
+import main.Scoreboard;
 
 /**
  *
@@ -75,6 +76,7 @@ public class WorldManager {
             while(run){
                 double time = confirmCheck();
                 executePhysics(time);
+                Scoreboard.cycle(time);
             }
         }
         

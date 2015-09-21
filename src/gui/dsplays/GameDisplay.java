@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import main.Scoreboard;
 import physics.Coordinate;
 import world.WorldManager;
 import world.entities.Entity;
@@ -90,6 +91,21 @@ public class GameDisplay extends Display{
         g2.drawString("Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
         g2.drawString("Perceived Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
         g2.drawString("Speed Charge: " + (((int)(Controller.getPlayer().getSpeedCharge()*100)) / 100.0) + " Flux Units", 10, 90);
+        
+        
+        double countdown = Scoreboard.timer();
+        if(countdown > 0){
+            g2.setFont(new Font("Courier New", Font.PLAIN, 48));
+            g2.drawString("Round start in:", interf.getCenterX()-200, 30);
+            g2.setFont(new Font("Courier New", Font.PLAIN, 36));
+            g2.drawString("" + (int)(1+countdown), interf.getCenterX()-9, 80);
+        } else {
+            g2.setFont(new Font("Courier New", Font.PLAIN, 48));
+            g2.drawString("Wave", interf.getCenterX()-50, 30);
+            g2.setFont(new Font("Courier New", Font.PLAIN, 36));
+            g2.drawString("" + (Scoreboard.wave()), interf.getCenterX()-9-12*(int)(Math.log10(Scoreboard.wave())), 80);
+        }
+        
     }
 
 }

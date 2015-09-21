@@ -15,25 +15,42 @@ import main.spawn.*;
 public class Scoreboard {
     private static double countdown = 5;
     private static int wave = 1;
-    private static SpawnPattern spawning;
+    private static SpawnPattern spawning = null;
     
-    public int wave(){ return wave; }
+    public static int wave(){ return wave; }
     
-    public double  timer(){ return countdown; }
+    public static double  timer(){ return countdown; }
     
     
-    public void cycle(double time){
-        if(countdown <= 0)
+    public static void cycle(double time){
+        if(countdown <= 0){
+            if(spawning == null)
+                spawning = nextSpawner();
             spawning.cycle(time);
-        else{
+        }else{
             if (spawning != null)
                 spawning = null;
+            
             countdown -= time;
+        }
+        
+        if(spawning != null) if(spawning.roundOver() && countdown <= 0)
+            ready();
+        
+    }
+    
+    public static SpawnPattern nextSpawner(){
+        int enemyCount = (int)Math.pow(4+2*wave, 0.75);
+        if(wave <= 2){
+            return new FistFighterPattern(enemyCount);
+        } else {
+            return new HybridPattern(enemyCount);
         }
     }
     
-    public void ready(){
-        spawning = new FistFighterPattern((int)Math.pow(wave, 0.75));
+    public static void ready(){
+        countdown = 5;
+        wave++;
     }
     
 }

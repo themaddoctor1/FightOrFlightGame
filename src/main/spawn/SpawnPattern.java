@@ -6,10 +6,16 @@
 
 package main.spawn;
 
+import world.WorldManager;
+
 /**
  *
  * @author Christopher Hittner
  */
-public interface SpawnPattern {
-    public void cycle(double time);
+public abstract class SpawnPattern {
+    
+    public abstract void cycle(double time);
+
+
+    public abstract boolean roundOver();
 }
