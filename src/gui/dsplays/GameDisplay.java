@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package gui.menus;
+package gui.dsplays;
 
 import gui.Camera;
 import gui.Controller;
@@ -24,7 +24,7 @@ import world.entities.creatures.Player;
  *
  * @author Christopher Hittner
  */
-public class GameMenu extends Menu{
+public class GameDisplay extends Display{
 
     @Override
     public void draw(Graphics g) {

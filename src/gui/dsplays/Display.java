@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package gui.menus;
+package gui.dsplays;
 
 import java.awt.Graphics;
 
@@ -12,6 +12,6 @@ import java.awt.Graphics;
  *
  * @author Christopher Hittner
  */
-public abstract class Menu {
+public abstract class Display {
     public abstract void draw(Graphics g);
 }

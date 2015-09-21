@@ -6,7 +6,7 @@
 
 package gui;
 
-import gui.menus.GameMenu;
+import gui.dsplays.GameDisplay;
 import gui.shapes.Polygon3D;
 import java.awt.Color;
 import java.awt.Font;
@@ -38,7 +38,7 @@ public class Interface3D extends Interface {
     @Override
     public void paint(Graphics g){
         
-        (new GameMenu()).draw(g);
+        display.draw(g);
     }
     
     

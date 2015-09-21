@@ -6,6 +6,7 @@
 
 package gui;
 
+import gui.dsplays.*;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
@@ -25,6 +26,8 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
     //Applet stuff
     protected Graphics graphics;
     protected JFrame frame;
+    
+    protected Display display = new GameDisplay();
     
     ////////////////////////////////////////////////////
     
@@ -103,6 +106,9 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
     public Controller getController(){ return controller; }
     public void cycleController(){ controller.execute(); }
     
+    public void setDisplay(Display d){
+        display = d;
+    }
     
     //-----------------------
     //Keyboard and Mouse
