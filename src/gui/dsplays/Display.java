@@ -7,11 +7,17 @@
 package gui.dsplays;
 
 import java.awt.Graphics;
+import java.awt.event.*;
 
 /**
  *
  * @author Christopher Hittner
  */
-public abstract class Display {
+public abstract class Display implements KeyListener, MouseListener, MouseMotionListener{
+    
+    public Display(){}
+    public Display(int W, int H){}
+    
     public abstract void draw(Graphics g);
+    public abstract void cycle();
 }

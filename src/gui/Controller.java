@@ -6,11 +6,15 @@
 
 package gui;
 
+import gui.dsplays.GameDisplay;
+import gui.dsplays.GameOverDisplay;
+import gui.dsplays.MainMenuDisplay;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 import world.entities.creatures.Player;
@@ -109,13 +113,15 @@ public class Controller {
             KeyEvent.VK_LEFT,       //Left
             KeyEvent.VK_DOWN,       //Backward
             KeyEvent.VK_RIGHT,      //Right
-            KeyEvent.VK_W,          //Look up      /  //////////////////////////
-            KeyEvent.VK_S,          //Look down   /__ ////Alternate control:////
-            KeyEvent.VK_A,          //Look left   \   ////  Mouse/Touchpad  ////
-            KeyEvent.VK_D,          //Look right   \  //////////////////////////
+            KeyEvent.VK_W,          
+            KeyEvent.VK_A,          
+            KeyEvent.VK_S,          
+            KeyEvent.VK_D,          
             KeyEvent.VK_SPACE,      //Jump
             KeyEvent.VK_E,          //Shoot (Mouse control: Left click)
-            KeyEvent.VK_SHIFT       //Brakes
+            KeyEvent.VK_SHIFT,       //Brakes
+            KeyEvent.VK_B,
+            KeyEvent.VK_ESCAPE      //End Game
         };
     }
     
@@ -124,74 +130,74 @@ public class Controller {
         
         //This should be run after any required operations are performed. The next two lines of code ensure that
         //the player cannot control the character.
-        if(currentPlayer.getHealth() <= 0)
-            return;
-        
-        double time = (System.nanoTime() - lastCheck)/Math.pow(10,9);
-        lastCheck += time * Math.pow(10,9);
-        
-        
-        Vector acc = new Vector(0,0,0);
-        Camera c = getCamera();
-        
-        if(currentPlayer.getPosition().Y() <= currentPlayer.getSize()){
-            if(getState(8)){
-                currentPlayer.getVelocity().addVectorToThis(new Vector(4 - currentPlayer.getVelocity().getMagnitudeY(),0, Math.PI/2.0));
-            } else if(getState(10) && currentPlayer.getVelocity().getMagnitude() > 0){
-                currentPlayer.getVelocity().addVectorToThis(new Vector(currentPlayer.getVelocity().unitVector(), -Math.min(time * currentPlayer.getAcceleration() *4, currentPlayer.getVelocity().getMagnitude())));
-            }else if(currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
-                for(int i = 0; i < 4; i++)
-                    if(getState(i))
-                        acc.addVectorToThis(new Vector(1 , c.getXZ() + i * 0.5 * Math.PI , 0));
+        if(Interface3D.getInterface3D().getDisplay() instanceof GameDisplay){
+            if(currentPlayer.getHealth() <= 0)
+                return;
 
-                if(acc.getMagnitude() != 0){
-                    acc = new Vector(acc.unitVector(),currentPlayer.getAcceleration() * time);
+            double time = (System.nanoTime() - lastCheck)/Math.pow(10,9);
+            lastCheck += time * Math.pow(10,9);
 
-                    if(currentPlayer.getVelocity().getMagnitude() > 0)
-                        acc.multiplyMagnitude(Math.pow(2 - Vector.cosOfAngleBetween(acc, currentPlayer.getVelocity()),1.5));
 
-                    currentPlayer.getVelocity().addVectorToThis(acc);
+            Vector acc = new Vector(0,0,0);
+            Camera c = getCamera();
+
+            if(currentPlayer.getPosition().Y() <= currentPlayer.getSize()){
+                if(getState(8)){
+                    currentPlayer.getVelocity().addVectorToThis(new Vector(4 - currentPlayer.getVelocity().getMagnitudeY(),0, Math.PI/2.0));
+                } else if((getState(10)||getState(11)) && currentPlayer.getVelocity().getMagnitude() > 0){
+                    currentPlayer.getVelocity().addVectorToThis(new Vector(currentPlayer.getVelocity().unitVector(), -Math.min(time * currentPlayer.getAcceleration() *4, currentPlayer.getVelocity().getMagnitude())));
+                }else if(currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
+                    for(int i = 0; i < 4; i++)
+                        if(getState(i) || getState(i+4))
+                            acc.addVectorToThis(new Vector(1 , c.getXZ() + i * 0.5 * Math.PI , 0));
+
+                    if(acc.getMagnitude() != 0){
+                        acc = new Vector(acc.unitVector(),currentPlayer.getAcceleration() * time);
+
+                        if(currentPlayer.getVelocity().getMagnitude() > 0)
+                            acc.multiplyMagnitude(Math.pow(2 - Vector.cosOfAngleBetween(acc, currentPlayer.getVelocity()),1.5));
+
+                        currentPlayer.getVelocity().addVectorToThis(acc);
+                    }
                 }
             }
+            double rotSpeed = 2 * time;
+
+            double sensitivity = 15;
+
+            double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Interface3D.getInterface3D().getCenterX())/Interface3D.getInterface3D().getPixelsPerRadian();
+            double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Interface3D.getInterface3D().getCenterY())/Interface3D.getInterface3D().getPixelsPerRadian();
+
+            c.setDirection(new Vector(1,c.getXZ() - rotX, c.getY() - rotY));
+
+            c.setDirection(new Vector(1, c.getXZ(), Math.max(-Math.PI/2.0, Math.min(Math.PI/2.0, c.getY()))));
+            //*
+            try {
+                (new Robot()).mouseMove(
+                        Interface3D.getInterface3D().getFrame().getContentPane().getWidth()/2+6,
+                        Interface3D.getInterface3D().getFrame().getContentPane().getHeight()/2+50
+                );
+            } catch (AWTException ex) {
+                Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            //*/
+
+            if(getState(9) || mouseHeld[0])
+                currentPlayer.getWeapon().use(time, currentPlayer);
+            
+            if(getState(12)){
+                Scoreboard.endGame();
+                Interface3D.getInterface3D().setDisplay(new MainMenuDisplay());
+            }
+            
+            //System.out.println(currentPlayer.getVelocity().toString(true));
         }
-        double rotSpeed = 2 * time;
-        
-        if(getState(4))
-            c.setDirection(new Vector(1,c.getXZ(), c.getY() + rotSpeed));
-        if(getState(5))
-            c.setDirection(new Vector(1,c.getXZ(), c.getY() - rotSpeed));
-        if(getState(6))
-            c.setDirection(new Vector(1,c.getXZ() + rotSpeed, c.getY()));
-        if(getState(7))
-            c.setDirection(new Vector(1,c.getXZ() - rotSpeed, c.getY()));
-        
-        double sensitivity = 15;
-        
-        double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Interface3D.getInterface3D().getCenterX())/Interface3D.getInterface3D().getPixelsPerRadian();
-        double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Interface3D.getInterface3D().getCenterY())/Interface3D.getInterface3D().getPixelsPerRadian();
-        
-        c.setDirection(new Vector(1,c.getXZ() - rotX, c.getY() - rotY));
-        
-        c.setDirection(new Vector(1, c.getXZ(), Math.max(-Math.PI/2.0, Math.min(Math.PI/2.0, c.getY()))));
-        //*
-        try {
-            (new Robot()).mouseMove(
-                    Interface3D.getInterface3D().getFrame().getContentPane().getWidth()/2+6,
-                    Interface3D.getInterface3D().getFrame().getContentPane().getHeight()/2+50
-            );
-        } catch (AWTException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //*/
-        
-        if(getState(9) || mouseHeld[0])
-            currentPlayer.getWeapon().use(time, currentPlayer);
-        
-        //System.out.println(currentPlayer.getVelocity().toString(true));
-        
     }
     
-    public void setPlayer(Player p){ currentPlayer = p; }
+    public static void setPlayer(Player p){
+        currentPlayer = p;
+        c = new Camera(currentPlayer.getPosition(), 0, 0);
+    }
     
     public static Camera getCamera(){
         return c;

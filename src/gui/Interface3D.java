@@ -41,6 +41,7 @@ public class Interface3D extends Interface {
         display.draw(g);
         
         /*
+        //Draws a cursor
         g.drawLine(mouseX, mouseY, mouseX+9, mouseY+12);
         g.drawLine(mouseX, mouseY, mouseX, mouseY+15);
         g.drawLine(mouseX, mouseY+15, mouseX+9, mouseY+12);

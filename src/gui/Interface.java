@@ -28,7 +28,7 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
     protected Graphics graphics;
     protected JFrame frame;
     
-    protected Display display = new GameDisplay();
+    protected Display display;
     
     protected int mouseX = 0, mouseY = 0;
     
@@ -65,6 +65,8 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
         Toolkit.getDefaultToolkit().createCustomCursor
              (image, new Point(0, 0), "invisibleCursor");
         frame.setCursor(transparentCursor);
+        
+        display = new MainMenuDisplay(width, height);
         
     }
     
@@ -109,6 +111,8 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
     
     public static Interface getInterface(){ return gui;}
     
+    public Display getDisplay(){ return display; }
+    
     //-----------------------
     //Controller
     //-----------------------
@@ -139,6 +143,7 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
     
     @Override
     public void mouseClicked(MouseEvent me) {
+        display.mouseClicked(me);
     }
 
     @Override
@@ -147,6 +152,7 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
             controller.setMouseState(0, true);
         else if(me.getButton() == MouseEvent.BUTTON2)
             controller.setMouseState(1, true);
+        display.mousePressed(me);
     }
 
     @Override
@@ -155,6 +161,7 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
             controller.setMouseState(0, false);
         else if(me.getButton() == MouseEvent.BUTTON2)
             controller.setMouseState(1, false);
+        display.mouseReleased(me);
     }
 
     @Override

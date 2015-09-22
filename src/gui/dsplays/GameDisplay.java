@@ -16,6 +16,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import main.Scoreboard;
 import physics.Coordinate;
 import world.WorldManager;
@@ -38,6 +40,10 @@ public class GameDisplay extends Display{
         int Z = (int) Controller.getPlayer().getPosition().Z();
         
         Player p = Controller.getPlayer();
+        
+        if(p.getHealth() <= 0)
+            Interface3D.getInterface3D().setDisplay(new GameOverDisplay());
+        
         Camera c = Controller.getCamera();
         c = new Camera(new Coordinate(c.getPosition().X(), c.getPosition().Y() + p.getSize() * 0.8, c.getPosition().Z()), c.getXZ(), c.getY());
         
@@ -104,6 +110,61 @@ public class GameDisplay extends Display{
             g2.drawString("Wave", interf.getCenterX()-40, 30);
             g2.drawString("" + (Scoreboard.wave()), interf.getCenterX()-9-12*(int)(Math.log10(Scoreboard.wave())), 80);
         }
+        
+    }
+
+    @Override
+    public void cycle() {
+        
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
         
     }
 

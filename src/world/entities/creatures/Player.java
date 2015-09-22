@@ -22,7 +22,7 @@ public class Player extends Speedster{
         this.speedCharge = 0;
     }
     
-
+    
     @Override
     public double faceXZ() {
         return Controller.getCamera().getXZ();

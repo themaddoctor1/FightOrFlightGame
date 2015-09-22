@@ -32,19 +32,21 @@ public class World {
                     
         }
         
-        //Removes null entities
+        //Removes null and dead entities
         for(int i = entities.size()-1; i >= 0; i--){
             Entity e = entities.get(i);
             if(e == null)
                 entities.remove(e);
             else if(e instanceof Creature){
                 Creature c = (Creature) e;
+                if(c instanceof Player)
+                    continue;
                 if(c.getHealth() <= 0)
                     c.killSelf();
             }
         }
         
-        //Removes dead entities
+        //Gravity
         for(int i = entities.size()-1; i >= 0; i--){
             try{
                 Entity e = entities.get(i);

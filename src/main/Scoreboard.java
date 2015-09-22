@@ -6,7 +6,10 @@
 
 package main;
 
+import gui.Controller;
 import main.spawn.*;
+import world.WorldManager;
+import world.entities.creatures.Player;
 
 /**
  *
@@ -16,6 +19,7 @@ public class Scoreboard {
     private static double countdown = 5;
     private static int wave = 1;
     private static SpawnPattern spawning = null;
+    private static boolean running = false;
     
     public static int wave(){ return wave; }
     
@@ -23,6 +27,10 @@ public class Scoreboard {
     
     
     public static void cycle(double time){
+        
+        if(!running)
+            return;
+        
         if(countdown <= 0){
             if(spawning == null)
                 spawning = nextSpawner();
@@ -57,6 +65,22 @@ public class Scoreboard {
     public static void ready(){
         countdown = 5;
         wave++;
+    }
+
+    public static void startGame() {
+        WorldManager.stopSimulation();
+        WorldManager.getWorld().getEntities().clear();
+        Controller.setPlayer(new Player());
+        WorldManager.getWorld().getEntities().add(Controller.getPlayer());
+        running = true;
+        countdown = 5;
+        wave = 1;
+        WorldManager.startSimulation();
+    }
+    
+    public static void endGame(){
+        running = false;
+        WorldManager.stopSimulation();
     }
     
 }
