@@ -11,6 +11,7 @@ import gui.Controller;
 import gui.Interface;
 import gui.Interface3D;
 import gui.shapes.Polygon3D;
+import gui.shapes.Rectangle3D;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -95,14 +96,12 @@ public class GameDisplay extends Display{
         
         double countdown = Scoreboard.timer();
         if(countdown > 0){
-            g2.setFont(new Font("Courier New", Font.PLAIN, 48));
-            g2.drawString("Round start in:", interf.getCenterX()-200, 30);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
+            g2.drawString("Round start in:", interf.getCenterX()-160, 30);
             g2.drawString("" + (int)(1+countdown), interf.getCenterX()-9, 80);
         } else {
-            g2.setFont(new Font("Courier New", Font.PLAIN, 48));
-            g2.drawString("Wave", interf.getCenterX()-50, 30);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
+            g2.drawString("Wave", interf.getCenterX()-40, 30);
             g2.drawString("" + (Scoreboard.wave()), interf.getCenterX()-9-12*(int)(Math.log10(Scoreboard.wave())), 80);
         }
         

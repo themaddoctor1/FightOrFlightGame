@@ -25,7 +25,15 @@ import world.entities.Entity;
 public class Gun extends Weapon{
     
     private double fireRate = 5;
-    private double counter = -1;
+    private double counter = 0.9/fireRate;
+    
+    public Gun(double rate){
+        fireRate = rate;
+    }
+    
+    public Gun(){
+        
+    }
     
     @Override
     public void cycle(double time, Entity user){

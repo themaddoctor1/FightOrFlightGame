@@ -6,7 +6,11 @@
 
 package gui;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import physics.Coordinate;
 import physics.Vector;
 import world.entities.creatures.Player;
@@ -27,6 +31,8 @@ public class Controller {
     private static Camera c;
     
     private static Player currentPlayer = new Player();
+    
+    private boolean[] mouseHeld = {false, false};
     
     
     /**
@@ -99,17 +105,17 @@ public class Controller {
     
     public static int[] generateKeyCodes(){
         return new int[]{
-            KeyEvent.VK_UP,
-            KeyEvent.VK_LEFT,
-            KeyEvent.VK_DOWN,
-            KeyEvent.VK_RIGHT,
-            KeyEvent.VK_W,
-            KeyEvent.VK_S,
-            KeyEvent.VK_A,
-            KeyEvent.VK_D,
-            KeyEvent.VK_SPACE,
-            KeyEvent.VK_E,
-            KeyEvent.VK_B
+            KeyEvent.VK_UP,         //Forward
+            KeyEvent.VK_LEFT,       //Left
+            KeyEvent.VK_DOWN,       //Backward
+            KeyEvent.VK_RIGHT,      //Right
+            KeyEvent.VK_W,          //Look up      /  //////////////////////////
+            KeyEvent.VK_S,          //Look down   /__ ////Alternate control:////
+            KeyEvent.VK_A,          //Look left   \   ////  Mouse/Touchpad  ////
+            KeyEvent.VK_D,          //Look right   \  //////////////////////////
+            KeyEvent.VK_SPACE,      //Jump
+            KeyEvent.VK_E,          //Shoot (Mouse control: Left click)
+            KeyEvent.VK_SHIFT       //Brakes
         };
     }
     
@@ -159,9 +165,26 @@ public class Controller {
         if(getState(7))
             c.setDirection(new Vector(1,c.getXZ() - rotSpeed, c.getY()));
         
-        c.setDirection(new Vector(1, c.getXZ(), Math.max(-Math.PI/2.0, Math.min(Math.PI/2.0, c.getY()))));
+        double sensitivity = 15;
         
-        if(getState(9))
+        double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Interface3D.getInterface3D().getCenterX())/Interface3D.getInterface3D().getPixelsPerRadian();
+        double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Interface3D.getInterface3D().getCenterY())/Interface3D.getInterface3D().getPixelsPerRadian();
+        
+        c.setDirection(new Vector(1,c.getXZ() - rotX, c.getY() - rotY));
+        
+        c.setDirection(new Vector(1, c.getXZ(), Math.max(-Math.PI/2.0, Math.min(Math.PI/2.0, c.getY()))));
+        //*
+        try {
+            (new Robot()).mouseMove(
+                    Interface3D.getInterface3D().getFrame().getContentPane().getWidth()/2+6,
+                    Interface3D.getInterface3D().getFrame().getContentPane().getHeight()/2+50
+            );
+        } catch (AWTException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //*/
+        
+        if(getState(9) || mouseHeld[0])
             currentPlayer.getWeapon().use(time, currentPlayer);
         
         //System.out.println(currentPlayer.getVelocity().toString(true));
@@ -175,5 +198,9 @@ public class Controller {
     }
     
     public static Player getPlayer(){ return currentPlayer; }
+
+    public void setMouseState(int i, boolean b) {
+        mouseHeld[i] = b;
+    }
     
 }

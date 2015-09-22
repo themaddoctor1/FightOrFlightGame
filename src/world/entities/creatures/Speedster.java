@@ -63,7 +63,7 @@ public abstract class Speedster extends Humanoid{
         if(velocity.getMagnitude() > 0){
             double KI = Math.pow(velocity.getMagnitude(),2)/2.0;
 
-            double chargeDerivative = Math.pow(10, -1)/(Math.pow(speedCharge+1,4));
+            double chargeDerivative = Math.pow(10, -2.5)/(Math.pow(speedCharge+1,6));
             
             double change = chargeDerivative * KI * perceivedTime;
             

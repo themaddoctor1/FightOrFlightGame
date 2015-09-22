@@ -39,6 +39,12 @@ public class Interface3D extends Interface {
     public void paint(Graphics g){
         
         display.draw(g);
+        
+        /*
+        g.drawLine(mouseX, mouseY, mouseX+9, mouseY+12);
+        g.drawLine(mouseX, mouseY, mouseX, mouseY+15);
+        g.drawLine(mouseX, mouseY+15, mouseX+9, mouseY+12);
+        */
     }
     
     

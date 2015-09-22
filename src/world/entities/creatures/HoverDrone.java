@@ -21,12 +21,12 @@ import physics.Vector;
  */
 public class HoverDrone extends Creature{
     
-    private double preferredAltitude = 2;
+    private double preferredAltitude = 4;
     
     public HoverDrone(Coordinate pos){
         super(pos,0.3,25);
         //pos.addVector(new Vector(preferredAltitude - pos.Y(), 0, Math.PI/2.0));
-        weapon = new Gun();
+        weapon = new Gun(100);
     }
 
     @Override

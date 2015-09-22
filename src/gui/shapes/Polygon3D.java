@@ -26,6 +26,7 @@ public class Polygon3D implements Shape3D{
     }
     
     
+    @Override
     public boolean contains(Camera c, int x, int y){
         return convert(c).contains(x, y);
     }

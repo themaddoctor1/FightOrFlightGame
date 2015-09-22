@@ -40,11 +40,17 @@ public class Scoreboard {
     }
     
     public static SpawnPattern nextSpawner(){
-        int enemyCount = (int)Math.pow(4+2*wave, 0.75);
-        if(wave <= 2){
-            return new FistFighterPattern(enemyCount);
+        int enemyCount = //(int)Math.pow(4+2*wave, 0.75);
+                (int)(4*wave / Math.pow(Math.log10(wave+10),4));
+        
+        //if(wave%5 == 0)
+        //    return new MissileStrikePattern(enemyCount);
+        if(wave <= 3){
+            return new DefaultPattern(enemyCount, true, false, false);
+        } else if(wave <= 7){
+            return new DefaultPattern(enemyCount, true, true, false);
         } else {
-            return new HybridPattern(enemyCount);
+            return new DefaultPattern(enemyCount, true, true, true);
         }
     }
     

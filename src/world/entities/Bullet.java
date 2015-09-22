@@ -17,7 +17,7 @@ import world.entities.creatures.Speedster;
 public class Bullet extends Entity{
 
     public Bullet(Coordinate c, Vector vel) {
-        super(c, 0.1);
+        super(c, 0.05);
         velocity = vel;
     }
     

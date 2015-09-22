@@ -49,13 +49,18 @@ public class Missile extends Entity{
         if(getPosition().Y() <= getSize() || Coordinate.relativeDistance(getPosition(), TARGET) <= SENSITIVITY){
             killSelf();
         } else if(fuel > 0){
-            Vector dir = new Vector(getPosition(), TARGET);
-            double cos = (Vector.cosOfAngleBetween(dir, getVelocity()));
-            Vector diff = new Vector(getVelocity().unitVector(), -dir.getMagnitude() * (cos+1)/2);
-            dir.addVectorToThis(diff);
-            Vector force = new Vector(dir.unitVector(), thrust * time/5);
-            getVelocity().addVectorToThis(force);
-            
+            if(getVelocity().getMagnitudeY() < -Math.sqrt((thrust-9.81)*getPosition().Y()) || getPosition().Y()-getSize() < 0.5){
+                Vector force = new Vector(thrust*time, 0, Math.PI/2.0);
+                System.out.println("UP");
+                getVelocity().addVectorToThis(force);
+            } else {
+                Vector dir = new Vector(getPosition(), TARGET);
+                double cos = (Vector.cosOfAngleBetween(dir, getVelocity()));
+                Vector diff = new Vector(getVelocity().unitVector(), -dir.getMagnitude() * (cos+1)/2);
+                dir.addVectorToThis(diff);
+                Vector force = new Vector(dir.unitVector(), thrust * time/5);
+                getVelocity().addVectorToThis(force);
+            }
             fuel -= time;
         }
         
@@ -71,7 +76,7 @@ public class Missile extends Entity{
     @Override
     public void killSelf(){
         super.killSelf();
-        WorldManager.getWorld().getEntities().add(new Explosion(getPosition(), Math.pow(10, 4), new Vector(getVelocity(),1)));
+        WorldManager.getWorld().getEntities().add(new Explosion(getPosition(), Math.pow(10, 5), new Vector(getVelocity(),1)));
     }
 
 }

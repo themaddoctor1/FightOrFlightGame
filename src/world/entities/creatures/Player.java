@@ -19,7 +19,7 @@ public class Player extends Speedster{
     public Player() {
         super(100);
         weapon = new Gun();
-        
+        this.speedCharge = 0;
     }
     
 

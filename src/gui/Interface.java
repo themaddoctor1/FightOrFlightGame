@@ -10,6 +10,7 @@ import gui.dsplays.*;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.MemoryImageSource;
 import javax.swing.JFrame;
 
 /**
@@ -28,6 +29,8 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
     protected JFrame frame;
     
     protected Display display = new GameDisplay();
+    
+    protected int mouseX = 0, mouseY = 0;
     
     ////////////////////////////////////////////////////
     
@@ -54,6 +57,14 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
         //This will make the program close when the red X in the top right is
         //clicked on
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setCursor(null);
+        int[] pixels = new int[16 * 16];
+        Image image = Toolkit.getDefaultToolkit().createImage(
+            new MemoryImageSource(16, 16, pixels, 0, 16));
+        Cursor transparentCursor =
+        Toolkit.getDefaultToolkit().createCustomCursor
+             (image, new Point(0, 0), "invisibleCursor");
+        frame.setCursor(transparentCursor);
         
     }
     
@@ -123,18 +134,27 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
         return frame.getHeight()/2;
     }
     
+    public int mouseX(){ return mouseX; }
+    public int mouseY(){ return mouseY; }
+    
     @Override
     public void mouseClicked(MouseEvent me) {
     }
 
     @Override
     public void mousePressed(MouseEvent me) {
-        
+        if(me.getButton() == MouseEvent.BUTTON1)
+            controller.setMouseState(0, true);
+        else if(me.getButton() == MouseEvent.BUTTON2)
+            controller.setMouseState(1, true);
     }
 
     @Override
     public void mouseReleased(MouseEvent me) {
-        
+        if(me.getButton() == MouseEvent.BUTTON1)
+            controller.setMouseState(0, false);
+        else if(me.getButton() == MouseEvent.BUTTON2)
+            controller.setMouseState(1, false);
     }
 
     @Override
@@ -149,12 +169,14 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
 
     @Override
     public void mouseDragged(MouseEvent me) {
-        
+        mouseX = me.getX();
+        mouseY = me.getY();
     }
 
     @Override
     public void mouseMoved(MouseEvent me) {
-        
+        mouseX = me.getX();
+        mouseY = me.getY();
     }
 
     @Override
