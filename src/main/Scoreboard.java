@@ -51,8 +51,8 @@ public class Scoreboard {
         int enemyCount = //(int)Math.pow(4+2*wave, 0.75);
                 (int)(4*wave / Math.pow(Math.log10(wave+10),4));
         
-        //if(wave%5 == 0)
-        //    return new MissileStrikePattern(enemyCount);
+        /*if(wave%10 == 0)
+            return new SpeedsterPattern();*/
         if(wave <= 3){
             return new DefaultPattern(enemyCount, true, false, false);
         } else if(wave <= 7){

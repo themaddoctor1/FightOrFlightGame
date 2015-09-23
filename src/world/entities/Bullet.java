@@ -59,13 +59,16 @@ public class Bullet extends Entity{
             }
         }
         
-        if(getPosition().Y() <= getSize()+0.01 && getVelocity().getMagnitudeY() < 0){
+        if(getPosition().Y() <= getSize()+0.01/* && getVelocity().getMagnitudeY() < 0*/){
+            killSelf();
+            /*
             double yVel = getVelocity().getMagnitudeY();
             velocity.addVectorToThis(new Vector(-2*yVel, 0, Math.PI/2.0));
             velocity.multiplyMagnitude(0.5);
             velocity.addMagnitude(-Math.max(velocity.getMagnitude(), -yVel + velocity.getMagnitude() * Math.sin(velocity.getAngleY())));
             if(velocity.getMagnitude() < 5 || velocity.getAngleY() < -0.1)
                 killSelf();
+                    */
         }
             
         

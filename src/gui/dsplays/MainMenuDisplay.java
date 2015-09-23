@@ -57,8 +57,8 @@ public class MainMenuDisplay extends Display{
         g2.drawString("Controls:", 10, Interface3D.getInterface3D().getCenterY()+disp+0);
         g2.drawString("WASD / Arrow Keys: Move", 10, Interface3D.getInterface3D().getCenterY()+disp+20);
         g2.drawString("Mouse: Look", 10, Interface3D.getInterface3D().getCenterY()+disp+40);
-        g2.drawString("LMB: Use Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+60);
-        g2.drawString("SHIFT: Brakes", 10, Interface3D.getInterface3D().getCenterY()+disp+80);
+        g2.drawString("LMB / E: Use Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+60);
+        g2.drawString("SHIFT / B: Brakes", 10, Interface3D.getInterface3D().getCenterY()+disp+80);
         g2.drawString("ESC: Exit", 10, Interface3D.getInterface3D().getCenterY()+disp+100);
         
         Polygon cursor = new Polygon();

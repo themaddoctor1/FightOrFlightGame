@@ -70,9 +70,9 @@ public class GameOverDisplay extends Display{
         int cells = 10;
         double width = 1;
         
-        for(double i = -cells + 0.5; i < cells+1; i++){
-            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells - 0.5)*width), new Coordinate(X+i*width,0, Z+(cells - 0.5)*width));
-            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X-(cells-0.5)*width,0, Z+i*width), new Coordinate(X+(cells-0.5)*width,0, Z+i*width));
+        for(double i = -cells - 0.5; i < cells+1; i++){
+            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells + 0.5)*width), new Coordinate(X+i*width,0, Z+(cells + 0.5)*width));
+            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X-(cells+0.5)*width,0, Z+i*width), new Coordinate(X+(cells+0.5)*width,0, Z+i*width));
         }
         
         for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++){
@@ -120,7 +120,8 @@ public class GameOverDisplay extends Display{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+        Interface3D.getInterface3D().setDisplay(new MainMenuDisplay());
+        Scoreboard.endGame();
     }
 
     @Override

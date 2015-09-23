@@ -7,9 +7,11 @@ package items;
 
 import gui.Camera;
 import gui.Controller;
+import gui.Interface;
 import gui.Interface3D;
 import gui.shapes.Polygon3D;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import physics.Coordinate;
 import physics.Vector;
@@ -24,15 +26,18 @@ import world.entities.Entity;
  */
 public class Gun extends Weapon{
     
-    private double fireRate = 5;
+    private double fireRate;
     private double counter = 0.9/fireRate;
+    private int ammoCount = -1;
+    private final int MAX_AMMO;
     
     public Gun(double rate){
         fireRate = rate;
+        MAX_AMMO = -1;
     }
     
     public Gun(){
-        
+        this(5);
     }
     
     @Override
@@ -49,6 +54,9 @@ public class Gun extends Weapon{
 
     @Override
     protected void execute(double time, Entity user, Object... params){
+        //If 0 ammo, return. Negative ammo count is meant to represent infinite ammo.
+        if(ammoCount == 0)
+            return;
         
         Vector dir = new Vector(1,((Creature) user).faceXZ(), ((Creature) user).faceY());
         
@@ -62,6 +70,8 @@ public class Gun extends Weapon{
         WorldManager.getWorld().getEntities().add(new Bullet(start, new Vector(dir, 375)));
         
         counter = 0;
+        //Prevents highly unlikely overflow issues.
+        ammoCount = Math.max(ammoCount-1, -1);
     }
 
     @Override
@@ -85,9 +95,30 @@ public class Gun extends Weapon{
         g.drawLine(centX, centY-rad, centX, centY+rad);
         
         
+        
+        
     }
         
-    
+    public int ammoLeft(){
+        return ammoCount;
+    }
+
+    @Override
+    public void drawInterface(Graphics g) {
+        
+        int wid = Interface.getInterface().getWidth();
+        int hei = Interface.getInterface().getHeight();
+        
+        g.setColor(Color.BLACK);
+        g.fillRect(150, hei-162, 10, 37);
+        g.fillRect(100, hei-160, 65, 15);
+        
+        if(ammoCount >= 0){
+            String counter = ammoCount + " / " + MAX_AMMO;
+            g.setFont(new Font("Courier New", Font.PLAIN, 30));
+            g.drawString(counter, 80, hei - 80);
+        }
+    }
     
     
 }

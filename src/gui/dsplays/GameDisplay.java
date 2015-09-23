@@ -51,9 +51,9 @@ public class GameDisplay extends Display{
         int cells = 10;
         double width = 1;
         
-        for(double i = -cells + 0.5; i < cells+1; i++){
-            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells - 0.5)*width), new Coordinate(X+i*width,0, Z+(cells - 0.5)*width));
-            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X-(cells-0.5)*width,0, Z+i*width), new Coordinate(X+(cells-0.5)*width,0, Z+i*width));
+        for(double i = -cells - 0.5; i < cells+1; i++){
+            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells + 0.5)*width), new Coordinate(X+i*width,0, Z+(cells + 0.5)*width));
+            Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X-(cells+0.5)*width,0, Z+i*width), new Coordinate(X+(cells+0.5)*width,0, Z+i*width));
         }
         
         for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++){
@@ -64,13 +64,21 @@ public class GameDisplay extends Display{
         
         p.getWeapon().drawPerspective(g);
         
+        //Draws speed charging tint
+        int stretch = (int)(0.1*Math.sqrt(interf.getWidth()*interf.getHeight())*(p.getVelocity().getMagnitudeXZ()/p.getSpeedLimit()));
+        g2.setColor(new Color(255,255,0,(int)(128*p.getVelocity().getMagnitudeXZ()/p.getSpeedLimit())));
+        g2.fillRect(0, 0, stretch, interf.getHeight());
+        g2.fillRect(interf.getWidth()-stretch, 0, stretch, interf.getHeight());
+        g2.fillRect(stretch, 0, interf.getWidth()-2*stretch, stretch);
+        g2.fillRect(stretch, interf.getHeight()-stretch, interf.getWidth()-2*stretch, stretch);
+        
         double healthLost = p.maxHealth() - p.getHealth();
         
         g2.setColor(new Color(255,0,0,(int)(192 * (1 - p.getHealth()/p.maxHealth()))));
         g2.fillRect((int)healthLost, (int)healthLost, interf.getFrame().getContentPane().getWidth()-2*(int)healthLost+1, interf.getFrame().getContentPane().getHeight()-2*(int)healthLost+1);
         
         
-        
+        //Draws blood screen
         for(int i = 0; i < healthLost; i++){
             Color col = new Color(255,0,0,(int)(255 - 63 * Math.pow(i/p.maxHealth(),0.5)));
             g2.setColor(col);
@@ -99,6 +107,9 @@ public class GameDisplay extends Display{
         g2.drawString("Perceived Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
         g2.drawString("Speed Charge: " + (((int)(Controller.getPlayer().getSpeedCharge()*100)) / 100.0) + " Flux Units", 10, 90);
         
+        p.getWeapon().drawInterface(g2);
+        
+        g2.setColor(Color.BLACK);
         
         double countdown = Scoreboard.timer();
         if(countdown > 0){

@@ -25,5 +25,5 @@ public abstract class Weapon {
     public abstract boolean canUse(double time, Entity user, Object... params);
     protected abstract void execute(double time, Entity user, Object... params);
     public abstract void drawPerspective(Graphics g);
-    
+    public abstract void drawInterface(Graphics g);
 }

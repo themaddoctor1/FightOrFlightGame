@@ -32,6 +32,8 @@ public class World {
                     
         }
         
+        
+        
         //Removes null and dead entities
         for(int i = entities.size()-1; i >= 0; i--){
             Entity e = entities.get(i);
@@ -77,7 +79,6 @@ public class World {
     }
     
     public void collisionPhysics(Entity a, Entity b, double time){
-        
         double dist = Coordinate.relativeDistance(a.getPosition(), b.getPosition())/0.5;
         if(dist < a.getSize()+b.getSize()){
             //A direction along which the entities should be moved

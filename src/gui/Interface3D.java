@@ -25,7 +25,7 @@ import world.entities.creatures.Player;
 public class Interface3D extends Interface {
     
     //Pixels per radian
-    protected double PPR = 400;
+    protected double PPR = 600;
     
     protected Interface3D(String name){
         this(name,1200,900);

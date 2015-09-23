@@ -163,7 +163,7 @@ public class Controller {
             }
             double rotSpeed = 2 * time;
 
-            double sensitivity = 15;
+            double sensitivity = 12;
 
             double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Interface3D.getInterface3D().getCenterX())/Interface3D.getInterface3D().getPixelsPerRadian();
             double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Interface3D.getInterface3D().getCenterY())/Interface3D.getInterface3D().getPixelsPerRadian();

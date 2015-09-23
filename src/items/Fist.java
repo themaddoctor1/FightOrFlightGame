@@ -6,6 +6,7 @@
 package items;
 
 import gui.Camera;
+import gui.Interface;
 import gui.shapes.Polygon3D;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -88,6 +89,21 @@ public class Fist extends Weapon{
         a = new Coordinate(0.6+1 * Math.sin(Math.max(0, epoch/PUNCH_TIME)*Math.PI),0,-0.2);
         Polygon3D.drawCurvedLine(g, c, 5, a, b);
         
+        
+    }
+
+    @Override
+    public void drawInterface(Graphics g) {
+        
+        int hei = Interface.getInterface().getHeight();
+        double charge = (1-epoch/PUNCH_TIME);
+        int MAX_WIDTH = 200;
+        int width = (int)(MAX_WIDTH * charge);
+        g.setColor(Color.BLACK);
+        g.fillRect(79, hei-121, MAX_WIDTH+2, 32);
+        Color c = new Color((int)Math.min(255, Math.max(510.0-width*765.0/MAX_WIDTH, 0)), (int) Math.max(0, Math.min(255, -255+width*765.0/MAX_WIDTH)), 0);
+        g.setColor(c);
+        g.fillRect(80, hei-120, width, 30);
         
     }
     

@@ -21,28 +21,31 @@ public class HostileSpeedster extends Speedster{
     public HostileSpeedster(Coordinate pos){
         super(pos,100);
         weapon = new Fist(1, 1);
+        speedCharge = Math.cbrt(Controller.getPlayer().speedCharge);
     }
 
     @Override
     protected void cycle(double time) {
         
+        
         double perceivedTime = time * getSpeedWarp();
         
         super.cycle(time);
-        
         if(getPosition().Y() <= getSize()){
             Vector acc = new Vector(0,0,0);
             
             double dist = Coordinate.relativeDistance(getPosition(), Controller.getPlayer().getPosition());
             
+            if(getVelocity().getMagnitude() == 0){
+                velocity.addVectorToThis(new Vector(new Vector(getPosition(), Controller.getPlayer().getPosition()).unitVector(), 0.01));
+            }
+            
             if(dist < 0.9){
                 acc = new Vector(getVelocity(), -perceivedTime * getAcceleration() * (0.9-dist));
-            } else if(dist < 100){
+            } else {
                 acc = new Vector(1, faceXZ(), faceY());
                 acc.addVectorToThis(new Vector(new Vector(velocity, -1).unitVector(), 0.5));
                 acc = new Vector(acc.unitVector(), getAcceleration() * perceivedTime);
-            } else if(getVelocity().getMagnitude() > 0){
-                acc = new Vector(getVelocity(), -perceivedTime * getAcceleration());
             }
             
             acc.multiplyMagnitude(Math.pow(2 - Vector.cosOfAngleBetween(acc, getVelocity()),1.5));
@@ -54,6 +57,8 @@ public class HostileSpeedster extends Speedster{
                 
             weapon.use(time, this, Controller.getPlayer());
         }
+        
+        
     }
 
     @Override
