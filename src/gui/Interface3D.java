@@ -6,17 +6,10 @@
 
 package gui;
 
-import gui.dsplays.GameDisplay;
-import gui.shapes.Polygon3D;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import gui.dsplays.*;
+import gui.shapes.*;
+import java.awt.*;
 import javax.swing.JFrame;
-import physics.Coordinate;
-import world.WorldManager;
-import world.entities.Entity;
-import world.entities.creatures.Player;
 
 /**
  *
@@ -37,9 +30,11 @@ public class Interface3D extends Interface {
     
     @Override
     public void paint(Graphics g){
-        
-        display.draw(g);
-        
+        try {
+            display.draw(g);
+        } catch(Exception e){
+            
+        }
         /*
         //Draws a cursor
         g.drawLine(mouseX, mouseY, mouseX+9, mouseY+12);

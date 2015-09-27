@@ -65,8 +65,9 @@ public class GameDisplay extends Display{
             
         }
         */
-        double dayLength = 300;
-        double timeOfDay = 2*Math.PI*((System.nanoTime()/Math.pow(10,9))%(dayLength))/dayLength;
+        double dayLength = 90;
+        double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
+        System.out.println(WorldManager.getTime());
         
         if(false)
             timeOfDay = Math.PI/4;
@@ -74,7 +75,7 @@ public class GameDisplay extends Display{
         double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
         
         Color sky = new Color((int) (180*multiplier), (int) (180*multiplier), (int) (255*multiplier));
-        Color ground = new Color(77, 120, 0);
+        Color ground = new Color((int)(77*(((0.2+multiplier)/1.2))), (int)(120*(((0.2+multiplier)/1.2))), 0);
         
         int groundWidth = Math.abs((int)(-2*interf.getCenterX()/Math.sin(c.getY())));
         
@@ -164,9 +165,6 @@ public class GameDisplay extends Display{
         g2.drawString("Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
         g2.drawString("Perceived Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
         g2.drawString("Speed Charge: " + (((int)(Controller.getPlayer().getSpeedCharge()*100)) / 100.0) + " Flux Units", 10, 90);
-        
-        g2.setColor(new Color(255,255,255,128));
-        g2.fillOval(-360,interf.getHeight()-300, 720, 600);
         
         p.getWeapon().drawInterface(g2);
         

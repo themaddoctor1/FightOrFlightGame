@@ -19,6 +19,10 @@ public class WorldManager {
     
     private static long timeChecked = System.nanoTime();
     
+    private static double time = 0;
+    
+    public static double getTime(){ return time; }
+    
     public static void setWorld(World w){
         world = w;
         confirmCheck();
@@ -33,8 +37,12 @@ public class WorldManager {
         executePhysics(confirmCheck());
     }
     
-    public static void executePhysics(double time){
-        world.executePhysics(time / Controller.getPlayer().getSpeedWarp());
+    public static void executePhysics(double t){
+        
+        double tau = t / Controller.getPlayer().getSpeedWarp();
+        
+        world.executePhysics(tau);
+        time += tau;
     }
     
     private static double confirmCheck(){

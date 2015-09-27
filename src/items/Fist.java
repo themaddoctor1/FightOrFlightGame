@@ -102,13 +102,14 @@ public class Fist extends Weapon{
         int width = (int)(MAX_WIDTH * charge);
         g.setColor(Color.BLACK);
         
-        g.setFont(new Font("Courier New", Font.PLAIN, 18));
-        g.drawString("Fist", 40, hei-40);
-        
         g.fillRect(39, hei-121, MAX_WIDTH+2, 32);
         Color c = new Color((int)Math.min(255, Math.max(510.0-width*765.0/MAX_WIDTH, 0)), (int) Math.max(0, Math.min(255, -255+width*765.0/MAX_WIDTH)), 0);
         g.setColor(c);
         g.fillRect(40, hei-120, width, 30);
+        
+        g.setFont(new Font("Courier New", Font.BOLD, 18));
+        g.setColor(new Color(24, 24, 255));
+        g.drawString("Fist", 40, hei-40);
         
     }
     

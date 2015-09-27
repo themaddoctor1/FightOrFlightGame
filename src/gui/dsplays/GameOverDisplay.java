@@ -46,10 +46,12 @@ public class GameOverDisplay extends Display{
         
         Graphics2D g2 = (Graphics2D) g;
         
+        Interface3D interf = Interface3D.getInterface3D();
+        
         double age = (System.nanoTime()-TIMESTAMP)/Math.pow(10, 9);
         
         if(age > 5){
-            Interface3D.getInterface3D().setDisplay(new MainMenuDisplay());
+            interf.setDisplay(new MainMenuDisplay());
             Scoreboard.endGame();
         }
         
@@ -67,8 +69,36 @@ public class GameOverDisplay extends Display{
                 -Math.PI/2.0
         );
         
+        double dayLength = 90;
+        double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
+        System.out.println(WorldManager.getTime());
+        
+        if(false)
+            timeOfDay = Math.PI/4;
+        
+        double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
+        
+        Color sky = new Color((int) (180*multiplier), (int) (180*multiplier), (int) (255*multiplier));
+        Color ground = new Color((int)(77*(((0.2+multiplier)/1.2))), (int)(120*(((0.2+multiplier)/1.2))), 0);
+        
+        int groundWidth = Math.abs((int)(-2*interf.getCenterX()/Math.sin(c.getY())));
+        
+        if(c.getY() < 0){
+            g2.setColor(sky);
+            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+            g2.setColor(ground);
+            g2.fillOval((int)(interf.getCenterX() * (1 + 1/Math.sin(c.getY()))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian()), groundWidth, groundWidth);
+        } else if(c.getY() > 0){
+            g2.setColor(ground);
+            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+            g2.setColor(sky);
+            g2.fillOval((int)(interf.getCenterX() * (1 - 1/Math.sin(c.getY()))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian()-groundWidth), groundWidth, groundWidth);
+        }
+        
         int cells = 10;
         double width = 1;
+        
+        g2.setColor(Color.BLACK);
         
         for(double i = -cells - 0.5; i < cells+1; i++){
             Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells + 0.5)*width), new Coordinate(X+i*width,0, Z+(cells + 0.5)*width));
@@ -84,13 +114,13 @@ public class GameOverDisplay extends Display{
         g2.setFont(new Font("Courier New", Font.PLAIN, 36));
         g2.drawString(
                 "You survived until wave " + (Scoreboard.wave()), 
-                (int)(Interface3D.getInterface3D().getCenterX()-280-12*Math.log10(Scoreboard.wave())), 
-                (int)(Interface3D.getInterface3D().getCenterY()*0.6));
+                (int)(interf.getCenterX()-280-12*Math.log10(Scoreboard.wave())), 
+                (int)(interf.getCenterY()*0.6));
         
         Polygon cursor = new Polygon();
-        cursor.addPoint(Interface3D.getInterface3D().mouseX(), Interface3D.getInterface3D().mouseY());
-        cursor.addPoint(Interface3D.getInterface3D().mouseX()+9, Interface3D.getInterface3D().mouseY()+12);
-        cursor.addPoint(Interface3D.getInterface3D().mouseX(), Interface3D.getInterface3D().mouseY()+15);
+        cursor.addPoint(interf.mouseX(), interf.mouseY());
+        cursor.addPoint(interf.mouseX()+9, interf.mouseY()+12);
+        cursor.addPoint(interf.mouseX(), interf.mouseY()+15);
         g2.setColor(Color.WHITE);
         g2.fill(cursor);
         g2.setColor(Color.BLACK);
