@@ -46,9 +46,9 @@ public class WorldManager {
     }
     
     private static double confirmCheck(){
-        double time = (getNanoTimeSinceLastCycle() / Math.pow(10,9));
+        double t = (getNanoTimeSinceLastCycle() / Math.pow(10,9));
         timeChecked = System.nanoTime();
-        return time;
+        return t;
     }
     
     private static long getNanoTimeSinceLastCycle(){
@@ -73,7 +73,8 @@ public class WorldManager {
     */
     private static class WorldThread extends Thread {
         private static boolean run = false;
-
+        private static int FPS = 1000;
+        
         private WorldThread(){}
         
         @Override
@@ -82,6 +83,10 @@ public class WorldManager {
             confirmCheck();
             
             while(run){
+                while(System.nanoTime() - timeChecked < 1000000000.0/FPS){
+                    
+                }
+                
                 double time = confirmCheck();
                 executePhysics(time);
                 Scoreboard.cycle(time);

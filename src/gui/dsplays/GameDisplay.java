@@ -30,7 +30,7 @@ import world.entities.creatures.Player;
  * @author Christopher Hittner
  */
 public class GameDisplay extends Display{
-
+    
     @Override
     public void draw(Graphics g) {
         Interface3D interf = Interface3D.getInterface3D();
@@ -67,7 +67,6 @@ public class GameDisplay extends Display{
         */
         double dayLength = 90;
         double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
-        System.out.println(WorldManager.getTime());
         
         if(false)
             timeOfDay = Math.PI/4;
@@ -79,18 +78,19 @@ public class GameDisplay extends Display{
         
         int groundWidth = Math.abs((int)(-2*interf.getCenterX()/Math.sin(c.getY())));
         
-        if(c.getY() < 0){
+        //Draws the background
+        if(c.getY() < 0)
             g2.setColor(sky);
-            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+        else
             g2.setColor(ground);
-            g2.fillOval((int)(interf.getCenterX() * (1 + 1/Math.sin(c.getY()))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian()), groundWidth, groundWidth);
-        } else if(c.getY() > 0){
-            g2.setColor(ground);
-            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
-            g2.setColor(sky);
-            g2.fillOval((int)(interf.getCenterX() * (1 - 1/Math.sin(c.getY()))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian()-groundWidth), groundWidth, groundWidth);
-        }
+        g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
         
+        //Draws the "foreground"
+        if(c.getY() < 0)
+            g2.setColor(ground);
+        else
+            g2.setColor(sky);
+        g2.fillOval((int)(interf.getCenterX() * (1 - 1/Math.abs(Math.sin(c.getY())))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian() - groundWidth*(1+Math.signum(c.getY()))/2.0), groundWidth, groundWidth);
         
         double sunRadius = interf.getPixelsPerRadian()*Math.min(Math.abs(Math.asin(Math.sin(timeOfDay))), 10*Math.asin(696300.0/149597870));
         
@@ -106,14 +106,24 @@ public class GameDisplay extends Display{
         
         g2.setColor(Color.BLACK);
         
-        int cells = 10;
+        if(c.getPosition().Y() > 0){
+            int shadowY = (int)(interf.getCenterY() + interf.getPixelsPerRadian()*(c.getY()+Math.PI/2.0));
+            double radius = Math.atan(0.4/c.getPosition().Y()) * interf.getPixelsPerRadian();
+            g2.setColor(new Color((int)(16*multiplier),(int)(16*multiplier),(int)(16*multiplier), 192));
+            g2.fillOval((int)(interf.getCenterX()-radius), (int)(shadowY-radius), (int)(2*radius), (int)(2*radius));
+        }
+        
+        g2.setColor(Color.BLACK);
+        
+        /*
+        int cells = 5;
         double width = 1;
         
         for(double i = -cells - 0.5; i < cells+1; i++){
             Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells + 0.5)*width), new Coordinate(X+i*width,0, Z+(cells + 0.5)*width));
             Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X-(cells+0.5)*width,0, Z+i*width), new Coordinate(X+(cells+0.5)*width,0, Z+i*width));
         }
-        
+        */
         for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++){
             Entity e = WorldManager.getWorld().getEntities().get(i);
             if(!e.equals(Controller.getPlayer()))
@@ -162,9 +172,9 @@ public class GameDisplay extends Display{
         
         g2.setFont(new Font("Courier New", Font.PLAIN, 12));
         g2.setColor(Color.BLACK);
-        g2.drawString("Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
-        g2.drawString("Perceived Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
-        g2.drawString("Speed Charge: " + (((int)(Controller.getPlayer().getSpeedCharge()*100)) / 100.0) + " Flux Units", 10, 90);
+        g2.drawString("Speed: " + (((int)(p.getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
+        g2.drawString("Perceived Speed: " + (((int)(p.getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
+        g2.drawString("Charge Capacity: " + (((int)(p.getChargeCapacity()*100)) / 100.0) + " Flux Units", 10, 90);
         
         p.getWeapon().drawInterface(g2);
         

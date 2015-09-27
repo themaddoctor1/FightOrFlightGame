@@ -136,17 +136,21 @@ public class Controller {
 
             double time = (System.nanoTime() - lastCheck)/Math.pow(10,9);
             lastCheck += time * Math.pow(10,9);
-
+            
 
             Vector acc = new Vector(0,0,0);
             Camera c = getCamera();
 
+            //If player is touching the ground
             if(currentPlayer.getPosition().Y() <= currentPlayer.getSize()){
+                //Jump
                 if(getState(8)){
                     currentPlayer.getVelocity().addVectorToThis(new Vector(4 - currentPlayer.getVelocity().getMagnitudeY(),0, Math.PI/2.0));
+                //Brakes
                 } else if((getState(10)||getState(11)) && currentPlayer.getVelocity().getMagnitude() > 0){
                     currentPlayer.getVelocity().addVectorToThis(new Vector(currentPlayer.getVelocity().unitVector(), -Math.min(time * currentPlayer.getAcceleration() *4, currentPlayer.getVelocity().getMagnitude())));
-                }else if(currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
+                //Movement
+                } else if(currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
                     for(int i = 0; i < 4; i++)
                         if(getState(i) || getState(i+4))
                             acc.addVectorToThis(new Vector(1 , c.getXZ() + i * 0.5 * Math.PI , 0));

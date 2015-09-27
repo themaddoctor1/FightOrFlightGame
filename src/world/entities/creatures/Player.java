@@ -19,7 +19,7 @@ public class Player extends Speedster{
     public Player() {
         super(100);
         weapon = new Fist(10,2);
-        this.speedCharge = 0;
+        this.chargeCapacity = Math.pow(10,-4);
     }
     
     

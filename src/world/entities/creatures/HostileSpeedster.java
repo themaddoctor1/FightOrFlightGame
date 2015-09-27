@@ -21,7 +21,7 @@ public class HostileSpeedster extends Speedster{
     public HostileSpeedster(Coordinate pos){
         super(pos,100);
         weapon = new Fist(1, 1);
-        speedCharge = Math.cbrt(Controller.getPlayer().speedCharge);
+        chargeCapacity = Math.cbrt(Controller.getPlayer().chargeCapacity);
     }
 
     @Override

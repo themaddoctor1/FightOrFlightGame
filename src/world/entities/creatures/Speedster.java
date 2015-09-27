@@ -16,7 +16,7 @@ import physics.Vector;
  */
 public abstract class Speedster extends Humanoid{
     
-    protected double speedCharge = 25;
+    protected double chargeCapacity = 25;
     private double regenTimer = 5;
     
     public Speedster(double hp) {
@@ -28,22 +28,22 @@ public abstract class Speedster extends Humanoid{
     }
     
     public double getSpeedWarp(){
-        if(getHealth() > 0)
-            return Math.sqrt(1 + Math.pow(speedCharge * velocity.getMagnitude() / ((5*(speedCharge+1))) , 2));
+        if(getHealth() > 0 && chargeCapacity != 0)
+            return Math.sqrt(1 + Math.pow(chargeCapacity * velocity.getMagnitude() / ((5*(chargeCapacity+1))) , 2));
         else
             return 1;
     }
     
-    public double getSpeedCharge(){ return speedCharge; }
+    public double getChargeCapacity(){ return chargeCapacity; }
     
     
     public double getAcceleration(){
         
-        return (50 - 45/Math.pow(speedCharge+1,1/10)) * Math.cbrt((1 + Math.pow(getSpeedCharge(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),2)));
+        return (50 - 45/Math.pow(chargeCapacity+1,1/10)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),2)));
     }
     
     public double getSpeedLimit(){
-        return (100 - 97/Math.pow(speedCharge+1,1)) * (Math.log10(speedCharge + 10));
+        return (100 - 97/Math.pow(chargeCapacity+1,1)) * (Math.log10(chargeCapacity + 10));
     }
     
     
@@ -56,17 +56,17 @@ public abstract class Speedster extends Humanoid{
         super.cycle(perceivedTime);
         
         if(getHealth() > 0 && regenTimer == 5)
-            modHealth(Math.sqrt(4 + Math.pow(speedCharge, 2)) * perceivedTime);
+            modHealth(Math.sqrt(4 + Math.pow(chargeCapacity, 2)) * perceivedTime);
         
         //Kinetic Impulse is KE / m (I'm not certain of whether or not this is real or not)
         if(velocity.getMagnitude() > 0){
             double KI = Math.pow(velocity.getMagnitude(),2)/2.0;
 
-            double chargeDerivative = Math.pow(10, -2.5)/(Math.pow(speedCharge+1,6));
+            double chargeDerivative = Math.pow(10, -2.5)/(Math.pow(chargeCapacity+1,6));
             
             double change = chargeDerivative * KI * perceivedTime;
             
-            speedCharge += change;
+            chargeCapacity += change;
             
             double magnitude = (0.008*Math.pow(velocity.getMagnitude(), 2));
             if(getPosition().Y() <= getSize())
