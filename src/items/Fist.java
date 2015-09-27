@@ -9,6 +9,7 @@ import gui.Camera;
 import gui.Interface;
 import gui.shapes.Polygon3D;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import physics.Coordinate;
 import physics.Vector;
@@ -100,10 +101,14 @@ public class Fist extends Weapon{
         int MAX_WIDTH = 200;
         int width = (int)(MAX_WIDTH * charge);
         g.setColor(Color.BLACK);
-        g.fillRect(79, hei-121, MAX_WIDTH+2, 32);
+        
+        g.setFont(new Font("Courier New", Font.PLAIN, 18));
+        g.drawString("Fist", 40, hei-40);
+        
+        g.fillRect(39, hei-121, MAX_WIDTH+2, 32);
         Color c = new Color((int)Math.min(255, Math.max(510.0-width*765.0/MAX_WIDTH, 0)), (int) Math.max(0, Math.min(255, -255+width*765.0/MAX_WIDTH)), 0);
         g.setColor(c);
-        g.fillRect(80, hei-120, width, 30);
+        g.fillRect(40, hei-120, width, 30);
         
     }
     

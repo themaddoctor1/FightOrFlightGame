@@ -10,6 +10,7 @@ import java.awt.Polygon;
 import java.util.ArrayList;
 import physics.Coordinate;
 import gui.Camera;
+import gui.Interface3D;
 
 /**
  *
@@ -100,6 +101,11 @@ public class Polygon3D implements Shape3D{
     }
     
     public static void drawCurvedLine(Graphics g, Camera c, double divisions, Coordinate start, Coordinate finish){
+        
+        int widthOfPI = (int) (Math.PI * Interface3D.getInterface3D().getPixelsPerRadian());
+        int centX = Interface3D.getInterface3D().getCenterX();
+        int centY = Interface3D.getInterface3D().getCenterY();
+        
         for(int i = 0; i < divisions; i++){
             Coordinate a = new Coordinate(
                       start.X() + (finish.X() - start.X())*i/(divisions)
@@ -115,6 +121,22 @@ public class Polygon3D implements Shape3D{
             
             int[] A = c.getPlanarCoordinate(a);
             int[] B = c.getPlanarCoordinate(b);
+            
+            boolean badX = Math.signum(A[0]-centX) != Math.signum(B[0]-centX) && (Math.abs(A[0]-B[0]) > widthOfPI);
+            boolean badY = Math.signum(A[1]-centY) != Math.signum(B[1]-centY) && (Math.abs(A[1]-B[1]) > widthOfPI);
+            
+            if(badX){
+                if(A[0] < B[0])
+                    A[0] += 2*widthOfPI;
+                else
+                    B[0] += 2*widthOfPI;
+            }
+            if(badY){
+                if(A[1] < B[1])
+                    A[1] += 2*widthOfPI;
+                else
+                    B[1] += 2*widthOfPI;
+            }
             
             //camera.drawCoordinate(g, a);
             ((Graphics2D)g).drawLine(A[0], A[1], B[0], B[1]);

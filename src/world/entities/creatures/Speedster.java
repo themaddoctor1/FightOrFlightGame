@@ -16,6 +16,8 @@ import physics.Vector;
  */
 public abstract class Speedster extends Humanoid{
     
+    protected double speedCharge = 25;
+    private double regenTimer = 5;
     
     public Speedster(double hp) {
         super(1, hp);
@@ -24,9 +26,6 @@ public abstract class Speedster extends Humanoid{
     public Speedster(Coordinate pos, double hp) {
         super(pos, 1, hp);
     }
-    
-    protected double speedCharge = 25;
-    private double regenTimer = 5;
     
     public double getSpeedWarp(){
         if(getHealth() > 0)

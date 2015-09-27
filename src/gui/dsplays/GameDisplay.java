@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import main.Scoreboard;
 import physics.Coordinate;
+import physics.Vector;
 import world.WorldManager;
 import world.entities.Entity;
 import world.entities.creatures.Player;
@@ -48,6 +49,62 @@ public class GameDisplay extends Display{
         c = new Camera(new Coordinate(c.getPosition().X(), c.getPosition().Y() + p.getSize() * 0.8, c.getPosition().Z()), c.getXZ(), c.getY());
         
         
+        //Draws ground
+        /*
+        double sightWidth = Math.max(Math.PI, (interf.getCenterX()/interf.getPixelsPerRadian()));
+        g2.setColor(new Color(120, 77, 0));
+        for(int i = -5; i < 5; i++){
+            double alpha = sightWidth*(i)/5.0 + c.getXZ() - 0.01 ;
+            double beta = alpha+sightWidth/5.0 + 0.02;
+            Coordinate[] slices = {
+                new Coordinate(X,0,Z),
+                new Coordinate(X+Math.pow(10,5)*Math.cos(alpha), 0, Z+Math.pow(10,5)*Math.sin(alpha)),
+                new Coordinate(Z+Math.pow(10,5)*Math.cos(beta), 0, Z+Math.pow(10,5)*Math.sin(beta))
+            };
+            new Polygon3D(slices, 5).fillShape(g, c);
+            
+        }
+        */
+        double dayLength = 300;
+        double timeOfDay = 2*Math.PI*((System.nanoTime()/Math.pow(10,9))%(dayLength))/dayLength;
+        
+        if(false)
+            timeOfDay = Math.PI/4;
+        
+        double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
+        
+        Color sky = new Color((int) (180*multiplier), (int) (180*multiplier), (int) (255*multiplier));
+        Color ground = new Color(77, 120, 0);
+        
+        int groundWidth = Math.abs((int)(-2*interf.getCenterX()/Math.sin(c.getY())));
+        
+        if(c.getY() < 0){
+            g2.setColor(sky);
+            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+            g2.setColor(ground);
+            g2.fillOval((int)(interf.getCenterX() * (1 + 1/Math.sin(c.getY()))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian()), groundWidth, groundWidth);
+        } else if(c.getY() > 0){
+            g2.setColor(ground);
+            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+            g2.setColor(sky);
+            g2.fillOval((int)(interf.getCenterX() * (1 - 1/Math.sin(c.getY()))), (int)(interf.getCenterY() + c.getY() * interf.getPixelsPerRadian()-groundWidth), groundWidth, groundWidth);
+        }
+        
+        
+        double sunRadius = interf.getPixelsPerRadian()*Math.min(Math.abs(Math.asin(Math.sin(timeOfDay))), 10*Math.asin(696300.0/149597870));
+        
+        Coordinate sun = new Coordinate(c.getPosition().X(), c.getPosition().Y(), c.getPosition().Z());
+        sun.addVector(new Vector(100, 0*Math.PI*(1+Math.signum(Math.sin(timeOfDay)))/2.0, timeOfDay + Math.PI * (1-Math.signum(Math.sin(timeOfDay)))/2.0));
+        int[] sunPos = c.getPlanarCoordinate(sun);
+        
+        if(timeOfDay < Math.PI)
+            g2.setColor(new Color(255,255,128));
+        else
+            g2.setColor(Color.WHITE);
+        g2.fillOval((int)(sunPos[0]-sunRadius), (int)(sunPos[1]-sunRadius), (int)(2*sunRadius), (int)(2*sunRadius));
+        
+        g2.setColor(Color.BLACK);
+        
         int cells = 10;
         double width = 1;
         
@@ -64,6 +121,7 @@ public class GameDisplay extends Display{
         
         p.getWeapon().drawPerspective(g);
         
+        /*
         //Draws speed charging tint
         int stretch = (int)(0.1*Math.sqrt(interf.getWidth()*interf.getHeight())*(p.getVelocity().getMagnitudeXZ()/p.getSpeedLimit()));
         g2.setColor(new Color(255,255,0,(int)(128*p.getVelocity().getMagnitudeXZ()/p.getSpeedLimit())));
@@ -71,7 +129,7 @@ public class GameDisplay extends Display{
         g2.fillRect(interf.getWidth()-stretch, 0, stretch, interf.getHeight());
         g2.fillRect(stretch, 0, interf.getWidth()-2*stretch, stretch);
         g2.fillRect(stretch, interf.getHeight()-stretch, interf.getWidth()-2*stretch, stretch);
-        
+        */
         double healthLost = p.maxHealth() - p.getHealth();
         
         g2.setColor(new Color(255,0,0,(int)(192 * (1 - p.getHealth()/p.maxHealth()))));
@@ -107,16 +165,25 @@ public class GameDisplay extends Display{
         g2.drawString("Perceived Speed: " + (((int)(Controller.getPlayer().getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
         g2.drawString("Speed Charge: " + (((int)(Controller.getPlayer().getSpeedCharge()*100)) / 100.0) + " Flux Units", 10, 90);
         
+        g2.setColor(new Color(255,255,255,128));
+        g2.fillOval(-360,interf.getHeight()-300, 720, 600);
+        
         p.getWeapon().drawInterface(g2);
         
         g2.setColor(Color.BLACK);
         
         double countdown = Scoreboard.timer();
         if(countdown > 0){
+            g2.setColor(new Color(255,255,255,128));
+            g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
+            g2.setColor(Color.BLACK);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
             g2.drawString("Round start in:", interf.getCenterX()-160, 30);
             g2.drawString("" + (int)(1+countdown), interf.getCenterX()-9, 80);
         } else {
+            g2.setColor(new Color(255,255,255,128));
+            g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
+            g2.setColor(Color.BLACK);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
             g2.drawString("Wave", interf.getCenterX()-40, 30);
             g2.drawString("" + (Scoreboard.wave()), interf.getCenterX()-9-12*(int)(Math.log10(Scoreboard.wave())), 80);
