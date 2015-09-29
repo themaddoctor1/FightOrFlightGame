@@ -63,7 +63,6 @@ public class GameOverDisplay extends Display{
         
         double dayLength = 90;
         double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
-        System.out.println(WorldManager.getTime());
         
         if(!Properties.DAY_NIGHT_CYCLE)
             timeOfDay = Math.PI/4;

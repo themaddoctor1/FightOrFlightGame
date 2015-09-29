@@ -13,6 +13,7 @@ public class Properties {
     public static final boolean
             DAY_NIGHT_CYCLE = false,
             REQUIRE_SPEED_CHARGE = true,
-            USE_SPEED_LIMIT = true;
+            USE_SPEED_LIMIT = true,
+            CHARGE_CAUSES_WARP = false;
     ;
 }
