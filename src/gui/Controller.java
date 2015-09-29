@@ -14,6 +14,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import main.Properties;
 import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
@@ -150,7 +151,7 @@ public class Controller {
                 } else if((getState(10)||getState(11)) && currentPlayer.getVelocity().getMagnitude() > 0){
                     currentPlayer.getVelocity().addVectorToThis(new Vector(currentPlayer.getVelocity().unitVector(), -Math.min(time * currentPlayer.getAcceleration() *4, currentPlayer.getVelocity().getMagnitude())));
                 //Movement
-                } else if(currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
+                } else if(!Properties.USE_SPEED_LIMIT || currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
                     for(int i = 0; i < 4; i++)
                         if(getState(i) || getState(i+4))
                             acc.addVectorToThis(new Vector(1 , c.getXZ() + i * 0.5 * Math.PI , 0));

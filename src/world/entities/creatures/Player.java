@@ -34,5 +34,5 @@ public class Player extends Speedster{
     }
 
 
-    
+ 
 }

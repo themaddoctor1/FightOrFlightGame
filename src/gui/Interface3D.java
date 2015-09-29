@@ -45,7 +45,7 @@ public class Interface3D extends Interface {
     
     
     public static void initialize(String name){
-        gui = new Interface3D(name);
+        gui = new Interface3D(name, Toolkit.getDefaultToolkit().getScreenSize().width, Toolkit.getDefaultToolkit().getScreenSize().height);
     }
     
     public static void initialize(String name, int width, int height){

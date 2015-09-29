@@ -18,6 +18,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import main.Properties;
 import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
@@ -68,7 +69,7 @@ public class GameDisplay extends Display{
         double dayLength = 90;
         double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
         
-        if(false)
+        if(!Properties.DAY_NIGHT_CYCLE)
             timeOfDay = Math.PI/4;
         
         double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
@@ -175,6 +176,7 @@ public class GameDisplay extends Display{
         g2.drawString("Speed: " + (((int)(p.getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
         g2.drawString("Perceived Speed: " + (((int)(p.getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
         g2.drawString("Charge Capacity: " + (((int)(p.getChargeCapacity()*100)) / 100.0) + " Flux Units", 10, 90);
+        g2.drawString("Charge: " + (p.getCharge()) + " Flux Units", 10, 105);
         
         p.getWeapon().drawInterface(g2);
         

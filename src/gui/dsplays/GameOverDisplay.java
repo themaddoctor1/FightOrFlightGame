@@ -5,21 +5,13 @@
  */
 package gui.dsplays;
 
-import gui.Camera;
-import gui.Controller;
-import gui.Interface;
-import gui.Interface3D;
-import gui.dsplays.buttons.DisplayButton;
-import gui.dsplays.buttons.StartButton;
+import gui.*;
+import gui.dsplays.buttons.*;
 import gui.shapes.Polygon3D;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import main.Scoreboard;
+import java.awt.*;
+import java.awt.event.*;
+import main.*;
 import physics.Coordinate;
 import world.WorldManager;
 import world.entities.Entity;
@@ -73,7 +65,7 @@ public class GameOverDisplay extends Display{
         double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
         System.out.println(WorldManager.getTime());
         
-        if(false)
+        if(!Properties.DAY_NIGHT_CYCLE)
             timeOfDay = Math.PI/4;
         
         double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
