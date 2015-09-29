@@ -11,6 +11,7 @@ import gui.dsplays.GameOverDisplay;
 import gui.dsplays.MainMenuDisplay;
 import java.awt.AWTException;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -170,8 +171,8 @@ public class Controller {
 
             double sensitivity = 12;
 
-            double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Interface3D.getInterface3D().getCenterX())/Interface3D.getInterface3D().getPixelsPerRadian();
-            double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Interface3D.getInterface3D().getCenterY())/Interface3D.getInterface3D().getPixelsPerRadian();
+            double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Toolkit.getDefaultToolkit().getScreenSize().width/2)/Interface3D.getInterface3D().getPixelsPerRadian();
+            double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Toolkit.getDefaultToolkit().getScreenSize().height/2)/Interface3D.getInterface3D().getPixelsPerRadian();
 
             c.setDirection(new Vector(1,c.getXZ() - rotX, c.getY() - rotY));
 
@@ -180,7 +181,7 @@ public class Controller {
             try {
                 (new Robot()).mouseMove(
                         Interface3D.getInterface3D().getFrame().getContentPane().getWidth()/2+6,
-                        Interface3D.getInterface3D().getFrame().getContentPane().getHeight()/2+50
+                        Interface3D.getInterface3D().getFrame().getContentPane().getHeight()/2+41
                 );
             } catch (AWTException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
