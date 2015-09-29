@@ -180,8 +180,8 @@ public class Controller {
             //*
             try {
                 (new Robot()).mouseMove(
-                        Interface3D.getInterface3D().getFrame().getContentPane().getWidth()/2+6,
-                        Interface3D.getInterface3D().getFrame().getContentPane().getHeight()/2+41
+                        Toolkit.getDefaultToolkit().getScreenSize().width/2 + Interface3D.getInterface3D().getFrame().getInsets().left,
+                        Toolkit.getDefaultToolkit().getScreenSize().height/2 + Interface3D.getInterface3D().getFrame().getInsets().top
                 );
             } catch (AWTException ex) {
                 Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
