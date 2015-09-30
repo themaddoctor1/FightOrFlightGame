@@ -19,7 +19,8 @@ public abstract class Speedster extends Humanoid{
     
     protected double chargeCapacity = 25;
     protected double charge = 0;
-    private double regenTimer = 5;
+    private double healthRegenTimer = 5;
+    protected double speedChargeRegenTimer = 5;
     
     public Speedster(double hp) {
         super(1, hp);
@@ -33,7 +34,7 @@ public abstract class Speedster extends Humanoid{
         if(!Properties.REQUIRE_SPEED_CHARGE || (charge > 0) && getHealth() > 0 && chargeCapacity != 0){
             double chargeWarpCoefficient = 0;
             if(Properties.CHARGE_CAUSES_WARP) chargeWarpCoefficient = Math.pow(Math.pow(chargeCapacity, 2)*Math.sin(charge*Math.PI/2.0), 4);
-            return Math.sqrt(1 + Math.pow(chargeCapacity * velocity.getMagnitude() / ((5*(chargeCapacity+1))) , 2) + Math.pow(chargeCapacity*Math.sin(charge*Math.PI/2.0), 2) + chargeWarpCoefficient);
+                return Math.sqrt(1 + Math.pow(chargeCapacity * velocity.getMagnitude() / ((5*(chargeCapacity+1))) , 2) + Math.pow(chargeCapacity*Math.sin(charge*Math.PI/2.0), 2) + chargeWarpCoefficient);
         }else
             return 1;
     }
@@ -41,10 +42,13 @@ public abstract class Speedster extends Humanoid{
     public double getChargeCapacity(){ return chargeCapacity; }
     
     public double getCharge() { return charge; }
+    public double maxCharge(){
+        return Math.pow(1 + 10*(Math.max(Math.pow(chargeCapacity, 2), Math.sqrt(chargeCapacity))),2);
+    }
     
     public double getAcceleration(){
         if(!Properties.REQUIRE_SPEED_CHARGE || (charge > 0))
-            return (50 - 45/Math.pow(chargeCapacity+1,1/10)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),2*2)));
+            return (50 - 45/Math.pow(chargeCapacity+1,1/10)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),2)));
         return 5;
     }
     
@@ -59,17 +63,21 @@ public abstract class Speedster extends Humanoid{
     protected void cycle(double time) {
         
         double perceivedTime = time * getSpeedWarp();
-        regenTimer = Math.min(5, regenTimer + perceivedTime);
+        healthRegenTimer = Math.min(5, healthRegenTimer + perceivedTime);
         
         super.cycle(perceivedTime);
         
-        if(getHealth() > 0 && regenTimer == 5)
+        if(getHealth() > 0 && healthRegenTimer == 5)
             modHealth(Math.sqrt(4 + Math.pow(charge, 2)) * perceivedTime);
         
         
-        if(Properties.REQUIRE_SPEED_CHARGE)
-            charge += Math.sqrt(1+chargeCapacity)*perceivedTime*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
-        else
+        if(Properties.REQUIRE_SPEED_CHARGE){
+            double chargeIncrease = 2*Math.sqrt(1+chargeCapacity)*perceivedTime*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
+            if(speedChargeRegenTimer >= 2)
+                chargeIncrease *= Math.sqrt(1+Math.pow(charge,2));
+            charge += chargeIncrease;
+            speedChargeRegenTimer = Math.max(0, Math.min(speedChargeRegenTimer+perceivedTime, 2));
+        }else
             charge = chargeCapacity;
         
         //Kinetic Impulse is KE / m (I'm not certain of whether or not this is real or not)
@@ -92,15 +100,20 @@ public abstract class Speedster extends Humanoid{
             
             velocity.addVectorToThis(frictionForce);
         }
+        //Speedsters should get hurt if they go too fast
+        if(Properties.DAMAGE_FROM_OVERSPEED && velocity.getMagnitude() > getSpeedLimit()){
+            double dmg = (Math.pow(velocity.getMagnitude(), 2) - Math.pow(getSpeedLimit(), 2))/Math.pow(Math.PI+Math.pow(chargeCapacity,2),2) * perceivedTime;
+            modHealth(-dmg);
+        }
         
-        charge = Math.max(0, Math.min(charge, 1 + 10*Math.max(Math.pow(chargeCapacity, 2), Math.sqrt(chargeCapacity))));
+        charge = Math.max(0, Math.min(charge, maxCharge()));
         
     }
     
     @Override
     public void modHealth(double amt){
         if(amt < 0)
-            regenTimer = 0;
+            healthRegenTimer = 0;
         super.modHealth(amt);
     }
     

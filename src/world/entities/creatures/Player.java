@@ -17,13 +17,16 @@ import main.Properties;
  */
 public class Player extends Speedster{
     
-    
     public Player() {
         super(100);
-        weapon = new Fist(10,2);
+        weapon = 
+                //new Gun(2);
+                new Fist(10,2);
+        
         this.chargeCapacity = Math.pow(10,-4);
     }
     
+    @Override
     protected void cycle(double time){
         
         boolean accelerating = false;
@@ -31,7 +34,12 @@ public class Player extends Speedster{
             accelerating |= Interface3D.getInterface3D().getController().getState(i);
         
         if(accelerating && Properties.REQUIRE_SPEED_CHARGE){
-            double chargeDecrease = (time*getSpeedWarp())*Math.pow(10,3)*Math.log10(1+9*Math.pow(getChargeCapacity(),2)/(Math.pow(getChargeCapacity(),2)+10))*Math.min(Math.pow((velocity.getMagnitude()) / getSpeedLimit(), 3), Math.cbrt(velocity.getMagnitude()) / getSpeedLimit());
+            double chargeDecrease = 
+                    4*Math.sqrt(1+chargeCapacity)*time*getSpeedWarp()*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
+                    //(time*getSpeedWarp())*Math.pow(10,3)*Math.log10(1+10*Math.pow(getChargeCapacity(),2.5)/(Math.pow(getChargeCapacity(),2)+10)) * Math.max(Math.pow((velocity.getMagnitude()) / getSpeedLimit(), 3), Math.cbrt(velocity.getMagnitude()) / getSpeedLimit());
+            
+            if(speedChargeRegenTimer >= 2 && getVelocity().getMagnitude() > 4)
+                speedChargeRegenTimer = 0;
             
             charge -= chargeDecrease;
         }

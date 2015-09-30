@@ -27,8 +27,8 @@ public class World {
         //Runs an entity cycle
         for(int i = entities.size()-1; i >= 0; i--){
             try{
-            entities.get(i).execute(time);
-            } catch(NullPointerException npe){}
+                entities.get(i).execute(time);
+            } catch(Exception npe){}
                     
         }
         

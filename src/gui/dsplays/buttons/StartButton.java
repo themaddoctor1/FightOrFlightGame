@@ -5,13 +5,19 @@
  */
 package gui.dsplays.buttons;
 
+import gui.Controller;
 import gui.Interface;
 import gui.Interface3D;
 import gui.dsplays.GameDisplay;
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import main.Scoreboard;
 import world.WorldManager;
 
@@ -44,6 +50,15 @@ public class StartButton extends DisplayButton{
     public void act() {
         Interface3D.getInterface3D().setDisplay(new GameDisplay());
         Scoreboard.startGame();
+        
+        try {
+            (new Robot()).mouseMove(
+                    Toolkit.getDefaultToolkit().getScreenSize().width/2 + Interface3D.getInterface3D().getFrame().getInsets().left,
+                    Toolkit.getDefaultToolkit().getScreenSize().height/2 + Interface3D.getInterface3D().getFrame().getInsets().top
+            );
+        } catch (AWTException ex) {
+            Logger.getLogger(StartButton.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

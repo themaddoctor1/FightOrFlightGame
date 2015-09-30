@@ -11,9 +11,10 @@ package main;
  */
 public class Properties {
     public static final boolean
+            CHARGE_CAUSES_WARP = false,
             DAY_NIGHT_CYCLE = false,
+            DAMAGE_FROM_OVERSPEED = true,
             REQUIRE_SPEED_CHARGE = true,
-            USE_SPEED_LIMIT = true,
-            CHARGE_CAUSES_WARP = false;
+            USE_SPEED_LIMIT = true
     ;
 }

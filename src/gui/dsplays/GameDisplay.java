@@ -184,14 +184,14 @@ public class GameDisplay extends Display{
         
         double countdown = Scoreboard.timer();
         if(countdown > 0){
-            g2.setColor(new Color(255,255,255,128));
+            g2.setColor(new Color(255,255,(int)(255*(1.0-p.getCharge()/p.maxCharge())),192));
             g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
             g2.setColor(Color.BLACK);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
             g2.drawString("Round start in:", interf.getCenterX()-160, 30);
             g2.drawString("" + (int)(1+countdown), interf.getCenterX()-9, 80);
         } else {
-            g2.setColor(new Color(255,255,255,128));
+            g2.setColor(new Color(255,255,(int)(255*(1.0-p.getCharge()/p.maxCharge())),192));
             g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
             g2.setColor(Color.BLACK);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));

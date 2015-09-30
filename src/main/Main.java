@@ -23,7 +23,7 @@ public class Main {
      */
     public static void main(String[] args) {
         
-        Interface3D.initialize("Speedster Showdown");
+        Interface3D.initialize("Fight Or Flight");
         
         WorldManager.getWorld().getEntities().add(Controller.getPlayer());
         

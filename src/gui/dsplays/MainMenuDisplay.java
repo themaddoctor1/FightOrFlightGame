@@ -50,7 +50,7 @@ public class MainMenuDisplay extends Display{
         g2.setColor(Color.BLACK);
         
         g2.setFont(new Font("Courier New", Font.PLAIN, 48));
-        g2.drawString("SPEEDSTER SHOWDOWN", Interface3D.getInterface3D().getCenterX() - 250, (int)(Interface3D.getInterface3D().getCenterY()*0.7));
+        g2.drawString(" FIGHT OR FLIGHT ", Interface3D.getInterface3D().getCenterX() - 250, (int)(Interface3D.getInterface3D().getCenterY()*0.7));
         
         g2.setFont(new Font("Courier New", Font.PLAIN, 16));
         int disp = 250;
