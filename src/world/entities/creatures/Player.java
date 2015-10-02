@@ -17,6 +17,7 @@ import main.Properties;
  */
 public class Player extends Speedster{
     
+    
     public Player() {
         super(100);
         weapon = 
@@ -56,6 +57,25 @@ public class Player extends Speedster{
     public double faceY() {
         return Controller.getCamera().getY();
     }
+    
+    @Override
+    public double maxHealth(){
+        return super.maxHealth() * Math.pow(1.1, hpLevel);
+    }
 
  
+    private int hpLevel = 0;
+    public void levelUpHP(){
+        hpLevel++;
+        healthRegenTimer = 5;
+        modHealth(maxHealth());
+        
+    }
+    public int getHpLevel(){ return hpLevel; }
+    
+    
+    
+    
+    
+    
 }

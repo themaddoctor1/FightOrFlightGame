@@ -6,7 +6,6 @@
 
 package gui;
 
-import gui.dsplays.*;
 import gui.shapes.*;
 import java.awt.*;
 import javax.swing.JFrame;

@@ -6,9 +6,10 @@
 
 package gui;
 
-import gui.dsplays.GameDisplay;
-import gui.dsplays.GameOverDisplay;
-import gui.dsplays.MainMenuDisplay;
+import gui.displays.GameDisplay;
+import gui.displays.GameOverDisplay;
+import gui.displays.MainMenuDisplay;
+import gui.displays.UpgradeDisplay;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
@@ -123,7 +124,8 @@ public class Controller {
             KeyEvent.VK_E,          //Shoot (Mouse control: Left click)
             KeyEvent.VK_SHIFT,       //Brakes
             KeyEvent.VK_B,
-            KeyEvent.VK_ESCAPE      //End Game
+            KeyEvent.VK_ESCAPE,     //End Game
+            KeyEvent.VK_U           //Upgrade menu
         };
     }
     
@@ -194,6 +196,9 @@ public class Controller {
             if(getState(12)){
                 Scoreboard.endGame();
                 Interface3D.getInterface3D().setDisplay(new MainMenuDisplay());
+            } else if(getState(13) && Scoreboard.timer() > 0){
+                Scoreboard.pauseGame();
+                Interface3D.getInterface3D().setDisplay(new UpgradeDisplay());
             }
             
             //System.out.println(currentPlayer.getVelocity().toString(true));

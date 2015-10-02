@@ -21,6 +21,8 @@ public class Scoreboard {
     private static SpawnPattern spawning = null;
     private static boolean running = false;
     
+    private static double XP = 0;
+    
     public static int wave(){ return wave; }
     
     public static double  timer(){ return countdown; }
@@ -75,12 +77,31 @@ public class Scoreboard {
         running = true;
         countdown = 5;
         wave = 1;
+        XP = 0;
         WorldManager.startSimulation();
     }
     
     public static void endGame(){
         running = false;
         WorldManager.stopSimulation();
+    }
+    
+    public static void resumeGame(){
+        running = true;
+        WorldManager.startSimulation();
+    }
+    
+    public static void pauseGame() {
+        running = false;
+        WorldManager.stopSimulation();
+    }
+    
+    public static void modXP(double amt){
+        XP += amt;
+    }
+    
+    public static double XP() {
+        return XP;
     }
     
 }

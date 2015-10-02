@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.dsplays.buttons;
+package gui.displays.buttons;
 
 import gui.Interface3D;
 import java.awt.Graphics;
@@ -14,7 +14,7 @@ import java.awt.Color;
  *
  * @author Christopher
  */
-public abstract class DisplayButton implements MouseListener{
+public abstract class DisplayButton {
     
     protected int x, y, w, h;
     

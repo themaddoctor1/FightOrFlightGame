@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package gui.dsplays;
+package gui.displays;
 
 import gui.Camera;
 import gui.Controller;
@@ -142,7 +142,7 @@ public class GameDisplay extends Display{
         g2.fillRect(stretch, 0, interf.getWidth()-2*stretch, stretch);
         g2.fillRect(stretch, interf.getHeight()-stretch, interf.getWidth()-2*stretch, stretch);
         */
-        double healthLost = p.maxHealth() - p.getHealth();
+        double healthLost = 100.0 * (1 - p.getHealth() / p.maxHealth());
         
         g2.setColor(new Color(255,0,0,(int)(192 * (1 - p.getHealth()/p.maxHealth()))));
         g2.fillRect((int)healthLost, (int)healthLost, interf.getFrame().getContentPane().getWidth()-2*(int)healthLost+1, interf.getFrame().getContentPane().getHeight()-2*(int)healthLost+1);

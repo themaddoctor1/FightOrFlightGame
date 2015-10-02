@@ -19,7 +19,7 @@ public abstract class Speedster extends Humanoid{
     
     protected double chargeCapacity = 25;
     protected double charge = 0;
-    private double healthRegenTimer = 5;
+    protected double healthRegenTimer = 5;
     protected double speedChargeRegenTimer = 5;
     
     public Speedster(double hp) {

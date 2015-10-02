@@ -6,7 +6,8 @@
 
 package gui;
 
-import gui.dsplays.*;
+import gui.displays.Display;
+import gui.displays.MainMenuDisplay;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;

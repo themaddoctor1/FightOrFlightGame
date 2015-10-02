@@ -7,6 +7,7 @@
 package world;
 
 import java.util.ArrayList;
+import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 import physics.functions.Plane;
@@ -36,15 +37,21 @@ public class World {
         
         //Removes null and dead entities
         for(int i = entities.size()-1; i >= 0; i--){
-            Entity e = entities.get(i);
-            if(e == null)
-                entities.remove(e);
-            else if(e instanceof Creature){
-                Creature c = (Creature) e;
-                if(c instanceof Player)
-                    continue;
-                if(c.getHealth() <= 0)
-                    c.killSelf();
+            try {
+                Entity e = entities.get(i);
+                if(e == null)
+                    entities.remove(e);
+                else if(e instanceof Creature){
+                    Creature c = (Creature) e;
+                    if(c instanceof Player)
+                        continue;
+                    if(c.getHealth() <= 0){
+                        Scoreboard.modXP(Math.log10(10*(1+Scoreboard.XP())*Scoreboard.wave()));
+                        c.killSelf();
+                    }
+                }
+            } catch(Exception e){
+                
             }
         }
         

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.dsplays;
+package gui.displays;
 
 import gui.*;
-import gui.dsplays.buttons.*;
 import gui.shapes.Polygon3D;
 import java.awt.Color;
 import java.awt.*;
@@ -108,14 +107,7 @@ public class GameOverDisplay extends Display{
                 (int)(interf.getCenterX()-280-12*Math.log10(Scoreboard.wave())), 
                 (int)(interf.getCenterY()*0.6));
         
-        Polygon cursor = new Polygon();
-        cursor.addPoint(interf.mouseX(), interf.mouseY());
-        cursor.addPoint(interf.mouseX()+9, interf.mouseY()+12);
-        cursor.addPoint(interf.mouseX(), interf.mouseY()+15);
-        g2.setColor(Color.WHITE);
-        g2.fill(cursor);
-        g2.setColor(Color.BLACK);
-        g2.draw(cursor);
+        drawCursor(g2);
         
     }
 

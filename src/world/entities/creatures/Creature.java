@@ -61,6 +61,7 @@ public abstract class Creature extends Entity implements HasHealth{
     }
     
     public Weapon getWeapon(){ return weapon; }
+    public void setWeapon(Weapon w){ weapon = w; }
     
     public abstract double faceXZ();
     public abstract double faceY();

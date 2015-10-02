@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui.dsplays;
+package gui.displays;
 
 import gui.Interface;
 import gui.Interface3D;
-import gui.dsplays.buttons.DisplayButton;
-import gui.dsplays.buttons.StartButton;
+import gui.displays.buttons.DisplayButton;
+import gui.displays.buttons.StartButton;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -60,15 +60,9 @@ public class MainMenuDisplay extends Display{
         g2.drawString("LMB / E: Use Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+60);
         g2.drawString("SHIFT / B: Brakes", 10, Interface3D.getInterface3D().getCenterY()+disp+80);
         g2.drawString("ESC: Exit", 10, Interface3D.getInterface3D().getCenterY()+disp+100);
+        g2.drawString("U: Access Upgrade Menu", 10, Interface3D.getInterface3D().getCenterY()+disp+120);
         
-        Polygon cursor = new Polygon();
-        cursor.addPoint(Interface3D.getInterface3D().mouseX(), Interface3D.getInterface3D().mouseY());
-        cursor.addPoint(Interface3D.getInterface3D().mouseX()+9, Interface3D.getInterface3D().mouseY()+12);
-        cursor.addPoint(Interface3D.getInterface3D().mouseX(), Interface3D.getInterface3D().mouseY()+15);
-        g2.setColor(Color.WHITE);
-        g2.fill(cursor);
-        g2.setColor(Color.BLACK);
-        g2.draw(cursor);
+        drawCursor(g2);
         
     }
 
