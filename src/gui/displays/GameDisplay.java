@@ -38,10 +38,19 @@ public class GameDisplay extends Display{
         
         Graphics2D g2 = (Graphics2D) g;
         
-        int X = (int) Controller.getPlayer().getPosition().X();
-        int Z = (int) Controller.getPlayer().getPosition().Z();
-        
         Player p = Controller.getPlayer();
+        
+        if(Properties.USE_FOV_SPEED_CHANGE){
+            if(Properties.REQUIRE_SPEED_CHARGE || p.getCharge() > 0)
+                interf.setPixelsPerRadian((1200 - 100 * Math.pow(Math.min(1, p.getVelocity().getMagnitude()/p.getSpeedLimit()), 4))/2.0);
+            else
+                interf.setPixelsPerRadian((600 + 3*interf.getPixelsPerRadian())/2);
+        }
+        
+        int X = (int) p.getPosition().X();
+        int Z = (int) p.getPosition().Z();
+        
+        
         
         if(p.getHealth() <= 0)
             Interface3D.getInterface3D().setDisplay(new GameOverDisplay());
@@ -197,6 +206,8 @@ public class GameDisplay extends Display{
         
         double countdown = Scoreboard.timer();
         if(countdown > 0){
+            g2.drawString("Press U to access", interf.getWidth() - 200, interf.getHeight()-100);
+            g2.drawString("     Upgrade menu", interf.getWidth() - 200, interf.getHeight()-80);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
             g2.drawString("Round start in:", interf.getCenterX()-160, 30);
             g2.drawString("" + (int)(1+countdown), interf.getCenterX()-9, 80);

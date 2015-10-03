@@ -102,7 +102,7 @@ public abstract class Speedster extends Humanoid{
             velocity.addVectorToThis(frictionForce);
         }
         //Speedsters should get hurt if they go too fast
-        if(Properties.DAMAGE_FROM_OVERSPEED && velocity.getMagnitude() > getSpeedLimit()){
+        if(Properties.DAMAGE_FROM_OVERSPEED && velocity.getMagnitude() > getSpeedLimit() && getPosition().Y() <= getSize()){
             double dmg = (Math.pow(velocity.getMagnitude(), 2) - Math.pow(getSpeedLimit(), 2))/Math.pow(Math.PI+Math.pow(chargeCapacity,2),2) * perceivedTime;
             modHealth(-dmg);
         }

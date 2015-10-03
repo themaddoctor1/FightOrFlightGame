@@ -63,7 +63,7 @@ public class UpgradeSpeedButton extends UpgradeButton {
         
         double factor = 1 + Controller.getPlayer().getChargeCapacity();
         
-        return (int)(50 * (Math.cbrt(factor)*Math.log10(10*factor)));
+        return (int)(20 * (Math.cbrt(factor)*Math.log10(10*factor)));
     }
 
     @Override

@@ -37,7 +37,7 @@ public class Player extends Speedster{
         
         Scoreboard.modXP(time*Math.sqrt(Math.log10(getSpeedWarp() + Math.pow(getVelocity().getMagnitude(), 1.5)))*0.1);
         
-        if(accelerating && Properties.REQUIRE_SPEED_CHARGE){
+        if(getPosition().Y() <= getSize() && accelerating && Properties.REQUIRE_SPEED_CHARGE){
             double chargeDecrease = 
                     4*Math.sqrt(1+chargeCapacity)*time*getSpeedWarp()*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
                     //(time*getSpeedWarp())*Math.pow(10,3)*Math.log10(1+10*Math.pow(getChargeCapacity(),2.5)/(Math.pow(getChargeCapacity(),2)+10)) * Math.max(Math.pow((velocity.getMagnitude()) / getSpeedLimit(), 3), Math.cbrt(velocity.getMagnitude()) / getSpeedLimit());
@@ -63,7 +63,7 @@ public class Player extends Speedster{
     
     @Override
     public double maxHealth(){
-        return super.maxHealth() * Math.pow(1.2, hpLevel) + 10*Math.pow(hpLevel, 1.2);
+        return super.maxHealth() * Math.pow(1.5, hpLevel) + 10*Math.pow(hpLevel, 1.5);
     }
 
  

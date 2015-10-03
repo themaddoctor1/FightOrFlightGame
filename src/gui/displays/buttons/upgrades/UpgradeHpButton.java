@@ -58,7 +58,7 @@ public class UpgradeHpButton extends UpgradeButton {
 
     @Override
     public int upgradeCost() {
-        return 5 * (Controller.getPlayer().getHpLevel() + 2);
+        return 5*((Controller.getPlayer().getHpLevel() + 1));
     }
 
     @Override
