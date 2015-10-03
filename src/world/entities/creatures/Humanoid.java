@@ -10,6 +10,7 @@ import gui.Camera;
 import gui.Interface3D;
 import gui.shapes.Polygon3D;
 import java.awt.Graphics;
+import main.Scoreboard;
 import physics.Coordinate;
 
 /**

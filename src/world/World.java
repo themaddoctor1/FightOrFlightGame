@@ -46,7 +46,6 @@ public class World {
                     if(c instanceof Player)
                         continue;
                     if(c.getHealth() <= 0){
-                        Scoreboard.modXP(Math.log10(10*(1+Scoreboard.XP())*Scoreboard.wave()));
                         c.killSelf();
                     }
                 }

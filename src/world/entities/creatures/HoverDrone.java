@@ -12,6 +12,7 @@ import items.Gun;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 
@@ -83,6 +84,12 @@ public class HoverDrone extends Creature{
         radius *= Interface3D.getInterface3D().getPixelsPerRadian();
         g.setColor(new Color(32,32,32));
         ((Graphics2D) g).fillOval(posit[0] - (int) radius, posit[1] - (int) radius, (int)(2*radius), (int)(2*radius));
+    }
+    
+    @Override
+    public void killSelf(){
+        Scoreboard.modXP(5*Math.log10(10*Scoreboard.wave()));
+        super.killSelf();
     }
     
 }

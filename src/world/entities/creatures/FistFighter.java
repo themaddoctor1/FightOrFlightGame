@@ -8,6 +8,7 @@ package world.entities.creatures;
 import gui.Controller;
 import items.Fist;
 import items.Gun;
+import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 import world.WorldManager;
@@ -48,6 +49,13 @@ public class FistFighter extends Humanoid{
     @Override
     public double faceY() {
         return new Vector(getPosition(), Controller.getPlayer().getPosition()).getAngleY();
+    }
+    
+    
+    @Override
+    public void killSelf(){
+        Scoreboard.modXP(Math.log10(10*Scoreboard.wave()));
+        super.killSelf();
     }
     
 }

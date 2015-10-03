@@ -8,6 +8,7 @@ package world.entities.creatures;
 
 import gui.Controller;
 import main.Properties;
+import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 
@@ -115,6 +116,11 @@ public abstract class Speedster extends Humanoid{
         if(amt < 0)
             healthRegenTimer = 0;
         super.modHealth(amt);
+    }
+    
+    @Override
+    public void killSelf(){
+        Scoreboard.modXP(20*Math.log10(10*Scoreboard.wave()));
     }
     
 }

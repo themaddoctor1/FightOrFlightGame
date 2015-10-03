@@ -11,6 +11,7 @@ import gui.Interface3D;
 import gui.shapes.Polygon3D;
 import items.Gun;
 import java.awt.Graphics;
+import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 import world.WorldManager;
@@ -99,6 +100,13 @@ public class Gunman extends Humanoid{
         double radius = Math.asin(getSize() * 0.2 / Coordinate.relativeDistance(c.getPosition(), b));
         radius *= Interface3D.getInterface3D().getPixelsPerRadian();
         g.fillOval((int)(headPos[0]-radius), (int)(headPos[1]-radius), (int)(2*radius), (int)(2*radius));
+    }
+    
+    
+    @Override
+    public void killSelf(){
+        Scoreboard.modXP(2*Math.log10(10*Scoreboard.wave()));
+        super.killSelf();
     }
     
 }

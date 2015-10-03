@@ -31,7 +31,7 @@ public class Fist extends Weapon{
     
     public Fist(double pow, double speed){
         POWER = pow;
-        PUNCH_TIME = 1/speed;
+        PUNCH_TIME = 1.0/speed;
     }
     
     @Override
