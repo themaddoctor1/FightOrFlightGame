@@ -10,6 +10,7 @@ import gui.Interface3D;
 import items.Fist;
 import items.Gun;
 import main.Properties;
+import main.Scoreboard;
 
 /**
  *
@@ -33,6 +34,8 @@ public class Player extends Speedster{
         boolean accelerating = false;
         for(int i = 0; !accelerating && i < 8; i++)
             accelerating |= Interface3D.getInterface3D().getController().getState(i);
+        
+        Scoreboard.modXP(time*Math.sqrt(Math.log10(getSpeedWarp() + Math.pow(getVelocity().getMagnitude(), 2))));
         
         if(accelerating && Properties.REQUIRE_SPEED_CHARGE){
             double chargeDecrease = 
@@ -60,7 +63,7 @@ public class Player extends Speedster{
     
     @Override
     public double maxHealth(){
-        return super.maxHealth() * Math.pow(1.1, hpLevel);
+        return super.maxHealth() * Math.pow(1.2, hpLevel) + 10*Math.pow(hpLevel, 1.2);
     }
 
  
@@ -72,6 +75,10 @@ public class Player extends Speedster{
         
     }
     public int getHpLevel(){ return hpLevel; }
+
+    public void levelUpSpeed(int i) {
+        chargeCapacity++;
+    }
     
     
     

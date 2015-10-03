@@ -8,7 +8,7 @@ package gui.displays;
 import gui.Interface3D;
 import gui.displays.buttons.DisplayButton;
 import gui.displays.buttons.ResumeButton;
-import gui.displays.buttons.upgrades.UpgradeHpButton;
+import gui.displays.buttons.upgrades.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -31,7 +31,10 @@ public class UpgradeDisplay extends Display{
         
         buttons = new DisplayButton[]{
             new ResumeButton(Interface3D.getInterface3D().getCenterX()-90, Interface3D.getInterface3D().getHeight() - 120),
-            new UpgradeHpButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273)
+            new UpgradeHpButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273),
+            new UpgradeSpeedButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 273),
+            new UpgradeFistDmgButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 123),
+            new UpgradeFistSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 123)
             
         };
     }

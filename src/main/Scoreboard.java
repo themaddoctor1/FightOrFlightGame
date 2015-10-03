@@ -65,8 +65,8 @@ public class Scoreboard {
     }
     
     public static void ready(){
+        modXP(0.5*(wave + Math.pow(wave++,2)));
         countdown = 5;
-        wave++;
     }
 
     public static void startGame() {

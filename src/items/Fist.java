@@ -113,4 +113,7 @@ public class Fist extends Weapon{
         
     }
     
+    public double POWER(){ return POWER; }
+    public double SPEED(){ return PUNCH_TIME; }
+    
 }
