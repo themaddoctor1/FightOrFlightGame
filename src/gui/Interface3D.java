@@ -29,6 +29,7 @@ public class Interface3D extends Interface {
     
     @Override
     public void paint(Graphics g){
+        
         try {
             display.draw(g);
         } catch(Exception e){

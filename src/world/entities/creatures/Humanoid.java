@@ -28,6 +28,7 @@ public abstract class Humanoid extends Creature{
     }
 
     
+    @Override
     public void draw(Graphics g, Camera c){
         Coordinate a,b;
         a = new Coordinate(getPosition().X(), getPosition().Y() - 0.2 * getSize(), getPosition().Z());
@@ -36,35 +37,35 @@ public abstract class Humanoid extends Creature{
                 getPosition().Y()-getSize(), 
                 getPosition().Z() + 0.2 * getSize() * Math.sin(faceXZ()+Math.PI/2.0)
         );
-        Polygon3D.drawCurvedLine(g, c, 10, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         b = new Coordinate(
                 getPosition().X() - 0.2 * getSize() * Math.cos(faceXZ()+Math.PI/2.0), 
                 getPosition().Y()-getSize(), 
                 getPosition().Z() - 0.2 * getSize() * Math.sin(faceXZ()+Math.PI/2.0)
         );
-        Polygon3D.drawCurvedLine(g, c, 10, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         b = new Coordinate(
                 getPosition().X(), 
                 getPosition().Y()+0.6*getSize(), 
                 getPosition().Z()
         );
-        Polygon3D.drawCurvedLine(g, c, 10, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         a = new Coordinate(
                 getPosition().X() + 0.2 * getSize() * Math.cos(faceXZ()+Math.PI/2.0), 
                 getPosition().Y() - 0.2 * getSize(), 
                 getPosition().Z() + 0.2 * getSize() * Math.sin(faceXZ()+Math.PI/2.0)
         );
-        Polygon3D.drawCurvedLine(g, c, 10, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         a = new Coordinate(
                 getPosition().X() - 0.2 * getSize() * Math.cos(faceXZ()+Math.PI/2.0), 
                 getPosition().Y() - 0.2 * getSize(), 
                 getPosition().Z() - 0.2 * getSize() * Math.sin(faceXZ()+Math.PI/2.0)
         );
-        Polygon3D.drawCurvedLine(g, c, 10, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         b = new Coordinate(
                 getPosition().X(), 

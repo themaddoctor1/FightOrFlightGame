@@ -35,7 +35,7 @@ public class Player extends Speedster{
         for(int i = 0; !accelerating && i < 8; i++)
             accelerating |= Interface3D.getInterface3D().getController().getState(i);
         
-        Scoreboard.modXP(time*Math.sqrt(Math.log10(getSpeedWarp() + Math.pow(getVelocity().getMagnitude(), 2))));
+        Scoreboard.modXP(time*Math.sqrt(Math.log10(getSpeedWarp() + Math.pow(getVelocity().getMagnitude(), 1.5)))*0.1);
         
         if(accelerating && Properties.REQUIRE_SPEED_CHARGE){
             double chargeDecrease = 

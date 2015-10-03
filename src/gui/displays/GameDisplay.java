@@ -180,20 +180,27 @@ public class GameDisplay extends Display{
         
         p.getWeapon().drawInterface(g2);
         
+        g2.setColor(new Color(255,255,255,96));
+        
+        String expString = "" + (int)(Scoreboard.XP());
+        g2.fillRect(interf.getWidth() - 10 * (5 + Math.max(expString.length(), 4)), interf.getHeight()-66, 10 * (2 + Math.max(expString.length(), 4)), 20);
+        
+        g2.setColor(Color.BLACK);
+        
+        g2.setFont(new Font("Courier New", Font.PLAIN, 16));
+        g2.drawString(expString, interf.getWidth() - 10 * (4 + expString.length()), interf.getHeight() - 50);
+        
+        //Round countdown/wave number
+        g2.setColor(new Color(255,255,(int)(255*(1.0-p.getCharge()/p.maxCharge())),192));
+        g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
         g2.setColor(Color.BLACK);
         
         double countdown = Scoreboard.timer();
         if(countdown > 0){
-            g2.setColor(new Color(255,255,(int)(255*(1.0-p.getCharge()/p.maxCharge())),192));
-            g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
-            g2.setColor(Color.BLACK);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
             g2.drawString("Round start in:", interf.getCenterX()-160, 30);
             g2.drawString("" + (int)(1+countdown), interf.getCenterX()-9, 80);
         } else {
-            g2.setColor(new Color(255,255,(int)(255*(1.0-p.getCharge()/p.maxCharge())),192));
-            g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
-            g2.setColor(Color.BLACK);
             g2.setFont(new Font("Courier New", Font.PLAIN, 36));
             g2.drawString("Wave", interf.getCenterX()-40, 30);
             g2.drawString("" + (Scoreboard.wave()), interf.getCenterX()-9-12*(int)(Math.log10(Scoreboard.wave())), 80);

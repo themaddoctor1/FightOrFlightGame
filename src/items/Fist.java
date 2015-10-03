@@ -85,10 +85,10 @@ public class Fist extends Weapon{
         Coordinate a, b;
         a = new Coordinate(0,-.2,-0.2);
         b = new Coordinate(0.3+0.5 * Math.sin(Math.max(0, epoch/PUNCH_TIME)*Math.PI),-.4 +0.3 * Math.sin(Math.max(0, epoch/PUNCH_TIME)*Math.PI),-0.2);
-        Polygon3D.drawCurvedLine(g, c, 5, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         a = new Coordinate(0.6+1 * Math.sin(Math.max(0, epoch/PUNCH_TIME)*Math.PI),0,-0.2);
-        Polygon3D.drawCurvedLine(g, c, 5, a, b);
+        Polygon3D.drawCurvedLine(g, c, 3, a, b);
         
         
     }
