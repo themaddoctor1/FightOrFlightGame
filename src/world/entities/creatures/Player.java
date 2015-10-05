@@ -9,6 +9,7 @@ import gui.Controller;
 import gui.Interface3D;
 import items.Fist;
 import items.Gun;
+import items.Weapon;
 import main.Properties;
 import main.Scoreboard;
 
@@ -17,13 +18,16 @@ import main.Scoreboard;
  * @author Christopher
  */
 public class Player extends Speedster{
-    
+    private Weapon[] weapons;
     
     public Player() {
         super(100);
-        weapon = 
-                //new Gun(2);
-                new Fist(10,2);
+        weapons = new Weapon[]{
+            new Fist(10, 2),
+            new Gun(2)
+        };
+        
+        weapon = weapons[0];
         
         this.chargeCapacity = Math.pow(10,-4);
     }
@@ -80,7 +84,9 @@ public class Player extends Speedster{
         chargeCapacity++;
     }
     
-    
+    public Weapon[] getWeapons(){
+        return weapons;
+    }
     
     
     
