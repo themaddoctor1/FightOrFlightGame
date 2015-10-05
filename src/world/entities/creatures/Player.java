@@ -80,8 +80,8 @@ public class Player extends Speedster{
     }
     public int getHpLevel(){ return hpLevel; }
 
-    public void levelUpSpeed(int i) {
-        chargeCapacity++;
+    public void levelUpSpeed() {
+        chargeCapacity *= 1.1;
     }
     
     public Weapon[] getWeapons(){

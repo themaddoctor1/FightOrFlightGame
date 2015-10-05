@@ -70,7 +70,7 @@ public class UpgradeSpeedButton extends UpgradeButton {
     protected void applyUpgrade() {
         if(Scoreboard.XP() >= upgradeCost()){
             Scoreboard.modXP(-upgradeCost());
-            Controller.getPlayer().levelUpSpeed(1);
+            Controller.getPlayer().levelUpSpeed();
         }
     }
     
