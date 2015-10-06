@@ -65,7 +65,7 @@ public class UpgradeFistDmgButton extends UpgradeButton {
     @Override
     public int upgradeCost() {
         if(Controller.getPlayer().getWeapon() instanceof Fist){
-            Fist f = ((Fist)Controller.getPlayer().getWeapons()[0]);
+            Fist f = ((Fist)Controller.getPlayer().getWeapons().get(0));
             return (int)(0.25*(f.POWER()/f.SPEED()));
         } else
             return (int)(Double.NaN);
@@ -75,11 +75,11 @@ public class UpgradeFistDmgButton extends UpgradeButton {
     protected void applyUpgrade() {
         if(Scoreboard.XP() >= upgradeCost() && Controller.getPlayer().getWeapon() instanceof Fist){
             Scoreboard.modXP(-upgradeCost());
-            Fist f = (Fist) Controller.getPlayer().getWeapon();
+            Fist f = (Fist) Controller.getPlayer().getWeapons().get(0);
             double speed = f.SPEED();
             Fist result = new Fist(f.POWER() * 1.25, 1.0/speed);
             Controller.getPlayer().setWeapon(result);
-            Controller.getPlayer().getWeapons()[0] = result;
+            Controller.getPlayer().replaceWeapon(0, result);
         }
     }
     

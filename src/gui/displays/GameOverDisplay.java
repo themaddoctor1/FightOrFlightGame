@@ -90,10 +90,12 @@ public class GameOverDisplay extends Display{
         
         g2.setColor(Color.BLACK);
         
+        /*
         for(double i = -cells - 0.5; i < cells+1; i++){
             Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X+i*width,0, Z-(cells + 0.5)*width), new Coordinate(X+i*width,0, Z+(cells + 0.5)*width));
             Polygon3D.drawCurvedLine(g2, c, 20, new Coordinate(X-(cells+0.5)*width,0, Z+i*width), new Coordinate(X+(cells+0.5)*width,0, Z+i*width));
         }
+        */
         
         for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++){
             Entity e = WorldManager.getWorld().getEntities().get(i);
@@ -106,6 +108,13 @@ public class GameOverDisplay extends Display{
                 "You survived until wave " + (Scoreboard.wave()), 
                 (int)(interf.getCenterX()-280-12*Math.log10(Scoreboard.wave())), 
                 (int)(interf.getCenterY()*0.6));
+        if(age <= 0.5){
+            g2.setColor(new Color(255,0,0,(int)(192.0*(1.0-2*age))));
+            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+        } else if(age >= 4){
+            g2.setColor(new Color(255,255,255,(int)(255.0*(age-4))));
+            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+        }
         
         drawCursor(g2);
         

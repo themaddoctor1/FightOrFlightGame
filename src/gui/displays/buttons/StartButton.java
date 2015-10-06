@@ -15,11 +15,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Robot;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.Scoreboard;
-import world.WorldManager;
 
 /**
  *
@@ -43,7 +41,7 @@ public class StartButton extends DisplayButton{
         else
             g.setColor(Color.BLACK);
         
-        g.drawString("START", x+32, y+28);
+        g.drawString("START", x+36, y+28);
     }
 
     @Override

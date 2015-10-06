@@ -6,13 +6,13 @@
 
 package gui;
 
-import gui.displays.Display;
-import gui.displays.MainMenuDisplay;
+import gui.displays.*;
 import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.MemoryImageSource;
 import javax.swing.JFrame;
+import main.Properties;
 
 /**
  *
@@ -67,7 +67,7 @@ public class Interface extends Applet implements KeyListener, MouseListener, Mou
              (image, new Point(0, 0), "invisibleCursor");
         frame.setCursor(transparentCursor);
         
-        display = new MainMenuDisplay(width, height);
+        display = (Properties.SHOW_LOGO_SCREEN)?new CompanyLogoDisplay(width, height):new MainMenuDisplay(width, height);
         
     }
     

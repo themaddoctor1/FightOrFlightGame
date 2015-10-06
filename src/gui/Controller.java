@@ -10,10 +10,12 @@ import gui.displays.GameDisplay;
 import gui.displays.GameOverDisplay;
 import gui.displays.MainMenuDisplay;
 import gui.displays.UpgradeDisplay;
+import items.Weapon;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import main.Properties;
@@ -125,7 +127,9 @@ public class Controller {
             KeyEvent.VK_SHIFT,       //Brakes
             KeyEvent.VK_B,
             KeyEvent.VK_ESCAPE,     //End Game
-            KeyEvent.VK_U           //Upgrade menu
+            KeyEvent.VK_U,          //Upgrade menu
+            KeyEvent.VK_MINUS,      //Previous weapon
+            KeyEvent.VK_EQUALS      //Next weapon
         };
     }
     
@@ -171,7 +175,7 @@ public class Controller {
             }
             double rotSpeed = 2 * time;
 
-            double sensitivity = 12;
+            double sensitivity = Properties.MOUSE_SENSITIVITY;
 
             double rotX = sensitivity * time*(Interface3D.getInterface3D().mouseX() - Toolkit.getDefaultToolkit().getScreenSize().width/2)/Interface3D.getInterface3D().getPixelsPerRadian();
             double rotY = sensitivity * time*(Interface3D.getInterface3D().mouseY() - Toolkit.getDefaultToolkit().getScreenSize().height/2)/Interface3D.getInterface3D().getPixelsPerRadian();
@@ -199,6 +203,18 @@ public class Controller {
             } else if(getState(13) && Scoreboard.timer() > 0){
                 Scoreboard.pauseGame();
                 Interface3D.getInterface3D().setDisplay(new UpgradeDisplay());
+            }
+            
+            ArrayList<Weapon> weapons = currentPlayer.getWeapons();
+            
+            if(!getState(14)){
+                currentPlayer.setWeapon(weapons.get(((weapons.indexOf(currentPlayer.getWeapon())-1+weapons.size())%weapons.size())));
+                setState(keyCodes[14], true);
+            }
+            
+            if(!getState(15)){
+                currentPlayer.setWeapon(weapons.get(((weapons.indexOf(currentPlayer.getWeapon())+1)%weapons.size())));
+                setState(keyCodes[15], true);
             }
             
             //System.out.println(currentPlayer.getVelocity().toString(true));

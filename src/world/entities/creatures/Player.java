@@ -10,6 +10,7 @@ import gui.Interface3D;
 import items.Fist;
 import items.Gun;
 import items.Weapon;
+import java.util.ArrayList;
 import main.Properties;
 import main.Scoreboard;
 
@@ -18,16 +19,20 @@ import main.Scoreboard;
  * @author Christopher
  */
 public class Player extends Speedster{
-    private Weapon[] weapons;
+    private ArrayList<Weapon> weapons;
     
     public Player() {
         super(100);
-        weapons = new Weapon[]{
+        weapons = new ArrayList<>();
+        Weapon[] add = {
             new Fist(10, 2),
-            new Gun(2)
+            new Gun(3)
         };
         
-        weapon = weapons[0];
+        for(int i = 0; i < add.length; i++)
+            weapons.add(add[i]);
+        
+        weapon = add[0];
         
         this.chargeCapacity = Math.pow(10,-4);
     }
@@ -84,8 +89,13 @@ public class Player extends Speedster{
         chargeCapacity *= 1.1;
     }
     
-    public Weapon[] getWeapons(){
+    public ArrayList<Weapon> getWeapons(){
         return weapons;
+    }
+
+    public void replaceWeapon(int i, Weapon result) {
+        weapons.remove(i);
+        weapons.add(i, result);
     }
     
     

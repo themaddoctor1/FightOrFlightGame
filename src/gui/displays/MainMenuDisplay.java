@@ -7,8 +7,7 @@ package gui.displays;
 
 import gui.Interface;
 import gui.Interface3D;
-import gui.displays.buttons.DisplayButton;
-import gui.displays.buttons.StartButton;
+import gui.displays.buttons.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -27,14 +26,16 @@ public class MainMenuDisplay extends Display{
     
     public MainMenuDisplay(){
         buttons = new DisplayButton[]{
-            new StartButton(Interface3D.getInterface3D().getCenterX()-80, Interface3D.getInterface3D().getCenterY())
+            new StartButton(Interface3D.getInterface3D().getCenterX()-80, Interface3D.getInterface3D().getCenterY()),
+            new QuitButton(Interface3D.getInterface3D().getCenterX()-80, Interface3D.getInterface3D().getCenterY()+60)
             
         };
     }
     
     public MainMenuDisplay(int W, int H){
         buttons = new DisplayButton[]{
-            new StartButton(W/2-80, H/2)
+            new StartButton(W/2-80, H/2),
+            new QuitButton(W/2-80, H/2+60)
             
         };
     }
@@ -44,8 +45,8 @@ public class MainMenuDisplay extends Display{
         
         Graphics2D g2 = (Graphics2D) g;
         
-        for(DisplayButton db : buttons)
-            db.draw(g2);
+        for(int i = 0; i < buttons.length; i++)
+            buttons[i].draw(g2);
         
         g2.setColor(Color.BLACK);
         
