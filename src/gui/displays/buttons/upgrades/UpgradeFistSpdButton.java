@@ -64,16 +64,13 @@ public class UpgradeFistSpdButton extends UpgradeButton {
 
     @Override
     public int upgradeCost() {
-        if(Controller.getPlayer().getWeapon() instanceof Fist){
-            Fist f = ((Fist)Controller.getPlayer().getWeapons().get(0));
-            return (int)(0.25*(f.POWER()/f.SPEED()));
-        } else
-            return (int)(Double.NaN);
+        Fist f = ((Fist)Controller.getPlayer().getWeapons().get(0));
+        return (int)(0.25*(f.POWER()/f.SPEED()));
     }
 
     @Override
     protected void applyUpgrade() {
-        if(Scoreboard.XP() >= upgradeCost() && Controller.getPlayer().getWeapon() instanceof Fist){
+        if(Scoreboard.XP() >= upgradeCost()){
             Scoreboard.modXP(-upgradeCost());
             Fist f = (Fist) Controller.getPlayer().getWeapons().get(0);
             Fist result = new Fist(f.POWER(), (1.0/f.SPEED()+1));

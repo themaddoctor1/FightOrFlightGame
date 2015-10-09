@@ -10,6 +10,7 @@ import gui.displays.GameDisplay;
 import gui.displays.GameOverDisplay;
 import gui.displays.MainMenuDisplay;
 import gui.displays.UpgradeDisplay;
+import items.Fist;
 import items.Weapon;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -206,16 +207,19 @@ public class Controller {
             }
             
             ArrayList<Weapon> weapons = currentPlayer.getWeapons();
+            int index = weapons.indexOf(currentPlayer.getWeapon());
             
             if(!getState(14)){
-                currentPlayer.setWeapon(weapons.get(((weapons.indexOf(currentPlayer.getWeapon())-1+weapons.size())%weapons.size())));
+                currentPlayer.setWeapon(weapons.get(((index-1+weapons.size())%weapons.size())));
                 setState(keyCodes[14], true);
             }
             
             if(!getState(15)){
-                currentPlayer.setWeapon(weapons.get(((weapons.indexOf(currentPlayer.getWeapon())+1)%weapons.size())));
+                currentPlayer.setWeapon(weapons.get(((index+1)%weapons.size())));
                 setState(keyCodes[15], true);
             }
+            
+            System.out.println(((Fist)currentPlayer.getWeapons().get(0)).POWER());
             
             //System.out.println(currentPlayer.getVelocity().toString(true));
         }

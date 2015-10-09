@@ -58,10 +58,11 @@ public class MainMenuDisplay extends Display{
         g2.drawString("Controls:", 10, Interface3D.getInterface3D().getCenterY()+disp+0);
         g2.drawString("WASD / Arrow Keys: Move", 10, Interface3D.getInterface3D().getCenterY()+disp+20);
         g2.drawString("Mouse: Look", 10, Interface3D.getInterface3D().getCenterY()+disp+40);
-        g2.drawString("LMB / E: Use Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+60);
-        g2.drawString("SHIFT / B: Brakes", 10, Interface3D.getInterface3D().getCenterY()+disp+80);
+        g2.drawString("LMB or E: Use Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+60);
+        g2.drawString("SHIFT or B: Brakes", 10, Interface3D.getInterface3D().getCenterY()+disp+80);
         g2.drawString("ESC: Exit", 10, Interface3D.getInterface3D().getCenterY()+disp+100);
         g2.drawString("U: Access Upgrade Menu", 10, Interface3D.getInterface3D().getCenterY()+disp+120);
+        g2.drawString("- or =: Switch Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+140);
         
         drawCursor(g2);
         
