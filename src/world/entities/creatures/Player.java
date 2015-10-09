@@ -26,7 +26,7 @@ public class Player extends Speedster{
         weapons = new ArrayList<>();
         Weapon[] add = {
             new Fist(10, 2),
-            new Gun(3)
+            new Gun(3, 8, 1)
         };
         
         for(int i = 0; i < add.length; i++)

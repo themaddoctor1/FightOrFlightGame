@@ -34,7 +34,10 @@ public class UpgradeDisplay extends Display{
             new UpgradeHpButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273),
             new UpgradeSpeedButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 273),
             new UpgradeFistDmgButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 123),
-            new UpgradeFistSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 123)
+            new UpgradeFistSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 123),
+            new UpgradeGunRldButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() + 27),
+            new UpgradeGunSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() + 27),
+            new UpgradeGunAmmoButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() + 177)
             
         };
     }
@@ -50,7 +53,7 @@ public class UpgradeDisplay extends Display{
         
         g2.setColor(Color.BLACK);
         
-        g2.drawRect(interf.getCenterX()-150, interf.getCenterY()-300, 300, 600);
+        g2.drawRect(interf.getCenterX()-150, interf.getCenterY()-300, 300, 625);
         for(DisplayButton db : buttons)
             db.draw(g2);
         

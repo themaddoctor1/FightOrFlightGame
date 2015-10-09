@@ -27,7 +27,7 @@ public class HoverDrone extends Creature{
     public HoverDrone(Coordinate pos){
         super(pos,0.3,25);
         //pos.addVector(new Vector(preferredAltitude - pos.Y(), 0, Math.PI/2.0));
-        weapon = new Gun(100);
+        weapon = new Gun(100, -1, 1);
     }
 
     @Override

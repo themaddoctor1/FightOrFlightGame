@@ -154,10 +154,13 @@ public class GameDisplay extends Display{
         double healthLost = 100.0 * (1 - p.getHealth() / p.maxHealth());
         
         g2.setColor(new Color(255,0,0,(int)(192 * (1 - p.getHealth()/p.maxHealth()))));
-        g2.fillRect((int)healthLost, (int)healthLost, interf.getFrame().getContentPane().getWidth()-2*(int)healthLost+1, interf.getFrame().getContentPane().getHeight()-2*(int)healthLost+1);
+        //g2.fillRect((int)healthLost, (int)healthLost, interf.getFrame().getContentPane().getWidth()-2*(int)healthLost+1, interf.getFrame().getContentPane().getHeight()-2*(int)healthLost+1);
+        
+        g2.fillRect(0, 0, interf.getFrame().getContentPane().getWidth(), interf.getFrame().getContentPane().getHeight());
         
         
         //Draws blood screen
+        /*
         for(int i = 0; i < healthLost; i++){
             Color col = new Color(255,0,0,(int)(255 - 63 * Math.pow(i/p.maxHealth(),0.5)));
             g2.setColor(col);
@@ -168,7 +171,7 @@ public class GameDisplay extends Display{
             //g2.fillRect(frame.getContentPane().getWidth()-1-i, 0, 1, frame.getContentPane().getHeight()-1-i);
             //g2.fillRect(0,frame.getContentPane().getHeight()-1-i,frame.getContentPane().getWidth()-1-i,1);
         }
-        
+        */
         /*
         g2.setColor(Color.BLACK);
         g2.fillRect(10, 10, frame.getContentPane().getWidth()/5, 20);

@@ -219,8 +219,6 @@ public class Controller {
                 setState(keyCodes[15], true);
             }
             
-            System.out.println(((Fist)currentPlayer.getWeapons().get(0)).POWER());
-            
             //System.out.println(currentPlayer.getVelocity().toString(true));
         }
     }

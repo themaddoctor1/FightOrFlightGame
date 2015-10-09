@@ -28,22 +28,38 @@ public class Gun extends Weapon{
     
     private double fireRate;
     private double counter = 0.9/fireRate;
-    private int ammoCount = -1;
-    private final int MAX_AMMO;
+    private int ammoCount;
+    public final int MAX_AMMO;
+    private double reloadTimer = -1;
+    public final double RELOAD_FACTOR;
     
-    public Gun(double rate){
+    public Gun(double rate, int maxAmmo, double reloadFactor){
         fireRate = rate;
-        MAX_AMMO = -1;
+        MAX_AMMO = maxAmmo;
+        ammoCount = maxAmmo;
+        RELOAD_FACTOR = reloadFactor;
     }
     
     public Gun(){
-        this(5);
+        this(5, -1, 1);
     }
     
     @Override
     public void cycle(double time, Entity user){
-        counter += time;
-        counter = Math.min(counter, 1/fireRate);
+        
+        if(ammoCount == 0 && MAX_AMMO > 0){
+            
+            if(reloadTimer == -1)
+                reloadTimer = 0;
+            else if(reloadTimer >= Math.log(Math.E+MAX_AMMO)/RELOAD_FACTOR){
+                ammoCount = MAX_AMMO;
+                reloadTimer = -1;
+            } else {
+                reloadTimer += time;
+            }
+        }
+        
+        counter = Math.min(counter+time, 1/fireRate);
     }
     
     
@@ -55,23 +71,24 @@ public class Gun extends Weapon{
     @Override
     protected void execute(double time, Entity user, Object... params){
         //If 0 ammo, return. Negative ammo count is meant to represent infinite ammo.
-        if(ammoCount == 0)
-            return;
         
-        Vector dir = new Vector(1,((Creature) user).faceXZ(), ((Creature) user).faceY());
+        if(ammoCount > 0 || MAX_AMMO <= 0) {
         
+            Vector dir = new Vector(1,((Creature) user).faceXZ(), ((Creature) user).faceY());
 
-        Coordinate start = new Coordinate(user.getPosition().X(), user.getPosition().Y(), user.getPosition().Z());
-        start.addVector(new Vector(dir,user.getSize()+0.2));
 
-        Vector vel = new Vector(dir, 10);
-        vel.addVectorToThis(user.getVelocity());
-        
-        WorldManager.getWorld().getEntities().add(new Bullet(start, new Vector(dir, 375)));
-        
-        counter = 0;
-        //Prevents highly unlikely overflow issues.
-        ammoCount = Math.max(ammoCount-1, -1);
+            Coordinate start = new Coordinate(user.getPosition().X(), user.getPosition().Y(), user.getPosition().Z());
+            start.addVector(new Vector(dir,user.getSize()+0.2));
+
+            Vector vel = new Vector(dir, 10);
+            vel.addVectorToThis(user.getVelocity());
+
+            WorldManager.getWorld().getEntities().add(new Bullet(start, new Vector(dir, 375)));
+
+            counter = 0;
+            //Prevents highly unlikely overflow issues.
+            ammoCount = Math.max(ammoCount-1, -1);
+        }
     }
 
     @Override
@@ -98,9 +115,17 @@ public class Gun extends Weapon{
         
         
     }
+    
+    public void addAmmo(int amt){
+        ammoCount = Math.max(0, Math.min(amt+ammoCount, MAX_AMMO));
+    }
         
     public int ammoLeft(){
         return ammoCount;
+    }
+    
+    public double fireRate(){
+        return fireRate;
     }
 
     @Override
