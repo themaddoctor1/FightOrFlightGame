@@ -67,19 +67,22 @@ public class DrainDrone extends Creature{
             getVelocity().addVectorToThis(new Vector(2*time,0,Math.PI/2.0));
         }
         
+        double drainers = 1;
         double drainMultiplier = 1;
         for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++){
             Entity e = WorldManager.getWorld().getEntities().get(i);
             if(this.equals(this))
                 continue;
-            else if(e instanceof DrainDrone)
+            else if(e instanceof DrainDrone){
                 drainMultiplier += 1 / Coordinate.relativeDistance(getPosition(), e.getPosition());
+                drainers++;
+            }
         }
         
-        drainMultiplier *= 10;
+        drainMultiplier *= 10 * drainers;
         
         double speedDrain = drainMultiplier*Math.sqrt(1+p.getChargeCapacity())*time*p.getSpeedWarp()*Math.max(Math.pow(p.getChargeCapacity(), 3), Math.cbrt(p.getChargeCapacity())) * Math.sqrt(1+Math.pow(p.getCharge(),2)) 
-                / Math.pow(Coordinate.relativeDistance(p.getPosition(), getPosition()), 2);
+                / Coordinate.relativeDistance(p.getPosition(), getPosition());
         
         p.modCharge(-Math.abs(speedDrain));
         

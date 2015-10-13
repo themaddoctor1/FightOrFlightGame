@@ -9,6 +9,7 @@ package world.entities.creatures;
 import gui.Camera;
 import gui.Interface3D;
 import gui.shapes.Polygon3D;
+import java.awt.Color;
 import java.awt.Graphics;
 import main.Scoreboard;
 import physics.Coordinate;
@@ -30,6 +31,9 @@ public abstract class Humanoid extends Creature{
     
     @Override
     public void draw(Graphics g, Camera c){
+        
+        g.setColor(Color.BLACK);
+        
         Coordinate a,b;
         a = new Coordinate(getPosition().X(), getPosition().Y() - 0.2 * getSize(), getPosition().Z());
         b = new Coordinate(
