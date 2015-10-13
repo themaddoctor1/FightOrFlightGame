@@ -43,7 +43,7 @@ public class ResumeButton extends DisplayButton{
         else
             g.setColor(Color.BLACK);
         
-        g.drawString("RESUME", x+32, y+28);
+        g.drawString("RESUME", x+36, y+28);
     }
 
     @Override

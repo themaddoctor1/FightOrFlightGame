@@ -6,6 +6,7 @@
 
 package main.spawn;
 
+import main.Properties;
 import world.WorldManager;
 
 /**
@@ -14,7 +15,7 @@ import world.WorldManager;
  */
 public abstract class SpawnPattern {
     
-    public static final int MAX_ENEMIES = 16;
+    public static final int MAX_ENEMIES = Properties.ENEMY_LIMIT;
     
     public abstract void cycle(double time);
 

@@ -20,5 +20,9 @@ public class Properties {
             USE_RECOIL = true,
             USE_SPEED_LIMIT = true
     ;
-    public static double MOUSE_SENSITIVITY = 12;
+    public static double 
+            MOUSE_SENSITIVITY = 12;
+    public static final int
+            ENEMY_LIMIT = 12;
+            ;
 }
