@@ -13,6 +13,7 @@ import gui.shapes.Polygon3D;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import main.Properties;
 import physics.Coordinate;
 import physics.Vector;
 import world.WorldManager;
@@ -33,16 +34,18 @@ public class Gun extends Weapon{
     public final int MAX_AMMO;
     private double reloadTimer = -1;
     public final double RELOAD_FACTOR;
+    public final boolean HAS_RECOIL;
     
-    public Gun(double rate, int maxAmmo, double reloadFactor){
+    public Gun(double rate, int maxAmmo, double reloadFactor, boolean recoil){
         fireRate = rate;
         MAX_AMMO = maxAmmo;
         ammoCount = maxAmmo;
         RELOAD_FACTOR = reloadFactor;
+        HAS_RECOIL = recoil;
     }
     
     public Gun(){
-        this(5, -1, 1);
+        this(5, -1, 1, true);
     }
     
     @Override
@@ -76,22 +79,29 @@ public class Gun extends Weapon{
         if(ammoCount > 0 || MAX_AMMO <= 0) {
             
             Vector dir = new Vector(1,((Creature) user).faceXZ(), ((Creature) user).faceY());
-            
-            double userSpeed = user.getVelocity().getMagnitude() * (9 - 8*Math.pow(Vector.cosOfAngleBetween(user.getVelocity(), dir), 2))/9;
-            
-            if(user instanceof Speedster)
-                userSpeed /= ((Speedster) user).getSpeedWarp();
-            
-            double theta = Math.random()-0.5;
-            double alpha = Math.random()*2*Math.PI;
-            
-            double wobbleMagnitude = Math.pow(userSpeed/(userSpeed+4), 2)/(2*Math.log(10*(1+counter)));
-            
-            Vector wobble = new Vector(wobbleMagnitude, theta, alpha);
-            
-            dir.addVectorToThis(wobble);
-            dir = dir.unitVector();
+            if(Properties.USE_RECOIL && HAS_RECOIL){
+                double userSpeed = user.getVelocity().getMagnitude();
+                
+                if(user instanceof Speedster)
+                    userSpeed /= ((Speedster) user).getSpeedWarp();
+                
+                if(userSpeed < 0.5)
+                    userSpeed = 0;
+                
+                userSpeed *= (9 - 8*Math.pow(Vector.cosOfAngleBetween(user.getVelocity(), dir), 2))/9;
+                
+                double theta = Math.random()-0.5;
+                double alpha = Math.random()*2*Math.PI;
 
+                double wobbleMagnitude = Math.pow(userSpeed/(userSpeed+4), 2)/(2*Math.log(10*(1+counter)));
+
+                Vector wobble = new Vector(wobbleMagnitude, theta, alpha);
+
+                dir.addVectorToThis(wobble);
+
+                dir = dir.unitVector();
+            }
+            
             Coordinate start = new Coordinate(user.getPosition().X(), user.getPosition().Y(), user.getPosition().Z());
             start.addVector(new Vector(dir,user.getSize()+0.2));
             

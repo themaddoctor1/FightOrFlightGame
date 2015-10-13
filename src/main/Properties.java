@@ -17,6 +17,7 @@ public class Properties {
             REQUIRE_SPEED_CHARGE = true,
             SHOW_LOGO_SCREEN = false,
             USE_FOV_SPEED_CHANGE = false,
+            USE_RECOIL = true,
             USE_SPEED_LIMIT = true
     ;
     public static double MOUSE_SENSITIVITY = 12;
