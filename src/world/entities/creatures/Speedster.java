@@ -49,13 +49,13 @@ public abstract class Speedster extends Humanoid{
     
     public double getAcceleration(){
         if(!Properties.REQUIRE_SPEED_CHARGE || (charge > 0))
-            return (50 - 45/Math.pow(chargeCapacity+1,1/10)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),2)));
+            return (50 - 45/Math.pow(chargeCapacity+1,1/9)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),4)));
         return 5;
     }
     
     public double getSpeedLimit(){
         if(!Properties.REQUIRE_SPEED_CHARGE || (charge > 0))
-            return (100 - 97/Math.pow(chargeCapacity+1,1)) * (Math.log10(chargeCapacity + 10));
+            return (100 - 97/Math.pow(chargeCapacity+1,1)) * (Math.log10((chargeCapacity*10) + 10));
         return 3;
     }
     
@@ -85,7 +85,7 @@ public abstract class Speedster extends Humanoid{
         if(velocity.getMagnitude() > 0){
             double KI = Math.pow(velocity.getMagnitude(),2)/2.0;
             
-            double chargeDerivative = Math.pow(10, -2.5)/(Math.pow(chargeCapacity+1,6));
+            double chargeDerivative = Math.pow(10, -2.5)/(Math.pow(chargeCapacity+1,7));
             
             double change = chargeDerivative * KI * perceivedTime;
             
