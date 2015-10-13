@@ -61,7 +61,7 @@ public class UpgradeGunAmmoButton extends UpgradeButton {
     @Override
     public int upgradeCost() {
         Gun g = ((Gun)Controller.getPlayer().getWeapons().get(1));
-        return (int)(5*Math.log10(10*(g.MAX_AMMO-7))*Math.sqrt(g.MAX_AMMO-7));
+        return (int)(5*Math.log10(10*(g.MAX_AMMO/8.0))*Math.sqrt(g.MAX_AMMO/8.0));
     }
 
     @Override
