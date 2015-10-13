@@ -11,10 +11,10 @@ import gui.Interface3D;
 import gui.shapes.Polygon3D;
 import items.Gun;
 import java.awt.Graphics;
+import java.awt.Color;
 import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
-import world.WorldManager;
 
 /**
  *
@@ -53,7 +53,11 @@ public class Gunman extends Humanoid{
     }
     
     @Override
-    public void draw(Graphics g, Camera c){Coordinate a,b;
+    public void draw(Graphics g, Camera c){
+        
+        g.setColor(Color.BLACK);
+        
+        Coordinate a,b;
         a = new Coordinate(getPosition().X(), getPosition().Y() - 0.2 * getSize(), getPosition().Z());
         b = new Coordinate(
                 getPosition().X() + 0.2 * getSize() * Math.cos(faceXZ()+Math.PI/2.0), 
