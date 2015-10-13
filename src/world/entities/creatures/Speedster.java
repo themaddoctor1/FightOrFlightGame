@@ -123,4 +123,8 @@ public abstract class Speedster extends Humanoid{
         Scoreboard.modXP(20*Math.log10(10*Scoreboard.wave()));
     }
     
+    public void modCharge(double amt) {
+        charge += amt;
+    }
+    
 }

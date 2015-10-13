@@ -58,7 +58,7 @@ public class Scoreboard {
         if(wave <= 3){
             return new DefaultPattern(enemyCount, true, false, false);
         } else if(wave <= 7){
-            return new DefaultPattern(enemyCount, true, true, false);
+            return new DefaultPattern(enemyCount, true, true, true);
         } else {
             return new DefaultPattern(enemyCount, true, true, true);
         }

@@ -15,19 +15,21 @@ import java.awt.Graphics2D;
 import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
+import world.WorldManager;
+import world.entities.Entity;
 
 /**
  *
  * @author Christopher
  */
-public class HoverDrone extends Creature{
+public class DrainDrone extends Creature{
     
     private double preferredAltitude = 4;
     
-    public HoverDrone(Coordinate pos){
+    public DrainDrone(Coordinate pos){
         super(pos,0.3,25);
         //pos.addVector(new Vector(preferredAltitude - pos.Y(), 0, Math.PI/2.0));
-        weapon = new Gun(100, -1, 1);
+        weapon = null;
     }
 
     @Override
@@ -38,9 +40,11 @@ public class HoverDrone extends Creature{
         //Counters gravity
         //getVelocity().addVectorToThis(new Vector(9.81*time,0,Math.PI/2.0));
         
+        Player p = Controller.getPlayer();
+        
         //Moves towards the player
         double magnitude = 10 * time;
-        Vector v = new Vector(getPosition(), Controller.getPlayer().getPosition());
+        Vector v = new Vector(getPosition(), p.getPosition());
         magnitude *= (1 - 0.5*Vector.cosOfAngleBetween(new Vector(1, getVelocity().getAngleXZ(), 0), v));
         v = new Vector(magnitude, v.getAngleXZ(), 0);
         getVelocity().addVectorToThis(v);
@@ -63,8 +67,21 @@ public class HoverDrone extends Creature{
             getVelocity().addVectorToThis(new Vector(2*time,0,Math.PI/2.0));
         }
         
-        if(Coordinate.relativeDistance(getPosition(), Controller.getPlayer().getPosition()) >= 2.5)
-            weapon.use(time, this, Controller.getPlayer());
+        double drainMultiplier = 1;
+        for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++){
+            Entity e = WorldManager.getWorld().getEntities().get(i);
+            if(this.equals(this))
+                continue;
+            else if(e instanceof DrainDrone)
+                drainMultiplier += 1 / Coordinate.relativeDistance(getPosition(), e.getPosition());
+        }
+        
+        drainMultiplier *= 10;
+        
+        double speedDrain = drainMultiplier*Math.sqrt(1+p.getChargeCapacity())*time*p.getSpeedWarp()*Math.max(Math.pow(p.getChargeCapacity(), 3), Math.cbrt(p.getChargeCapacity())) * Math.sqrt(1+Math.pow(p.getCharge(),2)) 
+                / Math.pow(Coordinate.relativeDistance(p.getPosition(), getPosition()), 2);
+        
+        p.modCharge(-Math.abs(speedDrain));
         
     }
 
@@ -83,7 +100,7 @@ public class HoverDrone extends Creature{
         int[] posit = c.getPlanarCoordinate(getPosition());
         double radius = Math.asin(getSize() / Coordinate.relativeDistance(c.getPosition(), getPosition()));
         radius *= Interface3D.getInterface3D().getPixelsPerRadian();
-        g.setColor(new Color(32,32,32));
+        g.setColor(new Color(24,24,64));
         ((Graphics2D) g).fillOval(posit[0] - (int) radius, posit[1] - (int) radius, (int)(2*radius), (int)(2*radius));
     }
     
