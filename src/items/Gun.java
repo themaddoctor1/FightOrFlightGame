@@ -19,6 +19,7 @@ import world.WorldManager;
 import world.entities.Bullet;
 import world.entities.creatures.Creature;
 import world.entities.Entity;
+import world.entities.creatures.Speedster;
 
 /**
  *
@@ -73,13 +74,27 @@ public class Gun extends Weapon{
         //If 0 ammo, return. Negative ammo count is meant to represent infinite ammo.
         
         if(ammoCount > 0 || MAX_AMMO <= 0) {
-        
+            
             Vector dir = new Vector(1,((Creature) user).faceXZ(), ((Creature) user).faceY());
-
+            
+            double userSpeed = user.getVelocity().getMagnitude() * (9 - 8*Math.pow(Vector.cosOfAngleBetween(user.getVelocity(), dir), 2))/9;
+            
+            if(user instanceof Speedster)
+                userSpeed /= ((Speedster) user).getSpeedWarp();
+            
+            double theta = Math.random()-0.5;
+            double alpha = Math.random()*2*Math.PI;
+            
+            double wobbleMagnitude = Math.pow(userSpeed/(userSpeed+4), 2)/(2*Math.log(10*(1+counter)));
+            
+            Vector wobble = new Vector(wobbleMagnitude, theta, alpha);
+            
+            dir.addVectorToThis(wobble);
+            dir = dir.unitVector();
 
             Coordinate start = new Coordinate(user.getPosition().X(), user.getPosition().Y(), user.getPosition().Z());
             start.addVector(new Vector(dir,user.getSize()+0.2));
-
+            
             Vector vel = new Vector(dir, 10);
             vel.addVectorToThis(user.getVelocity());
 
