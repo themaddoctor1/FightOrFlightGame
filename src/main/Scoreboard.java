@@ -56,12 +56,13 @@ public class Scoreboard {
         /*if(wave%10 == 0)
             return new SpeedsterPattern();*/
         if(wave <= 3){
-            return new DefaultPattern(enemyCount, true, false, false);
+            return new DefaultPattern(enemyCount, true, false, false, false);
         } else if(wave <= 7){
-            return new DefaultPattern(enemyCount, true, true, false);
-        } else {
-            return new DefaultPattern(enemyCount, true, true, true);
+            return new DefaultPattern(enemyCount, true, true, false, false);
+        } else if(wave <= 10){
+            return new DefaultPattern(enemyCount, true, true, true, false);
         }
+        return new DefaultPattern(enemyCount);
     }
     
     public static void ready(){
