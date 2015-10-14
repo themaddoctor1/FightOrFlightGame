@@ -22,6 +22,9 @@ import physics.Vector;
  */
 public class Gunman extends Humanoid{
     
+    private double faceXZ = 0;
+    private double faceY = 0;
+    
     public Gunman(Coordinate pos){
         super(pos,1,25);
         weapon = new Gun();
@@ -32,8 +35,22 @@ public class Gunman extends Humanoid{
         
         super.cycle(time);
         
+        Vector displacement = new Vector(getPosition(), Controller.getPlayer().getPosition());
+        
+        double Yvar = displacement.getAngleY() - faceY;
+        
+        faceY += time * 2 * Math.signum(Yvar) * (Math.pow(Yvar, 2)+1);
+        
+        double XZvar = displacement.getAngleXZ() - faceXZ;
+        while(XZvar > Math.PI)
+            XZvar -= 2*Math.PI;
+        while(XZvar < -Math.PI)
+            XZvar += 2*Math.PI;
+        
+        faceXZ += 2 * time * Math.signum(XZvar) * (Math.pow(XZvar, 2)+1);
+        
         if(getPosition().Y() <= getSize()){
-            Vector vel = new Vector((new Vector(getPosition(), Controller.getPlayer().getPosition())).unitVector(), 3);
+            Vector vel = new Vector((displacement).unitVector(), 3);
             vel.addVectorToThis(new Vector(velocity.getMagnitudeY(), 0, Math.PI/2.0));
             this.velocity = vel;
         }
@@ -44,12 +61,12 @@ public class Gunman extends Humanoid{
 
     @Override
     public double faceXZ() {
-        return new Vector(getPosition(), Controller.getPlayer().getPosition()).getAngleXZ();
+        return faceXZ; //new Vector(getPosition(), Controller.getPlayer().getPosition()).getAngleXZ();
     }
     
     @Override
     public double faceY() {
-        return new Vector(getPosition(), Controller.getPlayer().getPosition()).getAngleY();
+        return faceY; //new Vector(getPosition(), Controller.getPlayer().getPosition()).getAngleY();
     }
     
     @Override
