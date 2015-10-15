@@ -53,6 +53,8 @@ public class Scoreboard {
         int enemyCount = //(int)Math.pow(4+2*wave, 0.75);
                 (int)(4*wave / Math.pow(Math.log10(wave+10),4));
         
+        int specWave = (int)((4)*Math.random());
+        
         /*if(wave%10 == 0)
             return new SpeedsterPattern();*/
         if(wave <= 3){
@@ -61,7 +63,9 @@ public class Scoreboard {
             return new DefaultPattern(enemyCount, true, true, false, false);
         } else if(wave <= 10){
             return new DefaultPattern(enemyCount, true, true, true, false);
-        }
+        } else if(specWave == 0)
+            return new EnhancedEnemyPattern(enemyCount);
+        
         return new DefaultPattern(enemyCount);
     }
     

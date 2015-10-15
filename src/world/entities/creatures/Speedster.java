@@ -73,10 +73,11 @@ public abstract class Speedster extends Humanoid{
         
         
         if(Properties.REQUIRE_SPEED_CHARGE){
-            double chargeIncrease = 2*Math.sqrt(1+chargeCapacity)*perceivedTime*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
-            if(speedChargeRegenTimer >= 2)
+            double chargeIncrease = 2*Math.sqrt(1+chargeCapacity)*perceivedTime*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity))*((getPosition().Y() <= getSize())?1:0);
+            if(speedChargeRegenTimer >= 2){
                 chargeIncrease *= Math.sqrt(1+Math.pow(charge,2));
-            charge += chargeIncrease;
+                charge += chargeIncrease;
+            }
             speedChargeRegenTimer = Math.max(0, Math.min(speedChargeRegenTimer+perceivedTime, 2));
         }else
             charge = chargeCapacity;
@@ -89,7 +90,8 @@ public abstract class Speedster extends Humanoid{
             
             double change = chargeDerivative * KI * perceivedTime;
             
-            chargeCapacity += change;
+            if(getPosition().Y() <= getSize())
+                chargeCapacity += change;
             
             double magnitude = (0.008*Math.pow(velocity.getMagnitude(), 2));
             if(getPosition().Y() <= getSize())
