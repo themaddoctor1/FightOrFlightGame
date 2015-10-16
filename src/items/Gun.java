@@ -105,10 +105,10 @@ public class Gun extends Weapon{
             Coordinate start = new Coordinate(user.getPosition().X(), user.getPosition().Y(), user.getPosition().Z());
             start.addVector(new Vector(dir,user.getSize()+0.2));
             
-            Vector vel = new Vector(dir, 10);
+            Vector vel = new Vector(dir, 375);
             vel.addVectorToThis(user.getVelocity());
 
-            WorldManager.getWorld().getEntities().add(new Bullet(start, new Vector(dir, 375)));
+            WorldManager.getWorld().getEntities().add(new Bullet(start, vel));
 
             counter = 0;
             //Prevents highly unlikely overflow issues.

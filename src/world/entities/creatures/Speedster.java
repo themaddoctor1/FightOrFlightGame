@@ -50,13 +50,13 @@ public abstract class Speedster extends Humanoid{
     
     public double getAcceleration(){
         if(!Properties.REQUIRE_SPEED_CHARGE || (charge > 0))
-            return (50 - 45/Math.pow(chargeCapacity+1,1/9)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),4)));
+            return Math.log((Math.E+10*chargeCapacity))*(50 - 45/Math.pow(chargeCapacity+1,1/9)) * Math.cbrt((1 + Math.pow(getChargeCapacity(),2)) * (1 - Math.pow(getVelocity().getMagnitude()/getSpeedLimit(),4)));
         return 5;
     }
     
     public double getSpeedLimit(){
         if(!Properties.REQUIRE_SPEED_CHARGE || (charge > 0))
-            return (100 - 97/Math.pow(chargeCapacity+1,1)) * (Math.log10((chargeCapacity*10) + 10));
+            return (100 - 97/Math.pow(chargeCapacity+1,1)) * (Math.log10((chargeCapacity*10) + 10))*Math.log10(10+Math.pow(chargeCapacity,2)/5);
         return 3;
     }
     
