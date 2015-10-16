@@ -7,6 +7,7 @@ package world.entities;
 
 import gui.Camera;
 import gui.Interface3D;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import physics.*;
@@ -43,6 +44,9 @@ public abstract class Entity {
     
     
     public void draw(Graphics g, Camera c) {
+        
+        g.setColor(Color.BLACK);
+        
         int[] posit = c.getPlanarCoordinate(getPosition());
         double radius = Math.asin(getSize() / Coordinate.relativeDistance(c.getPosition(), getPosition()));
         radius *= Interface3D.getInterface3D().getPixelsPerRadian();

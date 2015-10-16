@@ -53,7 +53,8 @@ public class Scoreboard {
         int enemyCount = //(int)Math.pow(4+2*wave, 0.75);
                 (int)(4*wave / Math.pow(Math.log10(wave+10),4));
         
-        int specWave = (int)((4)*Math.random());
+        int startSpecWave = 13;
+        int specWave = (int)((6.0)*Math.random());
         
         /*if(wave%10 == 0)
             return new SpeedsterPattern();*/
@@ -63,8 +64,11 @@ public class Scoreboard {
             return new DefaultPattern(enemyCount, true, true, false, false);
         } else if(wave <= 10){
             return new DefaultPattern(enemyCount, true, true, true, false);
-        } else if(specWave == 0)
-            return new EnhancedEnemyPattern(enemyCount);
+        } else if(specWave == 0 && wave >= startSpecWave){
+            return new EnhancedEnemyPattern(enemyCount);  //Enhanced Enemy Wave
+        } else if(specWave == 1 && wave >= startSpecWave){
+            return new DroneStrikePattern(enemyCount);  //Death From Above
+        }
         
         return new DefaultPattern(enemyCount);
     }

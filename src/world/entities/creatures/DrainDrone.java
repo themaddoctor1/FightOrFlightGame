@@ -81,8 +81,10 @@ public class DrainDrone extends Creature{
         
         drainMultiplier *= 10 * drainers;
         
-        double speedDrain = drainMultiplier*Math.sqrt(1+p.getChargeCapacity())*time*p.getSpeedWarp()*Math.max(Math.pow(p.getChargeCapacity(), 3), Math.cbrt(p.getChargeCapacity())) * Math.sqrt(1+Math.pow(p.getCharge(),2)) 
+        double speedDrain = drainMultiplier*Math.sqrt(1+p.getChargeCapacity())*time*p.getSpeedWarp()*Math.max(Math.pow(p.getChargeCapacity(), 3), Math.cbrt(p.getChargeCapacity()))
                 / Math.pow(Coordinate.relativeDistance(p.getPosition(), getPosition()), 2);
+        
+        speedDrain *= Math.sqrt(1+Math.pow(p.getCharge(),2))*Math.pow(Math.max(0, Math.min(Controller.getPlayer().speedChargeRegenTimer()-1, 1)), 2);
         
         p.modCharge(-Math.abs(speedDrain));
         

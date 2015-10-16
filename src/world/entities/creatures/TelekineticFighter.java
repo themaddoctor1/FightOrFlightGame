@@ -25,8 +25,6 @@ public class TelekineticFighter extends Humanoid{
     private final double MAX_ENERGY = 100;
     private double energy;
     private boolean active = false;
-    
-    private final boolean THROW_PLAYER = false;
     private final boolean STOP_BULLETS = true;
     
     public TelekineticFighter(Coordinate pos){
@@ -54,29 +52,43 @@ public class TelekineticFighter extends Humanoid{
         
         double relDist = Coordinate.relativeDistance(pos, p.getPosition());
         
-        double force = 12;
-        
-        if(energy > 0 && active && relDist < 20 && THROW_PLAYER){
+        if(energy > 0 && active && relDist < 20){
             
-            double vertAng = 0;
+            double forceFactor = Math.sqrt(1/(Math.log((Math.sqrt(1+Coordinate.relativeDistance(p.getPosition(), pos)))))/2.0);
             
-            if(p.getPosition().Y() < 2 || (p.getVelocity().getAngleY() > 0 && p.getPosition().Y() < 10))
-                vertAng = Math.PI/2.0 + 0.2 * (Math.random()-0.5);
-            else {
-                vertAng = -Math.PI/2.0;
-                force *= Math.sqrt(1 + Math.pow(energy/MAX_ENERGY,2));
-            }
+            System.out.println(forceFactor);
             
-            p.getVelocity().addVectorToThis(new Vector(force*time, new Vector(getPosition(), p.getPosition()).getAngleXZ(), vertAng));
-            energy -= 50*time;
+            //Stops the player
+            Vector playerStop = new Vector(p.getVelocity().unitVector(), -0.9*time*p.getAcceleration() * forceFactor);
+            playerStop = new Vector(playerStop.getMagnitudeXZ(), playerStop.getAngleXZ(), 0);
+            p.getVelocity().addVectorToThis(playerStop);
+
+            //Suspends the player in midair
+            p.getVelocity().addVectorToThis(new Vector(9.81*time*forceFactor, 0, Math.PI/2.0));
+
+            double alt = 0.5 + p.getSize();
+
+            double altDisp = p.getPosition().Y() - alt;
+
+            double vYdesired = -Math.sqrt(10*Math.abs(altDisp))*Math.signum(altDisp);
+
+            if(p.getVelocity().getMagnitudeY() < vYdesired)
+                p.getVelocity().addVectorToThis(new Vector(10*time * forceFactor, 0, Math.PI/2.0));
+            else if(p.getVelocity().getMagnitudeY() > vYdesired)
+                p.getVelocity().addVectorToThis(new Vector(-10*time * forceFactor, 0, Math.PI/2.0));
             
+            energy -= 40*time;
             
-            
-        } else if(active) {
+        } else if(active && energy < 0) {
             active = false;
         } else {
-            energy += 50 * time;
+            energy += 75 * time;
         }
+        
+        System.out.println("Energy: " + energy);
+        
+        
+        
         
         if(STOP_BULLETS){
             ArrayList<Entity> bullets = new ArrayList<>(), allEntities = WorldManager.getWorld().getEntities();
@@ -119,9 +131,10 @@ public class TelekineticFighter extends Humanoid{
                 * time
                 * Controller.getPlayer().getSpeedWarp()
                 * Math.max(Math.pow(Controller.getPlayer().getChargeCapacity(), 3), Math.cbrt(Controller.getPlayer().getChargeCapacity())) 
-                * Math.sqrt(1+Math.pow(Controller.getPlayer().getCharge(),2)) 
                 / Math.pow(Coordinate.relativeDistance(Controller.getPlayer().getPosition(), getPosition()), 2);
-
+        
+        speedDrain *= Math.sqrt(1+Math.pow(p.getCharge(),2))*Math.pow(Math.max(0, Math.min(Controller.getPlayer().speedChargeRegenTimer()-1, 1)), 2);
+        
         Controller.getPlayer().modCharge(-Math.abs(speedDrain));
         
         energy += Math.pow((100*p.getChargeCapacity()/relDist), 2);
@@ -144,11 +157,7 @@ public class TelekineticFighter extends Humanoid{
     @Override
     public void killSelf(){
         int worth = 1;
-        if(STOP_BULLETS && THROW_PLAYER)
-            worth += 14;
-        else if(STOP_BULLETS)
-            worth += 4;
-        else if(THROW_PLAYER)
+        if(STOP_BULLETS)
             worth += 4;
         Scoreboard.modXP(Math.log10(worth*Scoreboard.wave()));
         super.killSelf();
