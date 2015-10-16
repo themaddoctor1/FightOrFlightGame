@@ -10,3 +10,4 @@ must fight endless waves of enemies that become more difficult to fight over tim
 | Fist Fighter | An enemy that fights using melee. | 1 |
 | Ghost | A partially invisible gunman that is hard to see. | 11 |
 | Gunman | An enemy that shoots bullets at the player. | 4 |
+| Telekinetic | An enemy that can stop bullets and the player using its mind. | 13 |
