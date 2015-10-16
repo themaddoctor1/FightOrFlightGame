@@ -51,7 +51,7 @@ public class Player extends Speedster{
                     4*Math.sqrt(1+chargeCapacity)*time*getSpeedWarp()*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
                     //(time*getSpeedWarp())*Math.pow(10,3)*Math.log10(1+10*Math.pow(getChargeCapacity(),2.5)/(Math.pow(getChargeCapacity(),2)+10)) * Math.max(Math.pow((velocity.getMagnitude()) / getSpeedLimit(), 3), Math.cbrt(velocity.getMagnitude()) / getSpeedLimit());
             
-            if(speedChargeRegenTimer >= 2 && getVelocity().getMagnitude() > 4)
+            if(getVelocity().getMagnitude() > 3)
                 speedChargeRegenTimer = 0;
             
             charge -= chargeDecrease;

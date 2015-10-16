@@ -44,7 +44,8 @@ public abstract class Speedster extends Humanoid{
     
     public double getCharge() { return charge; }
     public double maxCharge(){
-        return Math.pow(1 + 10*(Math.max(Math.pow(chargeCapacity, 2), Math.sqrt(chargeCapacity))),2);
+        double innerMagnitude = 1 + 10*(Math.max(Math.pow(chargeCapacity, 2), Math.sqrt(chargeCapacity)));
+        return Math.pow(innerMagnitude, 2)*Math.log10(Math.pow(innerMagnitude, 2));
     }
     
     public double getAcceleration(){
