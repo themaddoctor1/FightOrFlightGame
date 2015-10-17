@@ -75,7 +75,18 @@ public class Player extends Speedster{
         return super.maxHealth() * Math.pow(1.5, hpLevel) + 10*Math.pow(hpLevel, 1.5);
     }
 
- 
+    private int capacitanceLevel = 0;
+    public int capacitanceUpgradeLevel(){
+        return capacitanceLevel;
+    }
+    
+    public void levelUpCapacitance(){ capacitanceLevel++; }
+    
+    @Override
+    public double maxCharge(){
+        return super.maxCharge()*Math.pow(1.1, capacitanceLevel);
+    }
+    
     private int hpLevel = 0;
     public void levelUpHP(){
         hpLevel++;

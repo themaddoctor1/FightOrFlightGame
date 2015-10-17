@@ -18,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import main.Scoreboard;
 
 /**
@@ -34,53 +35,68 @@ public class UpgradeDisplay extends Display{
     
     public UpgradeDisplay(){
         
-        defaultButtons = new DisplayButton[]{
-                new ResumeButton(Interface3D.getInterface3D().getCenterX()-90, Interface3D.getInterface3D().getHeight() - 120),
-                new UpgradeCategoryButton(Interface3D.getInterface3D().getCenterX()-150, Interface3D.getInterface3D().getCenterY()-320, "Player"),
-                new UpgradeCategoryButton(Interface3D.getInterface3D().getCenterX() -50, Interface3D.getInterface3D().getCenterY()-320, "Gun"),
-                new UpgradeCategoryButton(Interface3D.getInterface3D().getCenterX() +50, Interface3D.getInterface3D().getCenterY()-320, "Fist")
-        };
+        Interface3D interf = Interface3D.getInterface3D();
         
+        
+        /*
         buttons.put(
                 "All",
                 new DisplayButton[]{
-                        new UpgradeHpButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273),
-                        new UpgradeSpeedButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 273),
-                        new UpgradeFistDmgButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 123),
-                        new UpgradeFistSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 123),
-                        new UpgradeGunRldButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() + 27),
-                        new UpgradeGunSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() + 27),
-                        new UpgradeGunAmmoButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() + 177)
+                        new UpgradeHpButton(interf.getCenterX()-123, interf.getCenterY() - 273),
+                        new UpgradeSpeedButton(interf.getCenterX()+27, interf.getCenterY() - 273),
+                        new UpgradeFistDmgButton(interf.getCenterX()-123, interf.getCenterY() - 123),
+                        new UpgradeFistSpdButton(interf.getCenterX()+27, interf.getCenterY() - 123),
+                        new UpgradeGunRldButton(interf.getCenterX()-123, interf.getCenterY() + 27),
+                        new UpgradeGunSpdButton(interf.getCenterX()+27, interf.getCenterY() + 27),
+                        new UpgradeGunAmmoButton(interf.getCenterX()-123, interf.getCenterY() + 177)
             
         });
-        
+        */
         buttons.put(
                 "Player",
                 new DisplayButton[]{
-                        new UpgradeHpButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273),
-                        new UpgradeSpeedButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 273),
+                        new UpgradeHpButton(interf.getCenterX()-123, interf.getCenterY() - 273),
+                        new UpgradeSpeedButton(interf.getCenterX()+27, interf.getCenterY() - 273),
+                        new UpgradeSpeedCapacityButton(interf.getCenterX()-123, interf.getCenterY() - 123)
             
         });
         
         buttons.put(
                 "Gun",
                 new DisplayButton[]{
-                        new UpgradeGunRldButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273),
-                        new UpgradeGunSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 273),
-                        new UpgradeGunAmmoButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 123)
+                        new UpgradeGunRldButton(interf.getCenterX()-123, interf.getCenterY() - 273),
+                        new UpgradeGunSpdButton(interf.getCenterX()+27, interf.getCenterY() - 273),
+                        new UpgradeGunAmmoButton(interf.getCenterX()-123, interf.getCenterY() - 123)
             
         });
         
         buttons.put(
                 "Fist",
                 new DisplayButton[]{
-                        new UpgradeFistDmgButton(Interface3D.getInterface3D().getCenterX()-123, Interface3D.getInterface3D().getCenterY() - 273),
-                        new UpgradeFistSpdButton(Interface3D.getInterface3D().getCenterX()+27, Interface3D.getInterface3D().getCenterY() - 273),
+                        new UpgradeFistDmgButton(interf.getCenterX()-123, interf.getCenterY() - 273),
+                        new UpgradeFistSpdButton(interf.getCenterX()+27, interf.getCenterY() - 273),
             
         });
         
+        DisplayButton[] pre = new DisplayButton[]{
+                new ResumeButton(interf.getCenterX()-90, interf.getHeight() - 120)
+        };
         
-        index = "All";
+        Iterator iter = buttons.keySet().iterator();
+        ArrayList<DisplayButton> btns = new ArrayList<>();
+        for(DisplayButton db : pre)
+            btns.add(db);
+        for(int i = 0; i < buttons.size(); i++){
+            String nm = (String)iter.next();
+            btns.add(new UpgradeCategoryButton(interf.getCenterX()-150+(100*i), interf.getCenterY()-320-20*(i/3), nm));
+        }
+            
+        
+        defaultButtons = new DisplayButton[btns.size()];
+        for(int i = 0; i < btns.size(); i++)
+            defaultButtons[i] = btns.get(i);
+        
+        index = "Player";
     }
     
     @Override
@@ -90,7 +106,7 @@ public class UpgradeDisplay extends Display{
         Interface3D interf = Interface3D.getInterface3D();
         
         g2.setFont(new Font("Courier New", Font.BOLD, 16));
-        g2.drawString("XP: " + (int)(Scoreboard.XP()), interf.getCenterX() - (int)(5*(4+Math.log10(1+Scoreboard.XP()))), interf.getCenterY()-310);
+        g2.drawString("XP: " + (int)(Scoreboard.XP()), interf.getCenterX() - (int)(5*(4+Math.log10(1+Scoreboard.XP()))), interf.getCenterY()-310-20*(buttons.size()/3));
         
         g2.setColor(Color.BLACK);
         
@@ -175,6 +191,10 @@ public class UpgradeDisplay extends Display{
 
     public void setButtonCategory(String menuName) {
         index = menuName;
+    }
+
+    public String getSubmenuName() {
+        return index;
     }
     
 }

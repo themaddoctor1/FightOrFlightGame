@@ -36,6 +36,13 @@ public class UpgradeCategoryButton extends DisplayButton{
     @Override
     public void draw(Graphics g) {
         super.draw(g);
+        
+        g.setColor(Color.BLACK);
+        g.drawRect(x, y, w, h);
+        
+        for(int i = 1; i < 3 && ((UpgradeDisplay) Interface3D.getInterface3D().getDisplay()).getSubmenuName().equals(menuName); i++)
+            g.drawRect(x+i, y+i, w-2*i, h-2*i);
+        
         g.setFont(new Font("Courier New", Font.PLAIN, 16));
         
         boolean select = isInButton(Interface3D.getInterface3D().mouseX(), Interface3D.getInterface3D().mouseY());
@@ -45,7 +52,7 @@ public class UpgradeCategoryButton extends DisplayButton{
         else
             g.setColor(Color.BLACK);
         
-        g.drawString(menuName, x+w/2-5*menuName.length(), y+h-2);
+        g.drawString(menuName, x+w/2-5*menuName.length(), y+h-5);
     }
 
     @Override
