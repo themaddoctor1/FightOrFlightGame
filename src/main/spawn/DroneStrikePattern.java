@@ -37,12 +37,14 @@ public class DroneStrikePattern extends SpawnPattern{
             Coordinate c = new Coordinate(Controller.getPlayer().getPosition().X(), 100, Controller.getPlayer().getPosition().Z());
             c.addVector(v);
             
-            int type = (int)(2*Math.random());
+            int type = (int)(3*Math.random());
             
             if(type == 0)
                 WorldManager.getWorld().getEntities().add(new HoverDrone(c));
             else if(type == 1)
                 WorldManager.getWorld().getEntities().add(new DrainDrone(c));
+            else if(type == 2)
+                WorldManager.getWorld().getEntities().add(new HealthDrainDrone(c));
             else
                 spawned--;
             

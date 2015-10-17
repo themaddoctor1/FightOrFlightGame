@@ -59,7 +59,7 @@ public class Scoreboard {
         /*if(wave%10 == 0)
             return new SpeedsterPattern();*/
         if(wave <= 3){
-            return new DefaultPattern(enemyCount, true, false, true, false);
+            return new DefaultPattern(enemyCount, true, false, false, false);
         } else if(wave <= 7){
             return new DefaultPattern(enemyCount, true, true, false, false);
         } else if(wave <= 10){
