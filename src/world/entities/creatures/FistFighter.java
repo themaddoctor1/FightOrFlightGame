@@ -20,7 +20,7 @@ import world.WorldManager;
 public class FistFighter extends Humanoid{
     
     public FistFighter(Coordinate pos){
-        super(pos,1,25);
+        super(pos,1,25*Math.log10(10+Scoreboard.wave()));
         weapon = new Fist(10, 1);
     }
 

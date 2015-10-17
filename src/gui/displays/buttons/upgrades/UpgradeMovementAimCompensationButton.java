@@ -39,8 +39,6 @@ public class UpgradeMovementAimCompensationButton extends OneOffUpgradeButton {
         g2.drawLine(x+2*w/5, y+h/2, x+3*w/5, y+h/2);
         g2.drawLine(x+w/2, y+2*h/5, x+w/2, y+3*h/5);
         
-        g2.setColor(Color.GRAY);
-        
         g2.drawLine(x+w/5, y+3*h/10, x+2*w/5, y+3*h/10);
         g2.drawLine(x+3*w/10, y+h/5, x+3*w/10, y + 2*h/5);
         
@@ -49,11 +47,6 @@ public class UpgradeMovementAimCompensationButton extends OneOffUpgradeButton {
             for(int i = 0; i <= 3; i++)
                 g2.drawRect(x+i,y+i,w-2*i,h-2*i);
         }
-        
-        g2.setColor(Color.red);
-        g2.fillRect(x+w/2+1, y+5, 3, (h-10)/2);
-        g2.setColor(Color.BLACK);
-        g2.fillRect(x+w/2+1, y+h/2, 3, (h-10)/2);
         
         g2.setFont(new Font("Courier New", Font.PLAIN, 16));
         g2.drawString("+Crosshair", x+h/2-45, y+h+15);

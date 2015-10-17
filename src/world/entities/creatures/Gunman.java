@@ -26,7 +26,7 @@ public class Gunman extends Humanoid{
     private double faceY = 0;
     
     public Gunman(Coordinate pos){
-        super(pos,1,25);
+        super(pos,1,35*Math.log10(10+Scoreboard.wave()));
         weapon = new Gun();
     }
 

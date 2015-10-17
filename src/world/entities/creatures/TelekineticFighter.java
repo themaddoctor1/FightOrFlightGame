@@ -28,7 +28,7 @@ public class TelekineticFighter extends Humanoid{
     private final boolean STOP_BULLETS = true;
     
     public TelekineticFighter(Coordinate pos){
-        super(pos,1,25);
+        super(pos,1,20*Math.log10(10+Scoreboard.wave()));
         weapon = new Fist(10, 1);
         energy = MAX_ENERGY*(1-1/(Controller.getPlayer().getChargeCapacity()+1));
     }
