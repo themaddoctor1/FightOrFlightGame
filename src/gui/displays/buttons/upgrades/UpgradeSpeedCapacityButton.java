@@ -61,7 +61,10 @@ public class UpgradeSpeedCapacityButton extends UpgradeButton {
 
     @Override
     protected void applyUpgrade() {
-        
+        if(Scoreboard.XP() >= upgradeCost()){
+            Scoreboard.modXP(-upgradeCost());
+            Controller.getPlayer().levelUpCapacitance();
+        }
     }
     
 }

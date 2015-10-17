@@ -53,10 +53,12 @@ public class DefaultPattern extends SpawnPattern{
             else if(rand == 1 && GUN){
                 WorldManager.getWorld().getEntities().add(new Gunman(c));
             }else if(rand == 2 && DRONE){
-                int type = (int)(2*Math.random());
+                int type = (int)(3*Math.random());
                 c.addVector(new Vector(20-1,0,Math.PI/2.0));
                 if(type == 0)
                     WorldManager.getWorld().getEntities().add(new HoverDrone(c));
+                else if(type == 1)
+                    WorldManager.getWorld().getEntities().add(new HealthDrainDrone(c));
                 else
                     WorldManager.getWorld().getEntities().add(new DrainDrone(c));
             } else if(rand == 3 && ENHANCED) {
