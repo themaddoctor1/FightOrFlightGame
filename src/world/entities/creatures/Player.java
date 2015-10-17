@@ -110,5 +110,13 @@ public class Player extends Speedster{
     }
     
     
+    private boolean velocityCompassActive = false;
+    public void setVelocityCompassState(boolean state){ velocityCompassActive = state; }
+    public boolean velocityCompass(){ return velocityCompassActive; }
+    
+    private boolean shootingMoveCompActive = false;
+    public void setShootingMoveCompState(boolean state){ shootingMoveCompActive = state; }
+    public boolean shootingMoveComp(){ return shootingMoveCompActive; }
+    
     
 }

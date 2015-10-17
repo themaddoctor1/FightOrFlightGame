@@ -136,6 +136,24 @@ public class Gun extends Weapon{
         g.drawLine(centX-rad, centY, centX+rad, centY);
         g.drawLine(centX, centY-rad, centX, centY+rad);
         
+        if(Controller.getPlayer().shootingMoveComp()){
+            Vector aim = new Vector(375, Controller.getPlayer().faceXZ(), Controller.getPlayer().faceY());
+            aim.addVectorToThis(Controller.getPlayer().getVelocity());
+            
+            double xOff = Interface3D.getInterface3D().getPixelsPerRadian()*(aim.getAngleXZ() - Controller.getPlayer().faceXZ());
+            double yOff = Interface3D.getInterface3D().getPixelsPerRadian()*(aim.getAngleY() - Controller.getPlayer().faceY());
+            
+            
+            while(Math.abs(xOff) >= Math.PI*Interface3D.getInterface3D().getPixelsPerRadian())
+                xOff -= Math.signum(xOff)*2*Math.PI*Interface3D.getInterface3D().getPixelsPerRadian();
+            while(Math.abs(yOff) >= Math.PI*Interface3D.getInterface3D().getPixelsPerRadian())
+                yOff -= Math.signum(yOff)*2*Math.PI*Interface3D.getInterface3D().getPixelsPerRadian();
+            
+            
+            g.drawLine(centX-rad-(int)(xOff), centY-(int)(yOff), centX+rad-(int)(xOff), centY-(int)(yOff));
+            g.drawLine(centX-(int)(xOff), centY-rad-(int)(yOff), centX-(int)(xOff), centY+rad-(int)(yOff));
+        }
+        
         
         
         

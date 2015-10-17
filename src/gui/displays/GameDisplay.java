@@ -183,6 +183,7 @@ public class GameDisplay extends Display{
         g2.drawRect(10, 10, frame.getContentPane().getWidth()/5, 20);
         */
         
+        //Debug Stats
         g2.setFont(new Font("Courier New", Font.PLAIN, 12));
         g2.setColor(Color.BLACK);
         g2.drawString("Speed: " + (((int)(p.getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
@@ -192,6 +193,7 @@ public class GameDisplay extends Display{
         
         p.getWeapon().drawInterface(g2);
         
+        //XP Counter
         g2.setColor(new Color(255,255,255,96));
         
         String expString = "" + (int)(Scoreboard.XP());
@@ -207,6 +209,7 @@ public class GameDisplay extends Display{
         g2.fillOval(interf.getCenterX()-200, -100, 400, 200);
         g2.setColor(Color.BLACK);
         
+        //Round data bar
         double countdown = Scoreboard.timer();
         if(countdown > 0){
             g2.drawString("Press U to access", interf.getWidth() - 200, interf.getHeight()-100);
@@ -220,8 +223,20 @@ public class GameDisplay extends Display{
             g2.drawString("" + (Scoreboard.wave()), interf.getCenterX()-9-12*(int)(Math.log10(Scoreboard.wave())), 80);
         }
         
+        //Velocity Compass
+        if(p.velocityCompass()){
+            g2.drawOval(interf.getCenterX()-30, interf.getHeight()-80, 60, 30);
+            double magn = p.getVelocity().getMagnitude();
+            if(magn > 0){
+                double xz = p.getVelocity().getAngleXZ() - p.faceXZ() + Math.PI/2.0;
+                magn /= p.getSpeedLimit();
+                magn = Math.min(Math.sqrt(magn), 1);
+                g2.drawLine(interf.getCenterX(), interf.getHeight()-65, (int)(interf.getCenterX()+magn*30*Math.cos(xz)), interf.getHeight()-65 - (int)(magn*15*Math.sin(xz)));
+            }
+        }
+        
     }
-
+    
     @Override
     public void cycle() {
         

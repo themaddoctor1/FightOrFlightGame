@@ -57,7 +57,9 @@ public class UpgradeDisplay extends Display{
                 new DisplayButton[]{
                         new UpgradeHpButton(interf.getCenterX()-123, interf.getCenterY() - 273),
                         new UpgradeSpeedButton(interf.getCenterX()+27, interf.getCenterY() - 273),
-                        new UpgradeSpeedCapacityButton(interf.getCenterX()-123, interf.getCenterY() - 123)
+                        new UpgradeSpeedCapacityButton(interf.getCenterX()-123, interf.getCenterY() - 123),
+                        new UpgradeVelocityCompassButton(interf.getCenterX()+27, interf.getCenterY() - 123),
+                        new UpgradeMovementAimCompensationButton(interf.getCenterX()+27, interf.getCenterY() + 27)
             
         });
         
