@@ -58,8 +58,7 @@ public class UpgradeDisplay extends Display{
                         new UpgradeHpButton(interf.getCenterX()-123, interf.getCenterY() - 273),
                         new UpgradeSpeedButton(interf.getCenterX()+27, interf.getCenterY() - 273),
                         new UpgradeSpeedCapacityButton(interf.getCenterX()-123, interf.getCenterY() - 123),
-                        new UpgradeVelocityCompassButton(interf.getCenterX()+27, interf.getCenterY() - 123),
-                        new UpgradeMovementAimCompensationButton(interf.getCenterX()+27, interf.getCenterY() + 27)
+                        new UpgradeVelocityCompassButton(interf.getCenterX()+27, interf.getCenterY() - 123)
             
         });
         
@@ -68,7 +67,9 @@ public class UpgradeDisplay extends Display{
                 new DisplayButton[]{
                         new UpgradeGunRldButton(interf.getCenterX()-123, interf.getCenterY() - 273),
                         new UpgradeGunSpdButton(interf.getCenterX()+27, interf.getCenterY() - 273),
-                        new UpgradeGunAmmoButton(interf.getCenterX()-123, interf.getCenterY() - 123)
+                        new UpgradeGunAmmoButton(interf.getCenterX()-123, interf.getCenterY() - 123),
+                        new UpgradeRecoilButton(interf.getCenterX()+27, interf.getCenterY() - 123),
+                        new UpgradeMovementAimCompensationButton(interf.getCenterX()-123, interf.getCenterY() + 27)
             
         });
         

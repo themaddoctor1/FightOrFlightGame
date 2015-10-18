@@ -12,6 +12,7 @@ import gui.displays.MainMenuDisplay;
 import gui.displays.PauseDisplay;
 import gui.displays.UpgradeDisplay;
 import items.Fist;
+import items.Gun;
 import items.Weapon;
 import java.awt.AWTException;
 import java.awt.Robot;
@@ -126,12 +127,13 @@ public class Controller {
             KeyEvent.VK_D,          
             KeyEvent.VK_SPACE,      //Jump
             KeyEvent.VK_E,          //Shoot (Mouse control: Left click)
-            KeyEvent.VK_SHIFT,       //Brakes
+            KeyEvent.VK_SHIFT,      //Brakes
             KeyEvent.VK_B,
             KeyEvent.VK_P,          //Pause Game
             KeyEvent.VK_U,          //Upgrade menu
             KeyEvent.VK_MINUS,      //Previous weapon
-            KeyEvent.VK_EQUALS     //Next weapon
+            KeyEvent.VK_EQUALS,     //Next weapon
+            KeyEvent.VK_R           //Reload
         };
     }
     
@@ -219,6 +221,11 @@ public class Controller {
             if(!getState(15)){
                 currentPlayer.setWeapon(weapons.get(((index+1)%weapons.size())));
                 setState(keyCodes[15], true);
+            }
+            
+            if(getState(16)){
+                Gun g = ((Gun)Controller.getPlayer().getWeapons().get(1));
+                g.addAmmo(-g.ammoLeft());
             }
             
             //System.out.println(currentPlayer.getVelocity().toString(true));
