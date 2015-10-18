@@ -8,6 +8,7 @@ package main;
 
 import gui.Controller;
 import main.spawn.*;
+import world.World;
 import world.WorldManager;
 import world.entities.creatures.Player;
 
@@ -82,7 +83,7 @@ public class Scoreboard {
 
     public static void startGame() {
         WorldManager.stopSimulation();
-        WorldManager.getWorld().getEntities().clear();
+        WorldManager.setWorld(new World());
         Controller.setPlayer(new Player());
         WorldManager.getWorld().getEntities().add(Controller.getPlayer());
         running = true;

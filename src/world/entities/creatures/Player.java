@@ -31,8 +31,7 @@ public class Player extends Speedster{
         
         for(int i = 0; i < add.length; i++)
             weapons.add(add[i]);
-        
-        weapon = add[0];
+        setWeapon(add[0]);
         
         chargeCapacity = 0;
     }

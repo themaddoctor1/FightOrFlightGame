@@ -42,7 +42,7 @@ public class Controller {
     private long lastCheck;
     private static Camera c;
     
-    private static Player currentPlayer = new Player();
+    private static Player currentPlayer = null;
     
     private boolean[] mouseHeld = {false, false};
     
@@ -54,7 +54,10 @@ public class Controller {
      * @precondition No two entries in the array are the same.
      */
     public Controller(String nm, int[] codes){
-        c = new Camera(currentPlayer.getPosition(), 0, 0);
+        if(currentPlayer != null)
+            c = new Camera(currentPlayer.getPosition(), 0, 0);
+        else
+            c = new Camera(new Coordinate(1,0,0), 0, 0);
         name = nm;
         keyCodes = codes;
         status = new boolean[codes.length];
@@ -229,6 +232,9 @@ public class Controller {
             }
             
             //System.out.println(currentPlayer.getVelocity().toString(true));
+        } else {
+            setState(keyCodes[14], true);
+            setState(keyCodes[15], true);
         }
     }
     
