@@ -132,6 +132,10 @@ public abstract class Speedster extends Humanoid{
         charge += amt;
     }
     
+    public void modChargeCapacity(double amt) {
+        chargeCapacity += amt;
+    }
+    
     public double speedChargeRegenTimer(){
         return speedChargeRegenTimer;
     }

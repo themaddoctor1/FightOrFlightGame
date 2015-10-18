@@ -84,4 +84,15 @@ public class HostileSpeedster extends Speedster{
             return face.getAngleY();
     }
     
+    @Override
+    public void killSelf(){
+        Player p = Controller.getPlayer();
+        
+        double newCapacity = Math.cbrt(Math.pow(p.getChargeCapacity(), 3) + Math.pow(getChargeCapacity(), 3));
+        
+        p.modChargeCapacity(newCapacity - p.getChargeCapacity());
+        
+        super.killSelf();
+    }
+    
 }

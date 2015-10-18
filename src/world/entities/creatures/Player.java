@@ -117,6 +117,6 @@ public class Player extends Speedster{
     private boolean shootingMoveCompActive = false;
     public void setShootingMoveCompState(boolean state){ shootingMoveCompActive = state; }
     public boolean shootingMoveComp(){ return shootingMoveCompActive; }
-    
+
     
 }

@@ -54,7 +54,7 @@ public class Scoreboard {
                 (int)(4*wave / Math.pow(Math.log10(wave+10),4));
         
         int startSpecWave = 13;
-        int specWave = (int)((6.0)*Math.random());
+        int specWave = (int)((9.0)*Math.random());
         
         /*if(wave%10 == 0)
             return new SpeedsterPattern();*/
@@ -68,6 +68,8 @@ public class Scoreboard {
             return new EnhancedEnemyPattern(enemyCount);  //Enhanced Enemy Wave
         } else if(specWave == 1 && wave >= startSpecWave){
             return new DroneStrikePattern(enemyCount);  //Death From Above
+        } else if(specWave == 2 && wave >= startSpecWave){
+            return new SpeedsterPattern();  //Superspeed Enemies
         }
         
         return new DefaultPattern(enemyCount);
