@@ -34,7 +34,7 @@ public class Player extends Speedster{
         
         weapon = add[0];
         
-        this.chargeCapacity = 0;
+        chargeCapacity = 0;
     }
     
     @Override

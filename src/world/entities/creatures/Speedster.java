@@ -122,7 +122,10 @@ public abstract class Speedster extends Humanoid{
     
     @Override
     public void killSelf(){
-        Scoreboard.modXP(20*Math.log10(10*Scoreboard.wave()));
+        if(!(this instanceof Player)){
+            super.killSelf();
+            Scoreboard.modXP(20*Math.log10(10*Scoreboard.wave()));
+        }
     }
     
     public void modCharge(double amt) {
