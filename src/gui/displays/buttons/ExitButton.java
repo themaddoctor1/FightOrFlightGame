@@ -14,9 +14,9 @@ import java.awt.Graphics;
  *
  * @author Christopher
  */
-public class QuitButton extends DisplayButton{
+public class ExitButton extends DisplayButton{
 
-    public QuitButton(int X, int Y) {
+    public ExitButton(int X, int Y) {
         super(X, Y, 160, 40);
     }
 
@@ -32,7 +32,7 @@ public class QuitButton extends DisplayButton{
         else
             g.setColor(Color.BLACK);
         
-        g.drawString("QUIT", x+44, y+28);
+        g.drawString("EXIT", x+44, y+28);
     }
 
     @Override

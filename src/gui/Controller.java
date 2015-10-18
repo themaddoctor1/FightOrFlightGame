@@ -9,6 +9,7 @@ package gui;
 import gui.displays.GameDisplay;
 import gui.displays.GameOverDisplay;
 import gui.displays.MainMenuDisplay;
+import gui.displays.PauseDisplay;
 import gui.displays.UpgradeDisplay;
 import items.Fist;
 import items.Weapon;
@@ -127,10 +128,10 @@ public class Controller {
             KeyEvent.VK_E,          //Shoot (Mouse control: Left click)
             KeyEvent.VK_SHIFT,       //Brakes
             KeyEvent.VK_B,
-            KeyEvent.VK_ESCAPE,     //End Game
+            KeyEvent.VK_P,          //Pause Game
             KeyEvent.VK_U,          //Upgrade menu
             KeyEvent.VK_MINUS,      //Previous weapon
-            KeyEvent.VK_EQUALS      //Next weapon
+            KeyEvent.VK_EQUALS     //Next weapon
         };
     }
     
@@ -199,9 +200,10 @@ public class Controller {
                 currentPlayer.getWeapon().use(time, currentPlayer);
             
             if(getState(12)){
-                Scoreboard.endGame();
-                Interface3D.getInterface3D().setDisplay(new MainMenuDisplay());
-            } else if(getState(13) && Scoreboard.timer() > 0){
+                Scoreboard.pauseGame();
+                Interface3D.getInterface3D().setDisplay(new PauseDisplay());
+            } 
+            if(getState(13) && Scoreboard.timer() > 0){
                 Scoreboard.pauseGame();
                 Interface3D.getInterface3D().setDisplay(new UpgradeDisplay());
             }

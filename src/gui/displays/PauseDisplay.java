@@ -5,39 +5,42 @@
  */
 package gui.displays;
 
-import gui.Interface;
 import gui.Interface3D;
-import gui.displays.buttons.*;
+import gui.displays.buttons.DisplayButton;
+import gui.displays.buttons.QuitGameButton;
+import gui.displays.buttons.ResumeButton;
+import gui.displays.buttons.UpgradeCategoryButton;
+import gui.displays.buttons.upgrades.*;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import main.Scoreboard;
 
 /**
  *
  * @author Christopher
  */
-public class MainMenuDisplay extends Display{
+public class PauseDisplay extends Display{
     
-    DisplayButton[] buttons;
+    private boolean canExit = false;
     
-    public MainMenuDisplay(){
+    private DisplayButton[] buttons;
+    
+    public PauseDisplay(){
+        
+        Interface3D interf = Interface3D.getInterface3D();
+        
         buttons = new DisplayButton[]{
-            new StartButton(Interface3D.getInterface3D().getCenterX()-80, Interface3D.getInterface3D().getCenterY()),
-            new ExitButton(Interface3D.getInterface3D().getCenterX()-80, Interface3D.getInterface3D().getCenterY()+60)
-            
+            new ResumeButton(interf.getCenterX()-90, interf.getCenterY()),
+            new QuitGameButton(Interface3D.getInterface3D().getCenterX()-80, Interface3D.getInterface3D().getCenterY()+60)
         };
-    }
-    
-    public MainMenuDisplay(int W, int H){
-        buttons = new DisplayButton[]{
-            new StartButton(W/2-80, H/2),
-            new ExitButton(W/2-80, H/2+60)
-            
-        };
+        
     }
     
     @Override
@@ -45,13 +48,11 @@ public class MainMenuDisplay extends Display{
         
         Graphics2D g2 = (Graphics2D) g;
         
-        for(int i = 0; i < buttons.length; i++)
-            buttons[i].draw(g2);
-        
         g2.setColor(Color.BLACK);
         
-        g2.setFont(new Font("Courier New", Font.PLAIN, 48));
-        g2.drawString(" FIGHT OR FLIGHT ", Interface3D.getInterface3D().getCenterX() - 250, (int)(Interface3D.getInterface3D().getCenterY()*0.7));
+        g2.setFont(new Font("Courier New", Font.PLAIN, 80));
+        g2.drawString("PAUSED", Interface3D.getInterface3D().getCenterX()-150, Interface3D.getInterface3D().getCenterY()/2);
+        
         
         g2.setFont(new Font("Courier New", Font.PLAIN, 16));
         int disp = 250;
@@ -64,7 +65,10 @@ public class MainMenuDisplay extends Display{
         g2.drawString("U: Access Upgrade Menu", 10, Interface3D.getInterface3D().getCenterY()+disp+120);
         g2.drawString("- or =: Switch Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+140);
         
-        drawCursor(g2);
+        for(DisplayButton db : buttons)
+            db.draw(g);
+        
+        drawCursor(g);
         
     }
 
@@ -72,12 +76,15 @@ public class MainMenuDisplay extends Display{
     public void cycle() {
         
     }
-
+    
+    public void permitExit(){ canExit = true; }
+    public boolean canExit(){ return canExit; }
+    
     @Override
     public void keyTyped(KeyEvent e) {
         
     }
-
+    
     @Override
     public void keyPressed(KeyEvent e) {
         

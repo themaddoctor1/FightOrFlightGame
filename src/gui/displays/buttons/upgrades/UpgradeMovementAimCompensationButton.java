@@ -61,7 +61,10 @@ public class UpgradeMovementAimCompensationButton extends OneOffUpgradeButton {
 
     @Override
     protected void applyUpgrade() {
-        Controller.getPlayer().setShootingMoveCompState(true);
+        if(Scoreboard.XP() >= upgradeCost()){
+            Scoreboard.modXP(-upgradeCost());
+            Controller.getPlayer().setShootingMoveCompState(true);
+        }
     }
 
     @Override

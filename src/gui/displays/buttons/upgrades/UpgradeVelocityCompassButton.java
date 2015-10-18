@@ -65,7 +65,10 @@ public class UpgradeVelocityCompassButton extends OneOffUpgradeButton {
 
     @Override
     protected void applyUpgrade() {
-        Controller.getPlayer().setVelocityCompassState(true);
+        if(Scoreboard.XP() >= upgradeCost()){
+            Scoreboard.modXP(-upgradeCost());
+            Controller.getPlayer().setVelocityCompassState(true);
+        }
     }
 
     @Override

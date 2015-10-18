@@ -21,7 +21,7 @@ public class Properties {
             USE_SPEED_LIMIT = true
     ;
     public static double 
-            MOUSE_SENSITIVITY = 12;
+            MOUSE_SENSITIVITY = 30;
     public static final int
             ENEMY_LIMIT = 12;
             ;
