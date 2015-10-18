@@ -79,6 +79,7 @@ public class Gun extends Weapon{
         if(ammoCount > 0 || MAX_AMMO <= 0) {
             
             Vector dir = new Vector(1,((Creature) user).faceXZ(), ((Creature) user).faceY());
+            
             if(Properties.USE_RECOIL && HAS_RECOIL){
                 double userSpeed = user.getVelocity().getMagnitude();
                 
@@ -149,9 +150,10 @@ public class Gun extends Weapon{
             while(Math.abs(yOff) >= Math.PI*Interface3D.getInterface3D().getPixelsPerRadian())
                 yOff -= Math.signum(yOff)*2*Math.PI*Interface3D.getInterface3D().getPixelsPerRadian();
             
+            rad /= 2;
             
-            g.drawLine(centX-rad-(int)(xOff), centY-(int)(yOff), centX+rad-(int)(xOff), centY-(int)(yOff));
-            g.drawLine(centX-(int)(xOff), centY-rad-(int)(yOff), centX-(int)(xOff), centY+rad-(int)(yOff));
+            g.drawLine(centX-rad-(int)(xOff), centY-rad-(int)(yOff), centX+rad-(int)(xOff), centY+rad-(int)(yOff));
+            g.drawLine(centX-rad-(int)(xOff), centY+rad-(int)(yOff), centX+rad-(int)(xOff), centY-rad-(int)(yOff));
         }
         
         

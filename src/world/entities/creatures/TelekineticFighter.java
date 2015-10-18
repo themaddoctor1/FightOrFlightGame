@@ -126,14 +126,7 @@ public class TelekineticFighter extends Humanoid{
         
         double drainMultiplier = 10 * 0;
         
-        double speedDrain = drainMultiplier
-                * Math.sqrt(1+Controller.getPlayer().getChargeCapacity())
-                * time
-                * Controller.getPlayer().getSpeedWarp()
-                * Math.max(Math.pow(Controller.getPlayer().getChargeCapacity(), 3), Math.cbrt(Controller.getPlayer().getChargeCapacity())) 
-                / Math.pow(Coordinate.relativeDistance(Controller.getPlayer().getPosition(), getPosition()), 2);
-        
-        speedDrain *= Math.sqrt(1+Math.pow(p.getCharge(),2))*Math.pow(Math.max(0, Math.min(Controller.getPlayer().speedChargeRegenTimer()-1, 1)), 2);
+        double speedDrain = drainMultiplier*Math.sqrt(1+p.getChargeCapacity())*time*p.getSpeedWarp()*p.chargeRate()*Math.max(0, Math.min(p.speedChargeRegenTimer()-1, 2));
         
         Controller.getPlayer().modCharge(-Math.abs(speedDrain));
         

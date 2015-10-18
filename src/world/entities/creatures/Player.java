@@ -34,7 +34,7 @@ public class Player extends Speedster{
         
         weapon = add[0];
         
-        this.chargeCapacity = Math.pow(10,-4);
+        this.chargeCapacity = 0;
     }
     
     @Override
@@ -48,7 +48,7 @@ public class Player extends Speedster{
         
         if(getPosition().Y() <= getSize() && accelerating && Properties.REQUIRE_SPEED_CHARGE){
             double chargeDecrease = 
-                    4*Math.sqrt(1+chargeCapacity)*time*getSpeedWarp()*Math.max(Math.pow(chargeCapacity, 3), Math.cbrt(chargeCapacity));
+                    10*time*getSpeedWarp() / Math.sqrt(1+getChargeCapacity());
                     //(time*getSpeedWarp())*Math.pow(10,3)*Math.log10(1+10*Math.pow(getChargeCapacity(),2.5)/(Math.pow(getChargeCapacity(),2)+10)) * Math.max(Math.pow((velocity.getMagnitude()) / getSpeedLimit(), 3), Math.cbrt(velocity.getMagnitude()) / getSpeedLimit());
             
             if(getVelocity().getMagnitude() > 3)
