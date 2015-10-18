@@ -63,6 +63,7 @@ public class MainMenuDisplay extends Display{
         g2.drawString("P: Pause Game", 10, Interface3D.getInterface3D().getCenterY()+disp+100);
         g2.drawString("U: Access Upgrade Menu", 10, Interface3D.getInterface3D().getCenterY()+disp+120);
         g2.drawString("- or =: Switch Weapon", 10, Interface3D.getInterface3D().getCenterY()+disp+140);
+        g2.drawString("R: Reload", 10, Interface3D.getInterface3D().getCenterY()+disp+160);
         
         drawCursor(g2);
         
