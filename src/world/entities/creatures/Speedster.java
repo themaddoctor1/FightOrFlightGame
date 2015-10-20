@@ -70,7 +70,7 @@ public abstract class Speedster extends Humanoid{
         super.cycle(perceivedTime);
         
         if(getHealth() > 0 && healthRegenTimer == 5)
-            modHealth(Math.sqrt(4 + Math.pow(chargeCapacity*getCharge()/maxCharge(), 2)) * perceivedTime);
+            modHealth(25*Math.sqrt(4 + Math.pow(chargeCapacity*getCharge()/maxCharge(), 2)) * perceivedTime);
         
         
         if(Properties.REQUIRE_SPEED_CHARGE){
