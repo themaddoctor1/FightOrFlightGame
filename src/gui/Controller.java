@@ -129,13 +129,14 @@ public class Controller {
             KeyEvent.VK_S,          
             KeyEvent.VK_D,          
             KeyEvent.VK_SPACE,      //Jump
-            KeyEvent.VK_E,          //Shoot (Mouse control: Left click)
             KeyEvent.VK_SHIFT,      //Brakes
             KeyEvent.VK_B,
             KeyEvent.VK_P,          //Pause Game
             KeyEvent.VK_U,          //Upgrade menu
             KeyEvent.VK_MINUS,      //Previous weapon
             KeyEvent.VK_EQUALS,     //Next weapon
+            KeyEvent.VK_Q,
+            KeyEvent.VK_E,
             KeyEvent.VK_R           //Reload
         };
     }
@@ -162,7 +163,7 @@ public class Controller {
                 if(getState(8)){
                     currentPlayer.getVelocity().addVectorToThis(new Vector(4 - currentPlayer.getVelocity().getMagnitudeY(),0, Math.PI/2.0));
                 //Brakes
-                } else if((getState(10)||getState(11)) && currentPlayer.getVelocity().getMagnitude() > 0){
+                } else if((getState(9)||getState(10)) && currentPlayer.getVelocity().getMagnitude() > 0){
                     currentPlayer.getVelocity().addVectorToThis(new Vector(currentPlayer.getVelocity().unitVector(), -Math.min(time * currentPlayer.getAcceleration() *4, currentPlayer.getVelocity().getMagnitude())));
                 //Movement
                 } else if(!Properties.USE_SPEED_LIMIT || currentPlayer.getVelocity().getMagnitude() < currentPlayer.getSpeedLimit()){
@@ -201,14 +202,14 @@ public class Controller {
             }
             //*/
 
-            if(getState(9) || mouseHeld[0])
+            if(mouseHeld[0])
                 currentPlayer.getWeapon().use(time, currentPlayer);
             
-            if(getState(12)){
+            if(getState(11)){
                 Scoreboard.pauseGame();
                 Interface3D.getInterface3D().setDisplay(new PauseDisplay());
             } 
-            if(getState(13) && Scoreboard.timer() > 0){
+            if(getState(12) && Scoreboard.timer() > 0){
                 Scoreboard.pauseGame();
                 Interface3D.getInterface3D().setDisplay(new UpgradeDisplay());
             }
@@ -216,25 +217,27 @@ public class Controller {
             ArrayList<Weapon> weapons = currentPlayer.getWeapons();
             int index = weapons.indexOf(currentPlayer.getWeapon());
             
-            if(!getState(14)){
+            if(!getState(13) || !getState(15)){
                 currentPlayer.setWeapon(weapons.get(((index-1+weapons.size())%weapons.size())));
-                setState(keyCodes[14], true);
-            }
-            
-            if(!getState(15)){
-                currentPlayer.setWeapon(weapons.get(((index+1)%weapons.size())));
+                setState(keyCodes[13], true);
                 setState(keyCodes[15], true);
             }
             
-            if(getState(16)){
+            if(!getState(14) || !getState(16)){
+                currentPlayer.setWeapon(weapons.get(((index+1)%weapons.size())));
+                setState(keyCodes[14], true);
+                setState(keyCodes[16], true);
+            }
+            
+            if(getState(17)){
                 Gun g = ((Gun)Controller.getPlayer().getWeapons().get(1));
                 g.addAmmo(-g.ammoLeft());
             }
             
             //System.out.println(currentPlayer.getVelocity().toString(true));
         } else {
-            setState(keyCodes[14], true);
-            setState(keyCodes[15], true);
+            for(int i = 13; i <= 16; i++)
+                setState(keyCodes[i], true);
         }
     }
     
