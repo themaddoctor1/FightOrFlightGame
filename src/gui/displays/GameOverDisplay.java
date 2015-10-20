@@ -116,7 +116,7 @@ public class GameOverDisplay extends Display{
             g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
         }
         
-        drawCursor(g2);
+        Display.drawCursor(g2);
         
     }
 
