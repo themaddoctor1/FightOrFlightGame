@@ -49,7 +49,7 @@ public class UpgradeRecoilButton extends OneOffUpgradeButton {
         }
         
         g2.setFont(new Font("Courier New", Font.PLAIN, 16));
-        g2.drawString("-Recoil", x+h/2-30, y+h+15);
+        g2.drawString("-Recoil", x+h/2-35, y+h+15);
         g2.drawString("Cost: " + upgradeCost(), x+h/2-40-(int)((int)Math.log10(1+upgradeCost())*5.0), y+h+35);
         
     }
