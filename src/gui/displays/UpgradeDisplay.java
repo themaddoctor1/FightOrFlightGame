@@ -117,7 +117,7 @@ public class UpgradeDisplay extends Display{
         for(DisplayButton db : getCurrentButtons())
             db.draw(g2);
         
-        drawCursor(g2);
+        Display.drawCursor(g2);
     }
 
     @Override
