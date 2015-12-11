@@ -65,8 +65,22 @@ public class CompanyLogoDisplay extends Display{
         g2.drawString("Christopher Hittner", interf.getCenterX() - 115, interf.getCenterY()-100);
         
         if(age >= 4){
-            g2.setColor(new Color(255, 255, 255, Math.min((int)(255 * (age-4)), 255)));
-            g2.fillRect(0, 0, interf.getWidth(), interf.getHeight());
+            double dayLength = 90;
+            double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
+
+            if(!Properties.DAY_NIGHT_CYCLE)
+                timeOfDay = Math.PI/4;
+
+            double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
+
+            Color sky = new Color((int) (180*multiplier), (int) (180*multiplier), (int) (255*multiplier), Math.min((int)(255 * (age-4)), 255));
+            Color ground = new Color((int)(77*(((0.2+multiplier)/1.2))), (int)(120*(((0.2+multiplier)/1.2))), 0, (int)Math.min((255.0*(age-4)), 255));
+
+            g2.setColor(sky);
+            g2.fillRect(0, 0, Interface3D.getInterface3D().getWidth(), Interface3D.getInterface3D().getHeight()/2);
+            g2.setColor(ground);
+            g2.fillRect(0, Interface3D.getInterface3D().getHeight()/2, Interface3D.getInterface3D().getWidth(), Interface3D.getInterface3D().getHeight()/2);
+            
             g2.setColor(new Color(0, 0, 0, Math.min((int)(255 * (age-4)), 255)));
             g2.setFont(new Font("Courier New", Font.PLAIN, 48));
             g2.drawString(" FIGHT OR FLIGHT ", Interface3D.getInterface3D().getCenterX() - 250, (int)(Interface3D.getInterface3D().getCenterY()*0.7));

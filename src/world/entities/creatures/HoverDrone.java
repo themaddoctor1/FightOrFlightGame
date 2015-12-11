@@ -15,6 +15,8 @@ import java.awt.Graphics2D;
 import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
+import world.WorldManager;
+import world.entities.AmmoPickup;
 
 /**
  *
@@ -27,7 +29,7 @@ public class HoverDrone extends Creature{
     public HoverDrone(Coordinate pos){
         super(pos,0.3,25);
         //pos.addVector(new Vector(preferredAltitude - pos.Y(), 0, Math.PI/2.0));
-        weapon = new Gun(100, -1, 1, false);
+        weapon = new Gun(100, -1, -1, 1, false);
     }
 
     @Override
@@ -89,6 +91,7 @@ public class HoverDrone extends Creature{
     
     @Override
     public void killSelf(){
+        WorldManager.getWorld().getEntities().add(new AmmoPickup(getPosition(), (int)(20*(1+Math.random()))));
         Scoreboard.modXP(5*Math.log10(10*Scoreboard.wave()));
         super.killSelf();
     }

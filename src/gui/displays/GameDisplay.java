@@ -24,6 +24,7 @@ import physics.Coordinate;
 import physics.Vector;
 import world.WorldManager;
 import world.entities.Entity;
+import world.entities.creatures.Creature;
 import world.entities.creatures.Player;
 
 /**
@@ -142,6 +143,17 @@ public class GameDisplay extends Display{
         
         p.getWeapon().drawPerspective(g);
         
+        //Speed Gauge
+        double velocity = p.getVelocity().getMagnitude();
+        
+        g2.setColor(new Color(255, 255, 255, 64));
+        g2.fillRect(25, 25, 200, 80);
+        
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font("Courier New", Font.PLAIN, 24));
+        g2.drawString((int) velocity + " m/s", 30, 45);
+        g2.drawString((int) (velocity / p.getSpeedWarp()) + " m/s", 30, 85);
+        
         /*
         //Draws speed charging tint
         int stretch = (int)(0.1*Math.sqrt(interf.getWidth()*interf.getHeight())*(p.getVelocity().getMagnitudeXZ()/p.getSpeedLimit()));
@@ -151,7 +163,6 @@ public class GameDisplay extends Display{
         g2.fillRect(stretch, 0, interf.getWidth()-2*stretch, stretch);
         g2.fillRect(stretch, interf.getHeight()-stretch, interf.getWidth()-2*stretch, stretch);
         */
-        double healthLost = 100.0 * (1 - p.getHealth() / p.maxHealth());
         
         g2.setColor(new Color(255,0,0,(int)(192 * (1 - p.getHealth()/p.maxHealth()))));
         //g2.fillRect((int)healthLost, (int)healthLost, interf.getFrame().getContentPane().getWidth()-2*(int)healthLost+1, interf.getFrame().getContentPane().getHeight()-2*(int)healthLost+1);
@@ -184,13 +195,14 @@ public class GameDisplay extends Display{
         */
         
         //Debug Stats
+        /**
         g2.setFont(new Font("Courier New", Font.PLAIN, 12));
         g2.setColor(Color.BLACK);
         g2.drawString("Speed: " + (((int)(p.getVelocity().getMagnitude()*100)) / 100.0) + " m/s", 10, 60);
         g2.drawString("Perceived Speed: " + (((int)(p.getVelocity().getMagnitude()*100/Controller.getPlayer().getSpeedWarp())) / 100.0) + " m/s", 10, 75);
         g2.drawString("Charge Capacity: " + (((int)(p.getChargeCapacity()*100)) / 100.0) + " Flux Units", 10, 90);
         g2.drawString("Charge: " + (p.getCharge()) + " Flux Units", 10, 105);
-        
+        */
         p.getWeapon().drawInterface(g2);
         
         //XP Counter
@@ -233,6 +245,48 @@ public class GameDisplay extends Display{
                 magn = Math.min(Math.sqrt(magn), 1);
                 g2.drawLine(interf.getCenterX(), interf.getHeight()-65, (int)(interf.getCenterX()+magn*30*Math.cos(xz)), interf.getHeight()-65 - (int)(magn*15*Math.sin(xz)));
             }
+        }
+        
+        if(p.minimapActive()) {
+            
+            int mapR = 100;
+            int mapX = interf.getWidth() - 25 - mapR;
+            int mapY = 25 + mapR;
+            int pixPerMeter = 4;
+            
+            g2.setColor(new Color(255, 255, 255, 64));
+            
+            g2.fillOval(mapX - mapR, mapY - mapR, 2*mapR, 2*mapR);
+            
+            g2.setColor(Color.BLACK);
+            
+            double fov = interf.getWidth() / (2 * interf.getPixelsPerRadian());
+            
+            int fovX = (int)(Math.sin(fov) * mapR);
+            int fovY = (int)(Math.cos(fov) * mapR);
+            
+            g2.fillOval(mapX - pixPerMeter, mapY - pixPerMeter, 2*pixPerMeter, 2*pixPerMeter);
+            g2.drawLine(mapX, mapY, mapX - fovX, mapY - fovY);
+            g2.drawLine(mapX, mapY, mapX + fovX, mapY - fovY);
+            
+            for(int i = 0; i < WorldManager.getWorld().getEntities().size(); i++) {
+                Entity e = WorldManager.getWorld().getEntities().get(i);
+                
+                g2.setColor(new Color(255, 0, 0, 128));
+                
+                if(p.equals(e) || !(e  instanceof Creature))
+                    continue;
+                else if(e != null) {
+                    Vector rel = new Vector(p.getPosition(), e.getPosition());
+                    double relAngle = rel.getAngleXZ() - p.faceXZ() + Math.PI/2.0;
+                    double dist = Math.min(pixPerMeter * rel.getMagnitudeXZ(), mapR);
+                    int mapBlipRad = (int)(pixPerMeter * e.getSize());
+                    
+                    g2.fillOval(mapX + (int)(dist * Math.cos(relAngle)) - mapBlipRad, mapY - (int)(dist * Math.sin(relAngle)) - mapBlipRad, 2*mapBlipRad, 2*mapBlipRad);
+                    
+                }
+            }
+            
         }
         
     }

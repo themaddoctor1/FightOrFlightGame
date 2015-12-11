@@ -112,8 +112,17 @@ public class GameOverDisplay extends Display{
             g2.setColor(new Color(255,0,0,(int)(192.0*(1.0-2*age))));
             g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
         } else if(age >= 4){
-            g2.setColor(new Color(255,255,255,(int)(255.0*(age-4))));
-            g2.fillRect(0,0,interf.getWidth(), interf.getHeight());
+        
+            if(!Properties.DAY_NIGHT_CYCLE)
+                timeOfDay = Math.PI/4;
+            
+            sky = new Color((int) (180*multiplier), (int) (180*multiplier), (int) (255*multiplier), (int)(255.0*(age-4)));
+            ground = new Color((int)(77*(((0.2+multiplier)/1.2))), (int)(120*(((0.2+multiplier)/1.2))), 0, (int)(255.0*(age-4)));
+
+            g2.setColor(sky);
+            g2.fillRect(0, 0, Interface3D.getInterface3D().getWidth(), Interface3D.getInterface3D().getHeight()/2);
+            g2.setColor(ground);
+            g2.fillRect(0, Interface3D.getInterface3D().getHeight()/2, Interface3D.getInterface3D().getWidth(), Interface3D.getInterface3D().getHeight()/2);
         }
         
         Display.drawCursor(g2);

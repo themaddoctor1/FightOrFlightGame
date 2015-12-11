@@ -6,23 +6,20 @@
 package gui.displays.buttons.upgrades;
 
 import gui.Controller;
-import items.Fist;
-import items.Gun;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.Rectangle;
 import main.Scoreboard;
 
 /**
  *
  * @author Christopher
  */
-public class UpgradeGunAmmoButton extends UpgradeButton {
+public class UpgradeMinimapButton extends OneOffUpgradeButton {
 
-    public UpgradeGunAmmoButton(int X, int Y) {
+    public UpgradeMinimapButton(int X, int Y) {
         super(X, Y);
     }
 
@@ -37,41 +34,49 @@ public class UpgradeGunAmmoButton extends UpgradeButton {
         }
         
         g2.setColor(Color.BLACK);
-        
-        for(int i = 1; i <= 4; i++){
-            g2.drawOval(x+(2*i-1)*w/10, y+h/4, w/5, h/2);
-            g2.fillRect(x+(2*i-1)*w/10-1, y+h/2, w/5+2, h/4+1);
-            g2.fillRect(x+w/10, y+5*h/8, 4*w/5, h/12);
-        }
-        
         g2.drawRect(x, y, w, h);
+        
+        g2.setColor(Color.GRAY);
+        g2.fillOval(x+4, y+4, w-8, h-8);
+        g2.setColor(Color.BLACK);
+        g2.drawOval(x+4, y+4, w-8, h-8);
+        
         
         if(selected){
             for(int i = 0; i <= 3; i++)
                 g2.drawRect(x+i,y+i,w-2*i,h-2*i);
         }
         
+        g2.drawLine(x + w/2, y + h/2, x + w/2 + (int)(w/Math.sqrt(8)), y+h/2-(int)(h/Math.sqrt(8)));
+        g2.drawLine(x + w/2, y + h/2, x + w/2 - (int)(w/Math.sqrt(8)), y+h/2-(int)(h/Math.sqrt(8)));
+        
         g2.setFont(new Font("Courier New", Font.PLAIN, 16));
-        g2.drawString("+Ammo", x+h/2-25, y+h+15);
-        String costLine = "Cost: " + upgradeCost();
-        g2.drawString(costLine, x+h/2-(5*costLine.length()), y+h+35);
+        g2.drawString("+Minimap", x+h/2-45, y+h+15);
+        g2.drawString("Cost: " + upgradeCost(), x+h/2-30-(int)((int)Math.log10(1+upgradeCost())*5.0), y+h+35);
+        
     }
 
     @Override
     public int upgradeCost() {
-        Gun g = ((Gun)Controller.getPlayer().getWeapons().get(1));
-        return (int)(5*Math.log10(10*(g.MAX_AMMO/8.0))*Math.sqrt(g.MAX_AMMO/8.0));
+        return 20;
     }
 
     @Override
     protected void applyUpgrade() {
         if(Scoreboard.XP() >= upgradeCost()){
             Scoreboard.modXP(-upgradeCost());
-            Gun g = (Gun) Controller.getPlayer().getWeapons().get(1);
-            Gun result = new Gun(g.fireRate(), g.spareAmmo(), (int)(g.MAX_AMMO*1.5), g.RELOAD_FACTOR, g.HAS_RECOIL);
-            Controller.getPlayer().setWeapon(result);
-            Controller.getPlayer().replaceWeapon(1, result);
+            Controller.getPlayer().setMinimapState(true);
         }
+    }
+
+    @Override
+    public void setUsed() {
+        Controller.getPlayer().setMinimapState(true);       
+    }
+
+    @Override
+    public boolean wasUsed() {
+        return Controller.getPlayer().minimapActive();
     }
     
 }

@@ -12,6 +12,7 @@ import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
 import world.WorldManager;
+import world.entities.AmmoPickup;
 
 /**
  *

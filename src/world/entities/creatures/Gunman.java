@@ -15,6 +15,8 @@ import java.awt.Color;
 import main.Scoreboard;
 import physics.Coordinate;
 import physics.Vector;
+import world.WorldManager;
+import world.entities.AmmoPickup;
 
 /**
  *
@@ -126,6 +128,8 @@ public class Gunman extends Humanoid{
     
     @Override
     public void killSelf(){
+        if(Math.random() < 0.25)
+            WorldManager.getWorld().getEntities().add(new AmmoPickup(getPosition()));
         Scoreboard.modXP(2*Math.log10(10*Scoreboard.wave()));
         super.killSelf();
     }

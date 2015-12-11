@@ -30,33 +30,35 @@ public class Gun extends Weapon{
     
     private double fireRate;
     private double counter = 0.9/fireRate;
-    private int ammoCount;
+    private int ammoCount, spareAmmo = -1;
     public final int MAX_AMMO;
     private double reloadTimer = -1;
     public final double RELOAD_FACTOR;
     public final boolean HAS_RECOIL;
     
-    public Gun(double rate, int maxAmmo, double reloadFactor, boolean recoil){
+    public Gun(double rate, int maxAmmo, int spareAmmo, double reloadFactor, boolean recoil){
         fireRate = rate;
         MAX_AMMO = maxAmmo;
         ammoCount = maxAmmo;
         RELOAD_FACTOR = reloadFactor;
         HAS_RECOIL = recoil;
+        this.spareAmmo = spareAmmo;
     }
     
     public Gun(){
-        this(5, -1, 1, true);
+        this(5, -1, -1, 1, true);
     }
     
     @Override
     public void cycle(double time, Entity user){
         
-        if(ammoCount == 0 && MAX_AMMO > 0){
+        if(ammoCount == 0 && MAX_AMMO > 0 && spareAmmo != 0){
             
             if(reloadTimer == -1)
                 reloadTimer = 0;
             else if(reloadTimer >= Math.log(Math.E+MAX_AMMO)/RELOAD_FACTOR){
-                ammoCount = MAX_AMMO;
+                ammoCount = spareAmmo > 0 ? Math.min(MAX_AMMO, spareAmmo) : MAX_AMMO;
+                spareAmmo = Math.max(-1, spareAmmo - ammoCount);
                 reloadTimer = -1;
             } else {
                 reloadTimer += time;
@@ -169,6 +171,10 @@ public class Gun extends Weapon{
         return ammoCount;
     }
     
+    public int spareAmmo() {
+        return spareAmmo;
+    }
+    
     public double fireRate(){
         return fireRate;
     }
@@ -184,10 +190,15 @@ public class Gun extends Weapon{
         g.fillRect(100, hei-160, 65, 15);
         
         if(ammoCount >= 0){
-            String counter = ammoCount + " / " + MAX_AMMO;
+            String counter = ammoCount + " / " + spareAmmo;
             g.setFont(new Font("Courier New", Font.PLAIN, 30));
             g.drawString(counter, 80, hei - 80);
         }
+    }
+    
+    public void giveAmmo(int numBullets) {
+        if(spareAmmo >= 0)
+            spareAmmo += numBullets;
     }
     
     

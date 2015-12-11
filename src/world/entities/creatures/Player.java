@@ -26,7 +26,7 @@ public class Player extends Speedster{
         weapons = new ArrayList<>();
         Weapon[] add = {
             new Fist(10, 2),
-            new Gun(3, 8, 1, true)
+            new Gun(3, 8, 0, 1, true)
         };
         
         for(int i = 0; i < add.length; i++)
@@ -116,6 +116,10 @@ public class Player extends Speedster{
     private boolean shootingMoveCompActive = false;
     public void setShootingMoveCompState(boolean state){ shootingMoveCompActive = state; }
     public boolean shootingMoveComp(){ return shootingMoveCompActive; }
+    
+    private boolean minimapActive = false;
+    public void setMinimapState(boolean state) { minimapActive = state; }
+    public boolean minimapActive() { return minimapActive; }
 
     
 }

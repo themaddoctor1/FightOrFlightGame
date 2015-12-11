@@ -15,6 +15,8 @@ import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import main.Properties;
+import world.WorldManager;
 
 /**
  *
@@ -44,6 +46,23 @@ public class MainMenuDisplay extends Display{
     public void draw(Graphics g) {
         
         Graphics2D g2 = (Graphics2D) g;
+        
+        double dayLength = 90;
+        double timeOfDay = 2*Math.PI*((WorldManager.getTime())%(dayLength))/dayLength;
+        
+        if(!Properties.DAY_NIGHT_CYCLE)
+            timeOfDay = Math.PI/4;
+        
+        double multiplier = Math.max(0, Math.min(2*Math.sin(timeOfDay)+0.2, 1));
+        
+        Color sky = new Color((int) (180*multiplier), (int) (180*multiplier), (int) (255*multiplier));
+        Color ground = new Color((int)(77*(((0.2+multiplier)/1.2))), (int)(120*(((0.2+multiplier)/1.2))), 0);
+        
+        g2.setColor(sky);
+        g2.fillRect(0, 0, Interface3D.getInterface3D().getWidth(), Interface3D.getInterface3D().getHeight()/2);
+        g2.setColor(ground);
+        g2.fillRect(0, Interface3D.getInterface3D().getHeight()/2, Interface3D.getInterface3D().getWidth(), Interface3D.getInterface3D().getHeight()/2);
+        
         
         for(int i = 0; i < buttons.length; i++)
             buttons[i].draw(g2);
