@@ -64,7 +64,7 @@ public class UpgradeRecoilButton extends OneOffUpgradeButton {
         if(Scoreboard.XP() >= upgradeCost()){
             Scoreboard.modXP(-upgradeCost());
             Gun g = (Gun) Controller.getPlayer().getWeapons().get(1);
-            Controller.getPlayer().replaceWeapon(1, new Gun(g.fireRate(), g.spareAmmo(), g.MAX_AMMO, g.RELOAD_FACTOR, false));
+            Controller.getPlayer().replaceWeapon(1, new Gun(g.fireRate(), g.MAX_AMMO, g.spareAmmo(), g.RELOAD_FACTOR, false));
         }
     }
     

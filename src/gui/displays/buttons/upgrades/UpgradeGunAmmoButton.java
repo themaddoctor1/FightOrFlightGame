@@ -68,7 +68,7 @@ public class UpgradeGunAmmoButton extends UpgradeButton {
         if(Scoreboard.XP() >= upgradeCost()){
             Scoreboard.modXP(-upgradeCost());
             Gun g = (Gun) Controller.getPlayer().getWeapons().get(1);
-            Gun result = new Gun(g.fireRate(), g.spareAmmo(), (int)(g.MAX_AMMO*1.5), g.RELOAD_FACTOR, g.HAS_RECOIL);
+            Gun result = new Gun(g.fireRate(), (int)(g.MAX_AMMO*1.5), g.spareAmmo(), g.RELOAD_FACTOR, g.HAS_RECOIL);
             Controller.getPlayer().setWeapon(result);
             Controller.getPlayer().replaceWeapon(1, result);
         }
