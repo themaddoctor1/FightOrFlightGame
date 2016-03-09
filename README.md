@@ -1,6 +1,5 @@
 # FightOrFlightGame
-Fight or Flight is a game that I wrote where the player becomes able to run progressively faster by running. The player 
-must fight endless waves of enemies that become more difficult to fight over time.
+Fight or Flight is a wave-based survival game in which the player is stuck in the open with no support. However, the player has the advantage of speed... so much that time itself must slow down to compensate.
 
 ##Enemies
 | Type | Description | Initial Wave |
